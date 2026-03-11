@@ -1,4 +1,4 @@
-export const GUEST_EMAIL = "ihnexperience@gmail.com";
+export const GUEST_EMAIL = "ihnsocialmediaa@gmail.com";
 
 export const enquiryOptions = [
   { value:"",            label:"Select enquiry type…" },

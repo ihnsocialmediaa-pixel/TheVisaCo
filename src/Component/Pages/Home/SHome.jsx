@@ -1475,11 +1475,11 @@ function FAQ() {
 // ─── CONTACT US SECTION ───────────────────────────────────────────────────────
 // • Only 2 contact channels: Email Us + Schedule Google Meet
 // • Message form: Enquiry Type dropdown, phone required
-// • Meeting scheduler: Google Calendar URL with auto guest ihnexperience@gmail.com
-// • Guest email ALWAYS added: ihnexperience@gmail.com
+// • Meeting scheduler: Google Calendar URL with auto guest ihnsocialmediaa.gmail.com
+// • Guest email ALWAYS added: ihnsocialmediaa.gmail.com
 
 function ContactUs() {
-  const GUEST_EMAIL = "ihnexperience@gmail.com";
+  const GUEST_EMAIL = "ihnsocialmediaa.gmail.com";
 
   const [tab, setTab] = React.useState("message");
 
@@ -1814,7 +1814,7 @@ function ContactUs() {
 }
 
 function ScheduleMeetingFloat() {
-  const GUEST_EMAIL = "ihnexperience@gmail.com";
+  const GUEST_EMAIL = "ihnsocialmediaa.gmail.com";
 
   const [open, setOpen]               = React.useState(false);
   const [meetScheduled, setMeetScheduled] = React.useState(false);

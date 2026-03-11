@@ -176,7 +176,7 @@ function LandingScreen({ onStart }) {
             <button className="btn btn-primary" onClick={onStart}>
               Start Free Interview
             </button>
-            <button className="btn btn-ghost">Watch Demo ▶</button>
+            
           </div>
         </div>
 

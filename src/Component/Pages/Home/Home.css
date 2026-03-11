@@ -740,7 +740,7 @@ img   { display: block; }
 .feedback__field { display: flex; flex-direction: column; gap: .4rem; }
 .feedback__label {
   font-family: var(--ff2); font-size: .75rem; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  letter-spacing: .08em; text-transform: uppercase; color: #002e5c;
 }
 .feedback__input,
 .feedback__textarea {

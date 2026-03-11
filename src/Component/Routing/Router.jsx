@@ -5,8 +5,7 @@ import Navbar from "../Main/Navbar/Navbar";
 import Footer from "../Main/Footer/Footer";
 import ApplicationForm from "../Pages/ApplicationForm/ApplicationForm";
 import LandingPage from "../Pages/LandingPage/LandingPage";
-
-
+import USMockInterview from "../Pages/Products/Interview/USMockInterview";
 
 function Router() {
   return (
@@ -17,6 +16,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/visa/:visaId" element={<Booking />} />
         <Route path="/application-form" element={<ApplicationForm />} />
+        <Route path="/interview" element={<USMockInterview />} />
       </Routes>
 
       <Footer />

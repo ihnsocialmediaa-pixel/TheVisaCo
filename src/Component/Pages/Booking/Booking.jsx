@@ -96,9 +96,9 @@ function HeroBanner({ data }) {
 
         {/* Title */}
         <h1 className="booking-hero__title">
-          {data.title} <span className="booking-hero__title-flag">{data.flag}</span> {data.country} Visa
-          <br />
-          <span className="booking-hero__title-sub">{data.subtitle}</span>
+          <span className="booking-hero__title-flag">{data.flag}</span> <br />
+          {data.title} Visa
+          
         </h1>
 
         {/* Pills */}

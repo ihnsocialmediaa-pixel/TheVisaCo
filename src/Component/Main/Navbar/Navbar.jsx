@@ -47,11 +47,12 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const links = [
-    "Visa on Arrival",
-    "Tourist Visa",
-    "Business Visa",
-    "Student Visa",
-    "Travel Insurance",
+    { label: "Visa on Arrival",    to: "#" },
+    { label: "Tourist Visa",       to: "#" },
+    { label: "Business Visa",      to: "#" },
+    { label: "Student Visa",       to: "#" },
+    { label: "Travel Insurance",   to: "#" },
+    { label: "Interview",          to: "/interview" },
   ];
 
   const closeMenu = () => setMobileOpen(false);
@@ -72,7 +73,15 @@ export default function Navbar() {
 
           {/* Desktop links — centre, only visible when scrolled */}
           <div className={`nav__links ${scrolled ? "nav__links--visible" : "nav__links--hidden"}`}>
-            {links.map(l => <Link to="#" className="nav__link" key={l}>{l}</Link>)}
+            {links.map(l => (
+              <Link
+                to={l.to}
+                className={`nav__link${l.label === "Interview" ? " nav__link--highlight" : ""}`}
+                key={l.label}
+              >
+                {l.label}
+              </Link>
+            ))}
           </div>
 
           {/* Right icons */}
@@ -112,7 +121,6 @@ export default function Navbar() {
             <span className="mobile-menu__logo-text">TheVisa</span>
           </Link>
           <button className="mobile-menu__close" onClick={closeMenu} aria-label="Close menu">
-            {/* X icon */}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
@@ -123,12 +131,12 @@ export default function Navbar() {
         <div className="mobile-menu__links">
           {links.map(l => (
             <Link
-              to="#"
-              className="mobile-menu__link"
-              key={l}
+              to={l.to}
+              className={`mobile-menu__link${l.label === "Interview" ? " mobile-menu__link--highlight" : ""}`}
+              key={l.label}
               onClick={closeMenu}
             >
-              {l}
+              {l.label}
             </Link>
           ))}
         </div>

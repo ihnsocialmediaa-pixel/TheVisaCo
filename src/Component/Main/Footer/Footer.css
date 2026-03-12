@@ -31,8 +31,26 @@
 .ve-footer{background:#001525;border-top:1px solid var(--border);padding:70px 0 0}
 .ve-footer__about{font-size:.9rem;color:var(--text-light);line-height:1.7;max-width:300px;margin-bottom:1.5rem}
 .ve-footer__socials{display:flex;gap:.6rem}
-.ve-social{width:36px;height:36px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--text-light);text-decoration:none;text-transform:uppercase;transition:var(--transition)}
-.ve-social:hover{background:var(--amber);border-color:var(--amber);color:var(--white);transform:translateY(-3px)}
+.ve-social {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.55);   /* was --text-light */
+  text-decoration: none;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.ve-social:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--white);
+  transform: translateY(-3px);
+}
 .ve-footer__heading{font-family:var(--ff-display);font-size:1rem;font-weight:600;color:var(--white);margin-bottom:1.2rem}
 .ve-footer__list{list-style:none;padding:0;margin:0}
 .ve-footer__list li{margin-bottom:.6rem;font-size:.88rem}

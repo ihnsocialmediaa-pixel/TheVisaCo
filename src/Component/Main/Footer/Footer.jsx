@@ -1,6 +1,15 @@
 import React from "react";
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
+
+const socials = [
+  { icon: <Facebook size={16} />, href: "#" },
+  { icon: <Linkedin size={16} />, href: "#" },
+  { icon: <Twitter size={16} />, href: "#" },
+  { icon: <Youtube size={16} />, href: "#" },
+];
+
 
 
 export default function Footer() {
@@ -16,9 +25,12 @@ export default function Footer() {
             <p className="ve-footer__about">
               A fresh, expert-led visa consultancy built on transparency, speed, and genuine care for every client. New company. Experienced team.
             </p>
+            {/* Inside JSX, replace the socials block */}
             <div className="ve-footer__socials">
-              {["f", "in", "tw", "yt"].map((s, i) => (
-                <Link className="ve-social" key={i} to="#">{s}</Link>
+              {socials.map((s, i) => (
+                <Link className="ve-social" key={i} to={s.href}>
+                  {s.icon}
+                </Link>
               ))}
             </div>
           </div>

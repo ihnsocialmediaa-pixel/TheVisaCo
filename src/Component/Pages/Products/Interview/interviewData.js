@@ -1,4 +1,6 @@
 // ─── INTERVIEW QUESTIONS ──────────────────────────────────────────────────────
+import { UserSearch, Mic2, BadgeCheck,Users, } from 'lucide-react';
+
 export const interviewQuestions = [
   {
     id: 1,
@@ -70,7 +72,9 @@ export const voiceConfig = {
     rate: 0.82,
     gender: "male",
     badge: "Senior Consular Officer",
-    avatar: "👨‍💼",
+    avatar: <Users size={32} strokeWidth={1.5} />,
+    avatarBg: "linear-gradient(135deg, #1e3a5f, #2d5a8e)",
+    accentColor: "#4f8ef7",
     preferredVoiceNames: ["male", "david", "mark", "daniel", "alex"],
   },
   female: {
@@ -79,10 +83,13 @@ export const voiceConfig = {
     rate: 0.82,
     gender: "female",
     badge: "Consular Officer",
-    avatar: "👩‍💼",
+    avatar: <Users size={32} strokeWidth={1.5} />,
+    avatarBg: "linear-gradient(135deg, #3b1f5e, #6b3fa0)",
+    accentColor: "#a78bfa",
     preferredVoiceNames: ["samantha", "karen", "victoria", "female", "zira", "susan"],
   },
 };
+
 
 // ─── IMPROVEMENT TIPS ─────────────────────────────────────────────────────────
 export const improvementTips = [
@@ -116,21 +123,21 @@ export const landingStats = [
 export const howItWorksSteps = [
   {
     step: "01",
+    icon: <UserSearch size={22} strokeWidth={1.8} color="#818cf8" />,
     title: "Choose Your Officer",
-    desc: "Select a male or female AI Consular Officer with authentic US Embassy voice simulation.",
-    icon: "🎭",
+    desc: "Select a male or female AI Consular Officer tailored to your visa application type.",
   },
   {
     step: "02",
-    title: "Answer Aloud",
-    desc: "Speak your answers naturally into the microphone. Our AI listens and transcribes in real-time.",
-    icon: "🎙️",
+    icon: <Mic2 size={22} strokeWidth={1.8} color="#f472b6" />,
+    title: "Speak Naturally",
+    desc: "Answer questions out loud just like a real interview. Our AI listens and responds in real time.",
   },
   {
     step: "03",
-    title: "Get AI Feedback",
-    desc: "Receive a comprehensive AI-generated performance analysis comparing your answers to ideal responses.",
-    icon: "📈",
+    icon: <BadgeCheck size={22} strokeWidth={1.8} color="#2dd4bf" />,
+    title: "Get Feedback",
+    desc: "Receive a detailed scorecard with tips to strengthen your answers and boost your confidence.",
   },
 ];
 

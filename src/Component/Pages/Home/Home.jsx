@@ -27,52 +27,52 @@ function getVisaIdForDestination(name) {
 
 function Hero({ search, setSearch }) {
   return (
-    <section className="hero">
-      <div className="hero__bg">
-        <div className="hero__orb hero__orb--1"/>
-        <div className="hero__orb hero__orb--2"/>
-        <div className="hero__orb hero__orb--3"/>
-        <div className="hero__orb hero__orb--4"/>
-        <div className="hero__orb hero__orb--5"/>
-        <div className="hero__orb hero__orb--6"/>
-        <div className="hero__grid"/>
+    <section className="home-hero">
+      <div className="home-hero__bg">
+        <div className="home-hero__orb home-hero__orb--1"/>
+        <div className="home-hero__orb home-hero__orb--2"/>
+        <div className="home-hero__orb home-hero__orb--3"/>
+        <div className="home-hero__orb home-hero__orb--4"/>
+        <div className="home-hero__orb home-hero__orb--5"/>
+        <div className="home-hero__orb home-hero__orb--6"/>
+        <div className="home-hero__grid"/>
       </div>
 
-      <div className="hero__inner">
-        <h1 className="hero__title" data-aos="fade-up" data-aos-delay="100">
+      <div className="home-hero__inner">
+        <h1 className="home-hero__title" data-aos="fade-up" data-aos-delay="100">
           Get Your Visa<br/>
-          <span className="hero__title-accent">On Time</span>
+          <span className="home-hero__title-accent">On Time</span>
         </h1>
 
-        <p className="hero__sub" data-aos="fade-up" data-aos-delay="200">
+        <p className="home-hero__sub" data-aos="fade-up" data-aos-delay="200">
           Fast, expert visa processing for 180+ countries — approved on time, guaranteed.
         </p>
 
-        <div className="search-wrap" data-aos="zoom-in-up" data-aos-delay="300">
-          <div className="search">
-            <svg className="search__icon" width="20" height="20" viewBox="0 0 24 24"
+        <div className="home-search-wrap" data-aos="zoom-in-up" data-aos-delay="300">
+          <div className="home-search">
+            <svg className="home-search__icon" width="20" height="20" viewBox="0 0 24 24"
               fill="none" stroke="#003a5c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <line x1="2" y1="12" x2="22" y2="12"/>
               <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
             </svg>
-            <span className="search__divider"/>
+            <span className="home-search__divider"/>
             <input
-              className="search__input"
+              className="home-search__input"
               type="text"
               placeholder="Select destination country…"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
             {search && (
-              <button className="search__clear" onClick={() => setSearch("")} aria-label="Clear">✕</button>
+              <button className="home-search__clear" onClick={() => setSearch("")} aria-label="Clear">✕</button>
             )}
-            <button className="search__btn">Search</button>
+            <button className="home-search__btn">Search</button>
           </div>
 
-          <div className="search__suggestions">
+          <div className="home-search__suggestions">
             {["UAE 🇦🇪","Thailand 🇹🇭","Japan 🇯🇵","USA 🇺🇸","UK 🇬🇧"].map(s => (
-              <button key={s} className="search__pill"
+              <button key={s} className="home-search__pill"
                 onClick={() => setSearch(s.split(" ")[0])}>
                 {s}
               </button>
@@ -88,14 +88,14 @@ function Hero({ search, setSearch }) {
 
 function CountryMarquee() {
   return (
-    <section className="ve-marquee-section">
-      <div className="ve-marquee-track">
-        <div className="ve-marquee-inner">
+    <section className="home-ve-marquee-section">
+      <div className="home-ve-marquee-track">
+        <div className="home-ve-marquee-inner">
           {[...countries, ...countries].map((c, i) => {
             const visaId = getVisaIdForDestination(c.name);
             return (
-              <Link key={i} to={`/visa/${visaId}`} className="ve-marquee-item">
-                <span className="ve-marquee-name">{c.name}</span>
+              <Link key={i} to={`/visa/${visaId}`} className="home-ve-marquee-item">
+                <span className="home-ve-marquee-name">{c.name}</span>
               </Link>
             );
           })}
@@ -113,15 +113,15 @@ function DestCard({ dest, index }) {
   return (
     <Link
       to={`/visa/${visaId}`}
-      className="dcard"
+      className="home-dcard"
       aria-label={`View ${dest.name} visa options`}
       data-aos="fade-up"
       data-aos-delay={Math.min((index % 5) * 60, 240)}
     >
       {/* ── Image block ── */}
-      <div className="dcard__img-wrap">
+      <div className="home-dcard__img-wrap">
         <img
-          className="dcard__img"
+          className="home-dcard__img"
           src={dest.img}
           alt={dest.name}
           loading="lazy"
@@ -130,13 +130,13 @@ function DestCard({ dest, index }) {
             e.target.nextSibling.style.display = "flex";
           }}
         />
-        <div className="dcard__fallback">🌍</div>
+        <div className="home-dcard__fallback">🌍</div>
 
         {/* Visa type — top right */}
-        <div className="dcard__tag">{dest.tag}</div>
+        <div className="home-dcard__tag">{dest.tag}</div>
 
         {/* Visa count — bottom left */}
-        <div className="dcard__badge">
+        <div className="home-dcard__badge">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
             <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955
@@ -148,14 +148,14 @@ function DestCard({ dest, index }) {
       </div>
 
       {/* ── Body ── */}
-      <div className="dcard__body">
+      <div className="home-dcard__body">
 
         {/* Name row + popularity badge */}
-        <div className="dcard__name-row">
-          <h3 className="dcard__name">{dest.name}</h3>
+        <div className="home-dcard__name-row">
+          <h3 className="home-dcard__name">{dest.name}</h3>
           {dest.popularity && (
             <span
-              className="dcard__popularity"
+              className="home-dcard__popularity"
               style={{ color: popStyle.color, background: popStyle.bg }}
             >
               {dest.popularity}
@@ -163,13 +163,12 @@ function DestCard({ dest, index }) {
           )}
         </div>
 
-        <div className="dcard__divider" />
+        <div className="home-dcard__divider" />
 
         {/* Footer: best price + strikethrough left · discounted fee right */}
-        <div className="dcard__footer">
-          <div className="dcard__price-block">
-            <span className="dcard__best-label">
-              {/* small tick icon */}
+        <div className="home-dcard__footer">
+          <div className="home-dcard__price-block">
+            <span className="home-dcard__best-label">
               <svg width="9" height="9" viewBox="0 0 12 12" fill="none"
                 stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
                 style={{ display:"inline-block", verticalAlign:"middle", marginRight:"3px", marginTop:"-1px" }}>
@@ -178,10 +177,10 @@ function DestCard({ dest, index }) {
               Actual Price
             </span>
             {dest.originalFee && (
-              <span className="dcard__original-fee">{dest.originalFee}</span>
+              <span className="home-dcard__original-fee">{dest.originalFee}</span>
             )}
           </div>
-          <span className="dcard__fee ">{dest.fee}</span>
+          <span className="home-dcard__fee">{dest.fee}</span>
         </div>
 
       </div>
@@ -220,36 +219,36 @@ function DestGrid({ search }) {
   const shown = filtered.slice(0, limit);
 
   return (
-    <section className="dest-section">
-      <div className="dest-section__inner">
+    <section className="home-dest-section">
+      <div className="home-dest-section__inner">
 
-        <div className="dest-section__head" data-aos="fade-up">
+        <div className="home-dest-section__head" data-aos="fade-up">
           <div>
-            <span className="sec-tag sec-tag--dark">Explore Destinations</span>
-            <h2 className="dest-section__title">Where do you want to go?</h2>
+            <span className="home-sec-tag home-sec-tag--dark">Explore Destinations</span>
+            <h2 className="home-dest-section__title">Where do you want to go?</h2>
           </div>
         </div>
 
-        <div className="filter-bar" data-aos="fade-up" data-aos-delay="100">
-          <div className="filter-bar__tabs">
+        <div className="home-filter-bar" data-aos="fade-up" data-aos-delay="100">
+          <div className="home-filter-bar__tabs">
             {filters.map(f => (
               <button
                 key={f}
-                className={`filter-tab${filter === f ? " filter-tab--active" : ""}`}
+                className={`home-filter-tab${filter === f ? " home-filter-tab--active" : ""}`}
                 onClick={() => setFilter(f)}
               >{f}</button>
             ))}
           </div>
-          <span className="filter-bar__count">{filtered.length} destinations</span>
+          <span className="home-filter-bar__count">{filtered.length} destinations</span>
         </div>
 
         {shown.length > 0 ? (
-          <div className="dest-grid">
+          <div className="home-dest-grid">
             {shown.map((d, i) => <DestCard key={d.id} dest={d} index={i} />)}
           </div>
         ) : (
-          <div className="empty" data-aos="fade-up">
-            <div className="empty__emoji">🔍</div>
+          <div className="home-empty" data-aos="fade-up">
+            <div className="home-empty__emoji">🔍</div>
             <h3>No results for "{search}"</h3>
             <p>Try a different country name or clear filters.</p>
           </div>
@@ -263,7 +262,7 @@ function DestGrid({ search }) {
 
 function HowItWorks() {
   const [current, setCurrent] = React.useState(0);
-  const [exitDir, setExitDir]   = React.useState(null); // "left" | "right" | null
+  const [exitDir, setExitDir]   = React.useState(null);
   const total = steps.length;
 
   const go = (dir) => {
@@ -276,8 +275,6 @@ function HowItWorks() {
   const handleDot = (i) => {
     if (i === current) return;
     go(i > current ? "left" : "right");
-    // We override setCurrent inside go's timeout, but we need target i
-    // So use a small helper:
     setExitDir(i > current ? "left" : "right");
     setTimeout(() => { setExitDir(null); setCurrent(i); }, 490);
   };
@@ -287,10 +284,9 @@ function HowItWorks() {
     return diff < 0 ? null : diff;
   };
 
-  // Shared arrow button markup
   const PrevBtn = () => (
     <button
-      className="how__nav-btn"
+      className="home-how__nav-btn"
       onClick={() => go("right")}
       disabled={current === 0}
       aria-label="Previous step"
@@ -304,7 +300,7 @@ function HowItWorks() {
 
   const NextBtn = () => (
     <button
-      className="how__nav-btn"
+      className="home-how__nav-btn"
       onClick={() => go("left")}
       disabled={current === total - 1}
       aria-label="Next step"
@@ -317,74 +313,67 @@ function HowItWorks() {
   );
 
   return (
-    <section className="how">
-      <div className="how__inner">
+    <section className="home-how">
+      <div className="home-how__inner">
 
-        {/* ── Centred heading ── */}
-        <div className="how__head" data-aos="fade-up">
-          <div className="how__head-text">
-            <span className="sec-tag">How It Works</span>
-            <h2 className="how__head-title">
+        <div className="home-how__head" data-aos="fade-up">
+          <div className="home-how__head-text">
+            <span className="home-sec-tag">How It Works</span>
+            <h2 className="home-how__head-title">
               Your visa, handled<br/>from start to finish
             </h2>
-            <p className="how__head-sub">
+            <p className="home-how__head-sub">
               No embassy visits. No paperwork confusion. Just your approved visa, on time.
             </p>
           </div>
         </div>
 
-        {/* ── Desktop/Tablet: [←]  [stack]  [→] ── */}
-        <div className="how__deck-row" data-aos="fade-up" data-aos-delay="100">
+        <div className="home-how__deck-row" data-aos="fade-up" data-aos-delay="100">
 
-          {/* Left arrow — desktop/tablet only (hidden on mobile via CSS) */}
           <PrevBtn />
 
-          {/* Card stack */}
-          <div className="how__stage">
+          <div className="home-how__stage">
             {steps.map((step, i) => {
               const pos = getPos(i);
               if (pos === null) return null;
 
               const isExiting = exitDir !== null && i === current;
               const exitClass = isExiting
-                ? ` how__card--exit-${exitDir}`
+                ? ` home-how__card--exit-${exitDir}`
                 : "";
 
               return (
                 <div
                   key={step.num}
-                  className={`how__card${exitClass}`}
+                  className={`home-how__card${exitClass}`}
                   data-pos={Math.min(pos, 4)}
-                  data-step={step.num}   /* drives per-card gradient */
+                  data-step={step.num}
                 >
-                  <div className="how__card-icon">{step.icon}</div>
-                  <div className="how__card-step">Step {step.num}</div>
-                  <h3 className="how__card-title">{step.title}</h3>
-                  <p className="how__card-desc">{step.desc}</p>
+                  <div className="home-how__card-icon">{step.icon}</div>
+                  <div className="home-how__card-step">Step {step.num}</div>
+                  <h3 className="home-how__card-title">{step.title}</h3>
+                  <p className="home-how__card-desc">{step.desc}</p>
                 </div>
               );
             })}
           </div>
 
-          {/* Right arrow — desktop/tablet only */}
           <NextBtn />
 
-          {/* Mobile nav row — sits below stage, shown only on ≤600px */}
-          <div className="how__mobile-nav">
+          <div className="home-how__mobile-nav">
             <PrevBtn />
-            <span className="how__nav-counter">{current + 1} / {total}</span>
+            <span className="home-how__nav-counter">{current + 1} / {total}</span>
             <NextBtn />
           </div>
 
         </div>
 
-        {/* ── Progress dots ── */}
-        <div className="how__footer">
-          <div className="how__dots">
+        <div className="home-how__footer">
+          <div className="home-how__dots">
             {steps.map((_, i) => (
               <button
                 key={i}
-                className={`how__dot${i === current ? " how__dot--active" : ""}`}
+                className={`home-how__dot${i === current ? " home-how__dot--active" : ""}`}
                 onClick={() => handleDot(i)}
                 aria-label={`Go to step ${i + 1}`}
               />
@@ -399,7 +388,6 @@ function HowItWorks() {
 // ─── TESTIMONIALS + FEEDBACK ──────────────────────────────────────────────────
 
 function Testimonials() {
-  // ── Feedback form state ──
   const [submitted, setSubmitted]   = React.useState(false);
   const [hoveredStar, setHoveredStar] = React.useState(0);
   const [form, setForm] = React.useState({ name:"", country:"", rating:0, text:"" });
@@ -446,76 +434,69 @@ function Testimonials() {
   const allReviews = [...userReviews, ...reviews];
 
   return (
-    <section className="testi">
-      {/* ── Animated background ── */}
-      <div className="testi__bg" aria-hidden="true">
-        <div className="testi__orb testi__orb--1"/>
-        <div className="testi__orb testi__orb--2"/>
-        <div className="testi__orb testi__orb--3"/>
-        <div className="testi__grid"/>
-        {/* floating quote marks */}
-        <span className="testi__deco testi__deco--1">"</span>
-        <span className="testi__deco testi__deco--2">"</span>
-        <span className="testi__deco testi__deco--3">★</span>
+    <section className="home-testi">
+      <div className="home-testi__bg" aria-hidden="true">
+        <div className="home-testi__orb home-testi__orb--1"/>
+        <div className="home-testi__orb home-testi__orb--2"/>
+        <div className="home-testi__orb home-testi__orb--3"/>
+        <div className="home-testi__grid"/>
+        <span className="home-testi__deco home-testi__deco--1">"</span>
+        <span className="home-testi__deco home-testi__deco--2">"</span>
+        <span className="home-testi__deco home-testi__deco--3">★</span>
       </div>
 
-      <div className="testi__inner">
+      <div className="home-testi__inner">
 
-        {/* ── Heading ── */}
-        <div className="testi__head" data-aos="fade-up">
-          <span className="sec-tag" style={{ color:"#F4B342", background:"rgba(244,179,66,.15)" }}>
+        <div className="home-testi__head" data-aos="fade-up">
+          <span className="home-sec-tag" style={{ color:"#F4B342", background:"rgba(244,179,66,.15)" }}>
             What Travellers Say
           </span>
-          <h2 className="testi__title">Trusted by <span className="testi__title-accent">180,000+</span> travellers</h2>
-          <p className="testi__sub">Real people. Real visas. Real stories.</p>
+          <h2 className="home-testi__title">Trusted by <span className="home-testi__title-accent">180,000+</span> travellers</h2>
+          <p className="home-testi__sub">Real people. Real visas. Real stories.</p>
 
-          {/* aggregate stars */}
-          <div className="testi__aggregate">
-            <div className="testi__stars-row">
+          <div className="home-testi__aggregate">
+            <div className="home-testi__stars-row">
               {[1,2,3,4,5].map(s => (
                 <svg key={s} width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               ))}
             </div>
-            <span className="testi__aggregate-score">4.9</span>
-            <span className="testi__aggregate-count">from 12,400+ reviews</span>
+            <span className="home-testi__aggregate-score">4.9</span>
+            <span className="home-testi__aggregate-count">from 12,400+ reviews</span>
           </div>
         </div>
 
-        {/* ── Review cards grid ── */}
-        <div className="testi__grid-reviews">
+        <div className="home-testi__grid-reviews">
           {allReviews.map((r, i) => (
             <div
               key={i}
-              className={`testi__card${r.isNew ? " testi__card--new" : ""}`}
+              className={`home-testi__card${r.isNew ? " home-testi__card--new" : ""}`}
               data-aos="fade-up"
               data-aos-delay={Math.min(i * 70, 350)}
             >
-              {/* quote watermark */}
-              <span className="testi__card-watermark">"</span>
+              <span className="home-testi__card-watermark">"</span>
 
-              {/* stars */}
-              <div className="testi__card-stars">
+              <div className="home-testi__card-stars">
                 {[1,2,3,4,5].map(s => (
                   <svg key={s} width="13" height="13" viewBox="0 0 24 24"
                     fill={s <= r.rating ? "#f59e0b" : "#d4dde6"}>
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                 ))}
-                {r.isNew && <span className="testi__card-new-badge">New</span>}
+                {r.isNew && <span className="home-testi__card-new-badge">New</span>}
               </div>
 
-              <p className="testi__card-text">"{r.text}"</p>
+              <p className="home-testi__card-text">"{r.text}"</p>
 
-              <div className="testi__card-author">
-                <div className="testi__card-avatar"
+              <div className="home-testi__card-author">
+                <div className="home-testi__card-avatar"
                   style={{ background: avatarGradients[i % avatarGradients.length] }}>
                   {r.avatar}
                 </div>
                 <div>
-                  <div className="testi__card-name">{r.name}</div>
-                  <div className="testi__card-route">
+                  <div className="home-testi__card-name">{r.name}</div>
+                  <div className="home-testi__card-route">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" strokeWidth="2" style={{marginRight:"4px",verticalAlign:"middle"}}>
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
@@ -529,93 +510,86 @@ function Testimonials() {
           ))}
         </div>
 
-        {/* ══════════════════════════════════════════════════════════
-            FEEDBACK FORM
-        ══════════════════════════════════════════════════════════ */}
-        <div className="feedback" data-aos="fade-up" data-aos-delay="100">
+        {/* FEEDBACK FORM */}
+        <div className="home-feedback" data-aos="fade-up" data-aos-delay="100">
 
-          <div className="feedback__left">
-            <span className="sec-tag" style={{ color:"#002236", background:"white" }}>
+          <div className="home-feedback__left">
+            <span className="home-sec-tag" style={{ color:"#002236", background:"white" }}>
               Share Your Experience
             </span>
-            <h3 className="feedback__title">How was your<br/>visa journey?</h3>
-            <p className="feedback__desc">
+            <h3 className="home-feedback__title">How was your<br/>visa journey?</h3>
+            <p className="home-feedback__desc">
               Your review helps thousands of other travellers make the right choice.
               It takes less than a minute.
             </p>
-            {/* decorative stat pills */}
-            <div className="feedback__stats">
-              <div className="feedback__stat">
-                <span className="feedback__stat-num">12K+</span>
-                <span className="feedback__stat-lbl">Reviews</span>
+            <div className="home-feedback__stats">
+              <div className="home-feedback__stat">
+                <span className="home-feedback__stat-num">12K+</span>
+                <span className="home-feedback__stat-lbl">Reviews</span>
               </div>
-              <div className="feedback__stat-divider"/>
-              <div className="feedback__stat">
-                <span className="feedback__stat-num">4.9★</span>
-                <span className="feedback__stat-lbl">Avg Rating</span>
+              <div className="home-feedback__stat-divider"/>
+              <div className="home-feedback__stat">
+                <span className="home-feedback__stat-num">4.9★</span>
+                <span className="home-feedback__stat-lbl">Avg Rating</span>
               </div>
-              <div className="feedback__stat-divider"/>
-              <div className="feedback__stat">
-                <span className="feedback__stat-num">98%</span>
-                <span className="feedback__stat-lbl">Recommend</span>
+              <div className="home-feedback__stat-divider"/>
+              <div className="home-feedback__stat">
+                <span className="home-feedback__stat-num">98%</span>
+                <span className="home-feedback__stat-lbl">Recommend</span>
               </div>
             </div>
           </div>
 
-          <div className="feedback__right">
+          <div className="home-feedback__right">
             {submitted ? (
-              /* ── Success state ── */
-              <div className="feedback__success">
-                <div className="feedback__success-icon">
+              <div className="home-feedback__success">
+                <div className="home-feedback__success-icon">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
                     stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
                     <polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
                 </div>
-                <h4 className="feedback__success-title">Thank you for your review!</h4>
-                <p className="feedback__success-sub">Your feedback has been added above and helps other travellers.</p>
-                <button className="feedback__submit feedback__submit--ghost" onClick={handleReset}>
+                <h4 className="home-feedback__success-title">Thank you for your review!</h4>
+                <p className="home-feedback__success-sub">Your feedback has been added above and helps other travellers.</p>
+                <button className="home-feedback__submit home-feedback__submit--ghost" onClick={handleReset}>
                   Write another review
                 </button>
               </div>
             ) : (
-              /* ── Form ── */
-              <div className="feedback__form">
+              <div className="home-feedback__form">
 
-                {/* Row 1: Name + Country */}
-                <div className="feedback__row">
-                  <div className="feedback__field">
-                    <label className="feedback__label">Your Name</label>
+                <div className="home-feedback__row">
+                  <div className="home-feedback__field">
+                    <label className="home-feedback__label">Your Name</label>
                     <input
-                      className={`feedback__input${errors.name ? " feedback__input--err" : ""}`}
+                      className={`home-feedback__input${errors.name ? " home-feedback__input--err" : ""}`}
                       placeholder="e.g. Priya S."
                       value={form.name}
                       onChange={e => { setForm(p=>({...p,name:e.target.value})); setErrors(p=>({...p,name:""})); }}
                     />
-                    {errors.name && <span className="feedback__err">{errors.name}</span>}
+                    {errors.name && <span className="home-feedback__err">{errors.name}</span>}
                   </div>
-                  <div className="feedback__field">
-                    <label className="feedback__label">Your Route</label>
+                  <div className="home-feedback__field">
+                    <label className="home-feedback__label">Your Route</label>
                     <input
-                      className={`feedback__input${errors.country ? " feedback__input--err" : ""}`}
+                      className={`home-feedback__input${errors.country ? " home-feedback__input--err" : ""}`}
                       placeholder="e.g. Delhi → Paris"
                       value={form.country}
                       onChange={e => { setForm(p=>({...p,country:e.target.value})); setErrors(p=>({...p,country:""})); }}
                     />
-                    {errors.country && <span className="feedback__err">{errors.country}</span>}
+                    {errors.country && <span className="home-feedback__err">{errors.country}</span>}
                   </div>
                 </div>
 
-                {/* Row 2: Star rating */}
-                <div className="feedback__field">
-                  <label className="feedback__label">Your Rating</label>
-                  <div className="feedback__stars">
+                <div className="home-feedback__field">
+                  <label className="home-feedback__label">Your Rating</label>
+                  <div className="home-feedback__stars">
                     {[1,2,3,4,5].map(s => (
                       <button
                         key={s}
                         type="button"
-                        className="feedback__star-btn"
+                        className="home-feedback__star-btn"
                         onMouseEnter={() => setHoveredStar(s)}
                         onMouseLeave={() => setHoveredStar(0)}
                         onClick={() => { setForm(p=>({...p,rating:s})); setErrors(p=>({...p,rating:""})); }}
@@ -635,34 +609,32 @@ function Testimonials() {
                       </button>
                     ))}
                     {form.rating > 0 && (
-                      <span className="feedback__rating-label">
+                      <span className="home-feedback__rating-label">
                         {["","Poor","Fair","Good","Great","Excellent!"][form.rating]}
                       </span>
                     )}
                   </div>
-                  {errors.rating && <span className="feedback__err">{errors.rating}</span>}
+                  {errors.rating && <span className="home-feedback__err">{errors.rating}</span>}
                 </div>
 
-                {/* Row 3: Review text */}
-                <div className="feedback__field">
-                  <label className="feedback__label">Your Review</label>
+                <div className="home-feedback__field">
+                  <label className="home-feedback__label">Your Review</label>
                   <textarea
-                    className={`feedback__textarea${errors.text ? " feedback__input--err" : ""}`}
+                    className={`home-feedback__textarea${errors.text ? " home-feedback__input--err" : ""}`}
                     placeholder="Tell us about your visa experience — the process, speed, support…"
                     rows={4}
                     value={form.text}
                     onChange={e => { setForm(p=>({...p,text:e.target.value})); setErrors(p=>({...p,text:""})); }}
                   />
-                  <div className="feedback__char">
-                    <span>{errors.text ? <span className="feedback__err">{errors.text}</span> : ""}</span>
+                  <div className="home-feedback__char">
+                    <span>{errors.text ? <span className="home-feedback__err">{errors.text}</span> : ""}</span>
                     <span style={{color: form.text.length < 20 ? "#94a3b8" : "#16a34a"}}>
                       {form.text.length} / 20+ chars
                     </span>
                   </div>
                 </div>
 
-                {/* Submit */}
-                <button className="feedback__submit" onClick={handleSubmit}>
+                <button className="home-feedback__submit" onClick={handleSubmit}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"/>
@@ -675,7 +647,6 @@ function Testimonials() {
             )}
           </div>
         </div>
-        {/* end feedback */}
 
       </div>
     </section>
@@ -715,19 +686,19 @@ function Popular() {
   }, [rotate]);
 
   return (
-    <section className="popular">
-      <div className="popular__inner">
+    <section className="home-popular">
+      <div className="home-popular__inner">
 
-        <div className="popular__head sec-head sec-head--light" data-aos="fade-up">
-          <span className="sec-tag sec-tag--light">Trending Now</span>
-          <h2 className="dest-section__title" style={{ marginTop: ".5rem" }}>
+        <div className="home-popular__head home-sec-head home-sec-head--light" data-aos="fade-up">
+          <span className="home-sec-tag home-sec-tag--light">Trending Now</span>
+          <h2 className="home-dest-section__title" style={{ marginTop: ".5rem" }}>
             Most Popular Destinations
           </h2>
         </div>
 
-        <div className="popular__scene" data-aos="fade-up" data-aos-delay="80">
+        <div className="home-popular__scene" data-aos="fade-up" data-aos-delay="80">
           <div
-            className="popular__track"
+            className="home-popular__track"
             style={{ transform: `rotateY(${deg}deg)` }}
           >
             {items.map((d, i) => {
@@ -744,34 +715,30 @@ function Popular() {
               return (
                 <div
                   key={d.id}
-                  className="popular__slide"
+                  className="home-popular__slide"
                   style={{
                     transform: `rotateY(${seatAngle}deg) translateZ(${RADIUS}px)`,
                     opacity: visible ? opacity : 0,
                     pointerEvents: visible ? "auto" : "none",
                   }}
                 >
-                  <div className={`popular__item${isActive ? " popular__item--active" : ""}`}>
+                  <div className={`home-popular__item${isActive ? " home-popular__item--active" : ""}`}>
 
-                    {/* Image strip */}
-                    <div className="popular__thumb-wrap">
+                    <div className="home-popular__thumb-wrap">
                       <img
                         src={d.img}
                         alt={d.name}
-                        className="popular__thumb"
+                        className="home-popular__thumb"
                         onError={e => (e.target.style.display = "none")}
                       />
-                      {/* rank — top left */}
-                      <span className="popular__rank">#{i + 1}</span>
-                      {/* visa type — top right */}
-                      <span className="popular__thumb-tag">{d.tag}</span>
+                      <span className="home-popular__rank">#{i + 1}</span>
+                      <span className="home-popular__thumb-tag">{d.tag}</span>
                     </div>
 
-                    {/* Info body */}
-                    <div className="popular__body">
+                    <div className="home-popular__body">
                       <div>
-                        <div className="popular__pname">{d.name}</div>
-                        <div className="popular__pmeta">
+                        <div className="home-popular__pname">{d.name}</div>
+                        <div className="home-popular__pmeta">
                           <svg width="8" height="8" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="2.2">
                             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
@@ -781,14 +748,14 @@ function Popular() {
                         </div>
                       </div>
 
-                      <div className="popular__footer-row">
-                        <div className="popular__price-col">
+                      <div className="home-popular__footer-row">
+                        <div className="home-popular__price-col">
                           {d.originalFee && (
-                            <span className="popular__pfee-orig">{d.originalFee}</span>
+                            <span className="home-popular__pfee-orig">{d.originalFee}</span>
                           )}
-                          <span className="popular__pfee">{d.fee}</span>
+                          <span className="home-popular__pfee">{d.fee}</span>
                         </div>
-                        <Link to={`/visa/${visaId}`} className="popular__btn">
+                        <Link to={`/visa/${visaId}`} className="home-popular__btn">
                           Apply →
                         </Link>
                       </div>
@@ -801,27 +768,26 @@ function Popular() {
           </div>
         </div>
 
-        {/* Nav */}
-        <div className="popular__nav">
-          <button className="popular__nav-btn" onClick={() => rotate(-1)} aria-label="Previous">
+        <div className="home-popular__nav">
+          <button className="home-popular__nav-btn" onClick={() => rotate(-1)} aria-label="Previous">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </button>
 
-          <div className="popular__dots">
+          <div className="home-popular__dots">
             {items.map((_, i) => (
               <button
                 key={i}
-                className={`popular__dot${i === active ? " popular__dot--active" : ""}`}
+                className={`home-popular__dot${i === active ? " home-popular__dot--active" : ""}`}
                 onClick={() => goTo(i)}
                 aria-label={`Go to ${items[i].name}`}
               />
             ))}
           </div>
 
-          <button className="popular__nav-btn" onClick={() => rotate(1)} aria-label="Next">
+          <button className="home-popular__nav-btn" onClick={() => rotate(1)} aria-label="Next">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6"/>
@@ -836,30 +802,26 @@ function Popular() {
 // ─── CTA BANNER — Runway Scroll ───────────────────────────────────────────────
 
 function CTABanner() {
-  const [progress, setProgress] = React.useState(0);   // 0–100
+  const [progress, setProgress] = React.useState(0);
   const [launched, setLaunched] = React.useState(false);
   const [dragging, setDragging] = React.useState(false);
   const runwayRef  = React.useRef(null);
   const planeRef   = React.useRef(null);
   const startXRef  = React.useRef(null);
 
-  const LAUNCH_THRESHOLD = 88; // % at which launch triggers
+  const LAUNCH_THRESHOLD = 88;
 
-  // ── clamp helper ──
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-  // ── compute progress from clientX ──
   const calcProgress = (clientX) => {
     const rw = runwayRef.current;
     if (!rw) return 0;
     const { left, width } = rw.getBoundingClientRect();
-    // account for plane thumb size (~56px = half of 48px thumb + padding)
     const usable = width - 56;
     const raw = (clientX - left - 28) / usable * 100;
     return clamp(raw, 0, 100);
   };
 
-  // ── Mouse events ──
   const onMouseDown = (e) => {
     e.preventDefault();
     setDragging(true);
@@ -872,11 +834,10 @@ function CTABanner() {
     if (p >= LAUNCH_THRESHOLD && !launched) triggerLaunch();
   }, [dragging, launched]);
   const onMouseUp = React.useCallback(() => {
-    if (!launched) setProgress(0); // snap back unless launched
+    if (!launched) setProgress(0);
     setDragging(false);
   }, [launched]);
 
-  // ── Touch events ──
   const onTouchStart = (e) => {
     setDragging(true);
     startXRef.current = e.touches[0].clientX;
@@ -900,7 +861,6 @@ function CTABanner() {
     }, 1400);
   };
 
-  // ── Global listeners ──
   React.useEffect(() => {
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
@@ -914,21 +874,19 @@ function CTABanner() {
     };
   }, [onMouseMove, onMouseUp, onTouchMove, onTouchEnd]);
 
-  // speed label
-  const speed = Math.round(progress * 2.8);  // 0 → 280 knots
+  const speed = Math.round(progress * 2.8);
   const speedLabel = launched ? "AIRBORNE 🛫" : progress > 60 ? `${speed} kts` : progress > 20 ? `${speed} kts` : "READY";
 
   return (
-    <section className="cta-banner">
+    <section className="home-cta-banner">
 
-      {/* ── Animated background ── */}
-      <div className="cta-banner__bg" aria-hidden="true">
-        <div className="cta-orb cta-orb--1"/>
-        <div className="cta-orb cta-orb--2"/>
-        <div className="cta-orb cta-orb--3"/>
-        <div className="cta-banner__stars">
+      <div className="home-cta-banner__bg" aria-hidden="true">
+        <div className="home-cta-orb home-cta-orb--1"/>
+        <div className="home-cta-orb home-cta-orb--2"/>
+        <div className="home-cta-orb home-cta-orb--3"/>
+        <div className="home-cta-banner__stars">
           {Array.from({length:28}).map((_,i) => (
-            <div key={i} className="cta-star"
+            <div key={i} className="home-cta-star"
               style={{
                 left: `${Math.random()*100}%`,
                 top:  `${Math.random()*80}%`,
@@ -940,80 +898,70 @@ function CTABanner() {
             />
           ))}
         </div>
-        {/* Cloud strips */}
-        <div className="cta-cloud cta-cloud--1"/>
-        <div className="cta-cloud cta-cloud--2"/>
-        <div className="cta-cloud cta-cloud--3"/>
+        <div className="home-cta-cloud home-cta-cloud--1"/>
+        <div className="home-cta-cloud home-cta-cloud--2"/>
+        <div className="home-cta-cloud home-cta-cloud--3"/>
       </div>
 
-      <div className="cta-banner__inner">
+      <div className="home-cta-banner__inner">
 
-        {/* ── Heading ── */}
-        <div className="cta-banner__head" data-aos="fade-up">
-          <span className="sec-tag" style={{color:"#F4B342",background:"rgba(244,179,66,.15)"}}>
+        <div className="home-cta-banner__head" data-aos="fade-up">
+          <span className="home-sec-tag" style={{color:"#F4B342",background:"rgba(244,179,66,.15)"}}>
             Limited Time Offer
           </span>
-          <h2 className="cta-banner__title">
+          <h2 className="home-cta-banner__title">
             Your Next Trip<br/>
-            <span className="cta-banner__title-accent">Starts Here</span>
+            <span className="home-cta-banner__title-accent">Starts Here</span>
           </h2>
-          <p className="cta-banner__sub">
+          <p className="home-cta-banner__sub">
             Drag the plane down the runway to take off.
           </p>
         </div>
 
-        {/* ── RUNWAY SLIDER ── */}
-        <div className="cta-runway-wrap" data-aos="fade-up" data-aos-delay="150">
+        <div className="home-cta-runway-wrap" data-aos="fade-up" data-aos-delay="150">
 
-          {/* Speed + status HUD */}
-          <div className="cta-hud">
-            <div className="cta-hud__item">
-              <span className="cta-hud__label">STATUS</span>
-              <span className="cta-hud__val" style={{color: launched?"#22c55e": progress>60?"#F4B342":"rgba(255,255,255,.7)"}}>
+          <div className="home-cta-hud">
+            <div className="home-cta-hud__item">
+              <span className="home-cta-hud__label">STATUS</span>
+              <span className="home-cta-hud__val" style={{color: launched?"#22c55e": progress>60?"#F4B342":"rgba(255,255,255,.7)"}}>
                 {speedLabel}
               </span>
             </div>
-            <div className="cta-hud__sep"/>
-            <div className="cta-hud__item">
-              <span className="cta-hud__label">PROGRESS</span>
-              <span className="cta-hud__val">{Math.round(progress)}%</span>
+            <div className="home-cta-hud__sep"/>
+            <div className="home-cta-hud__item">
+              <span className="home-cta-hud__label">PROGRESS</span>
+              <span className="home-cta-hud__val">{Math.round(progress)}%</span>
             </div>
-            <div className="cta-hud__sep"/>
-            <div className="cta-hud__item">
-              <span className="cta-hud__label">DESTINATION</span>
-              <span className="cta-hud__val">BOOKING</span>
+            <div className="home-cta-hud__sep"/>
+            <div className="home-cta-hud__item">
+              <span className="home-cta-hud__label">DESTINATION</span>
+              <span className="home-cta-hud__val">BOOKING</span>
             </div>
           </div>
 
-          {/* Runway track */}
-          <div className="cta-runway" ref={runwayRef}>
+          <div className="home-cta-runway" ref={runwayRef}>
 
-            {/* Tarmac fill */}
-            <div className="cta-runway__tarmac">
-              {/* Centre dashes */}
-              <div className="cta-runway__dashes">
+            <div className="home-cta-runway__tarmac">
+              <div className="home-cta-runway__dashes">
                 {Array.from({length:12}).map((_,i) => (
-                  <div key={i} className="cta-runway__dash"
+                  <div key={i} className="home-cta-runway__dash"
                     style={{ opacity: (i / 12) < (progress / 100) ? 0.15 : 0.45 }}
                   />
                 ))}
               </div>
 
-              {/* Progress fill glow */}
-              <div className="cta-runway__fill"
+              <div className="home-cta-runway__fill"
                 style={{ width: `${progress}%` }}
               />
 
-              {/* THRESHOLD marker */}
-              <div className="cta-runway__marker" style={{ left:`${LAUNCH_THRESHOLD}%` }}>
-                <span className="cta-runway__marker-label">TAKEOFF</span>
+              <div className="home-cta-runway__marker" style={{ left:`${LAUNCH_THRESHOLD}%` }}>
+                <span className="home-cta-runway__marker-label">TAKEOFF</span>
               </div>
             </div>
 
-            {/* ── PLANE THUMB ── */}
             <div
               ref={planeRef}
-              className={`cta-plane${dragging?" cta-plane--drag":""}${launched?" cta-plane--launch":""}`}
+              className={`home-cta-plane${dragging?" home-cta-plane--drag":""}${launched?" home-cta-plane--launch":""}`}
               style={{ left: `calc(${progress}% - 28px + ${progress/100 * 0}px)` }}
               onMouseDown={onMouseDown}
               onTouchStart={onTouchStart}
@@ -1024,37 +972,28 @@ function CTABanner() {
               aria-label="Drag to apply for visa"
               tabIndex={0}
             >
-              {/* Engine heat shimmer */}
               {progress > 30 && (
-                <div className="cta-plane__heat"
+                <div className="home-cta-plane__heat"
                   style={{ opacity: Math.min((progress - 30) / 70, 0.6) }}
                 />
               )}
 
-              {/* SVG plane icon */}
-              <svg className="cta-plane__svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Body */}
+              <svg className="home-cta-plane__svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="32" cy="32" rx="22" ry="7" fill="white" opacity="0.95"/>
-                {/* Nose */}
                 <path d="M54 32 Q62 32 58 28 L54 29Z" fill="white" opacity="0.9"/>
-                {/* Tail fin */}
                 <path d="M12 32 L8 20 L18 28Z" fill="white" opacity="0.85"/>
-                {/* Main wing */}
                 <path d="M28 32 L18 18 L42 28 Z" fill="white" opacity="0.9"/>
                 <path d="M28 32 L18 46 L42 36 Z" fill="white" opacity="0.85"/>
-                {/* Small rear wing */}
                 <path d="M14 32 L10 26 L20 30Z" fill="white" opacity="0.7"/>
                 <path d="M14 32 L10 38 L20 34Z" fill="white" opacity="0.65"/>
-                {/* Window strip */}
                 <ellipse cx="38" cy="30" rx="6" ry="2.5" fill="#0ea5e9" opacity="0.6"/>
                 <ellipse cx="38" cy="34" rx="6" ry="2.5" fill="#0ea5e9" opacity="0.4"/>
               </svg>
 
-              {/* Engine exhaust trail */}
               {progress > 10 && (
-                <div className="cta-plane__trail">
+                <div className="home-cta-plane__trail">
                   {[1,2,3].map(i => (
-                    <div key={i} className="cta-plane__trail-puff"
+                    <div key={i} className="home-cta-plane__trail-puff"
                       style={{ animationDelay: `${i * 0.1}s`, opacity: Math.min(progress/80, 0.7) }}
                     />
                   ))}
@@ -1062,11 +1001,8 @@ function CTABanner() {
               )}
             </div>
 
-            
-
-            {/* Launched overlay */}
             {launched && (
-              <div className="cta-runway__launched">
+              <div className="home-cta-runway__launched">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                   stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
@@ -1078,10 +1014,9 @@ function CTABanner() {
 
           </div>
 
-          {/* Runway edge lights */}
-          <div className="cta-runway__lights">
+          <div className="home-cta-runway__lights">
             {Array.from({length:10}).map((_,i) => (
-              <div key={i} className="cta-runway__light"
+              <div key={i} className="home-cta-runway__light"
                 style={{
                   background: i / 10 < progress / 100
                     ? (progress > LAUNCH_THRESHOLD ? "#22c55e" : "#F4B342")
@@ -1096,7 +1031,7 @@ function CTABanner() {
             ))}
           </div>
 
-          <p className="cta-runway__caption">
+          <p className="home-cta-runway__caption">
             {progress < LAUNCH_THRESHOLD
               ? "Begin your application"
               : launched
@@ -1105,7 +1040,6 @@ function CTABanner() {
           </p>
 
         </div>
-        {/* end runway wrap */}
 
       </div>
     </section>
@@ -1133,40 +1067,36 @@ function FAQ() {
 
   const clearSearch = () => { setQuery(""); inputRef.current?.focus(); };
 
-  // Highlight matching text
   const highlight = (text) => {
     if (!query.trim()) return text;
     const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
     const parts = text.split(regex);
     return parts.map((part, i) =>
       regex.test(part)
-        ? <mark key={i} className="faq__highlight">{part}</mark>
+        ? <mark key={i} className="home-faq__highlight">{part}</mark>
         : part
     );
   };
 
   return (
-    <section className="faq">
-      {/* ── Decorative background ── */}
-      <div className="faq__bg" aria-hidden="true">
-        <div className="faq__blob faq__blob--1" />
-        <div className="faq__blob faq__blob--2" />
-        <div className="faq__blob faq__blob--3" />
-        {/* Floating geometric shapes */}
-        <div className="faq__geo faq__geo--ring1" />
-        <div className="faq__geo faq__geo--ring2" />
-        <div className="faq__geo faq__geo--dot1" />
-        <div className="faq__geo faq__geo--dot2" />
-        <div className="faq__geo faq__geo--dot3" />
-        <div className="faq__geo faq__geo--line1" />
-        <div className="faq__geo faq__geo--line2" />
+    <section className="home-faq">
+      <div className="home-faq__bg" aria-hidden="true">
+        <div className="home-faq__blob home-faq__blob--1" />
+        <div className="home-faq__blob home-faq__blob--2" />
+        <div className="home-faq__blob home-faq__blob--3" />
+        <div className="home-faq__geo home-faq__geo--ring1" />
+        <div className="home-faq__geo home-faq__geo--ring2" />
+        <div className="home-faq__geo home-faq__geo--dot1" />
+        <div className="home-faq__geo home-faq__geo--dot2" />
+        <div className="home-faq__geo home-faq__geo--dot3" />
+        <div className="home-faq__geo home-faq__geo--line1" />
+        <div className="home-faq__geo home-faq__geo--line2" />
       </div>
 
-      <div className="faq__inner">
+      <div className="home-faq__inner">
 
-        {/* ── Heading ── */}
-        <div className="faq__head" data-aos="fade-up">
-          <span className="faq__eyebrow">
+        <div className="home-faq__head" data-aos="fade-up">
+          <span className="home-faq__eyebrow">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
               style={{ flexShrink: 0 }}>
@@ -1175,21 +1105,19 @@ function FAQ() {
             </svg>
             Got Questions?
           </span>
-          <h2 className="faq__title">
+          <h2 className="home-faq__title">
             Frequently Asked
-            <span className="faq__title-accent"> Questions</span>
+            <span className="home-faq__title-accent"> Questions</span>
           </h2>
-          <p className="faq__sub">
+          <p className="home-faq__sub">
             Everything you need to know — answered clearly and quickly.
           </p>
         </div>
 
-        {/* ── Search bar ── */}
-        <div className="faq__search-wrap" data-aos="fade-up" data-aos-delay="80">
-          <div className={`faq__search${focused ? " faq__search--focused" : ""}${query ? " faq__search--has-val" : ""}`}>
+        <div className="home-faq__search-wrap" data-aos="fade-up" data-aos-delay="80">
+          <div className={`home-faq__search${focused ? " home-faq__search--focused" : ""}${query ? " home-faq__search--has-val" : ""}`}>
 
-            {/* Search icon */}
-            <span className="faq__search-icon">
+            <span className="home-faq__search-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"/>
@@ -1199,7 +1127,7 @@ function FAQ() {
 
             <input
               ref={inputRef}
-              className="faq__search-input"
+              className="home-faq__search-input"
               type="text"
               placeholder="Search questions — e.g. documents, refund, express…"
               value={query}
@@ -1209,16 +1137,14 @@ function FAQ() {
               aria-label="Search FAQ"
             />
 
-            {/* Live count badge */}
             {query && (
-              <span className="faq__search-count">
+              <span className="home-faq__search-count">
                 {filtered.length} result{filtered.length !== 1 ? "s" : ""}
               </span>
             )}
 
-            {/* Clear button */}
             {query && (
-              <button className="faq__search-clear" onClick={clearSearch} aria-label="Clear search">
+              <button className="home-faq__search-clear" onClick={clearSearch} aria-label="Clear search">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="18" y1="6" x2="6" y2="18"/>
@@ -1227,8 +1153,7 @@ function FAQ() {
               </button>
             )}
 
-            {/* Search button */}
-            <button className="faq__search-btn" aria-label="Search">
+            <button className="home-faq__search-btn" aria-label="Search">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"/>
@@ -1238,12 +1163,11 @@ function FAQ() {
             </button>
           </div>
 
-          {/* Quick suggestion pills */}
           {!query && (
-            <div className="faq__suggestions">
-              <span className="faq__suggestions-label">Try:</span>
+            <div className="home-faq__suggestions">
+              <span className="home-faq__suggestions-label">Try:</span>
               {["processing time", "documents needed", "express visa", "refund policy"].map(s => (
-                <button key={s} className="faq__suggestion-pill"
+                <button key={s} className="home-faq__suggestion-pill"
                   onClick={() => { setQuery(s); setOpen(null); }}>
                   {s}
                 </button>
@@ -1252,33 +1176,31 @@ function FAQ() {
           )}
         </div>
 
-        {/* ── Tag filter chips ── */}
-        <div className="faq__tags" data-aos="fade-up" data-aos-delay="100">
+        <div className="home-faq__tags" data-aos="fade-up" data-aos-delay="100">
           {allTags.map(tag => (
             <button
               key={tag}
-              className={`faq__tag${activeTag === tag ? " faq__tag--active" : ""}`}
+              className={`home-faq__tag${activeTag === tag ? " home-faq__tag--active" : ""}`}
               onClick={() => { setTag(tag); setOpen(null); }}
             >
               {tag}
               {tag !== "All" && (
-                <span className="faq__tag-count">
+                <span className="home-faq__tag-count">
                   {faqs.filter(f => f.tag === tag).length}
                 </span>
               )}
             </button>
           ))}
-          <span className="faq__tag-total">{filtered.length} of {faqs.length} shown</span>
+          <span className="home-faq__tag-total">{filtered.length} of {faqs.length} shown</span>
         </div>
 
-        {/* ── Accordion list ── */}
-        <div className="faq__list">
+        <div className="home-faq__list">
           {filtered.length === 0 ? (
-            <div className="faq__empty" data-aos="fade-up">
-              <div className="faq__empty-icon">🔍</div>
-              <h3 className="faq__empty-title">No results for "{query}"</h3>
-              <p className="faq__empty-sub">Try a different keyword or clear the filter.</p>
-              <button className="faq__empty-btn" onClick={clearSearch}>Clear search</button>
+            <div className="home-faq__empty" data-aos="fade-up">
+              <div className="home-faq__empty-icon">🔍</div>
+              <h3 className="home-faq__empty-title">No results for "{query}"</h3>
+              <p className="home-faq__empty-sub">Try a different keyword or clear the filter.</p>
+              <button className="home-faq__empty-btn" onClick={clearSearch}>Clear search</button>
             </div>
           ) : (
             filtered.map((item, i) => {
@@ -1287,27 +1209,23 @@ function FAQ() {
               return (
                 <div
                   key={globalIdx}
-                  className={`faq__item${isOpen ? " faq__item--open" : ""}`}
+                  className={`home-faq__item${isOpen ? " home-faq__item--open" : ""}`}
                   style={{ animationDelay: `${i * 45}ms` }}
                 >
                   <button
-                    className="faq__q"
+                    className="home-faq__q"
                     onClick={() => toggle(globalIdx)}
                     aria-expanded={isOpen}
                   >
-                    {/* Number */}
-                    <span className="faq__q-num">
+                    <span className="home-faq__q-num">
                       {String(globalIdx + 1).padStart(2, "0")}
                     </span>
 
-                    {/* Question text */}
-                    <span className="faq__q-text">{highlight(item.q)}</span>
+                    <span className="home-faq__q-text">{highlight(item.q)}</span>
 
-                    {/* Tag pill */}
-                    <span className="faq__q-tag">{item.tag}</span>
+                    <span className="home-faq__q-tag">{item.tag}</span>
 
-                    {/* Chevron */}
-                    <span className="faq__chevron">
+                    <span className="home-faq__chevron">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="2.3"
                         strokeLinecap="round" strokeLinejoin="round"
@@ -1320,9 +1238,8 @@ function FAQ() {
                     </span>
                   </button>
 
-                  {/* Answer panel */}
                   <div
-                    className="faq__a-wrap"
+                    className="home-faq__a-wrap"
                     style={{
                       maxHeight: isOpen ? "320px" : "0",
                       opacity:   isOpen ? 1 : 0,
@@ -1330,9 +1247,9 @@ function FAQ() {
                       overflow: "hidden",
                     }}
                   >
-                    <div className="faq__a-inner">
-                      <div className="faq__a-bar" />
-                      <p className="faq__a">{highlight(item.a)}</p>
+                    <div className="home-faq__a-inner">
+                      <div className="home-faq__a-bar" />
+                      <p className="home-faq__a">{highlight(item.a)}</p>
                     </div>
                   </div>
                 </div>
@@ -1341,20 +1258,19 @@ function FAQ() {
           )}
         </div>
 
-        {/* ── Footer CTA ── */}
-        <div className="faq__footer" data-aos="fade-up">
-          <div className="faq__footer-card">
-            <div className="faq__footer-icon">
+        <div className="home-faq__footer" data-aos="fade-up">
+          <div className="home-faq__footer-card">
+            <div className="home-faq__footer-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
               </svg>
             </div>
-            <div className="faq__footer-text-wrap">
-              <strong className="faq__footer-title">Still have questions?</strong>
-              <span className="faq__footer-sub">Our visa experts reply within 2 hours.</span>
+            <div className="home-faq__footer-text-wrap">
+              <strong className="home-faq__footer-title">Still have questions?</strong>
+              <span className="home-faq__footer-sub">Our visa experts reply within 2 hours.</span>
             </div>
-            <a href="#contact" className="faq__footer-btn">
+            <a href="#contact" className="home-faq__footer-btn">
               Contact Support →
             </a>
           </div>
@@ -1369,7 +1285,6 @@ function FAQ() {
 function ContactUs() {
   const [tab, setTab] = React.useState("message");
 
-  // ── Message form ──
   const [form, setForm]         = React.useState({ name:"", email:"", phone:"", destination:"", message:"", enquiry:"" });
   const [errors, setErrors]     = React.useState({});
   const [submitted, setSubmitted] = React.useState(false);
@@ -1401,7 +1316,6 @@ function ContactUs() {
     }, 1200);
   };
 
-  // ── Meeting form ──
   const [meet, setMeet]               = React.useState({ name:"", email:"", phone:"", date:"", time:"", topic:"", notes:"" });
   const [meetErrors, setMeetErrors]   = React.useState({});
   const [meetScheduled, setMeetScheduled] = React.useState(false);
@@ -1453,208 +1367,201 @@ function ContactUs() {
   ];
 
   return (
-    <section className="contact" id="contact">
-      <div className="contact__bg" aria-hidden="true">
-        <div className="contact__orb contact__orb--1" />
-        <div className="contact__orb contact__orb--2" />
-        <div className="contact__grid-bg" />
+    <section className="home-contact" id="contact">
+      <div className="home-contact__bg" aria-hidden="true">
+        <div className="home-contact__orb home-contact__orb--1" />
+        <div className="home-contact__orb home-contact__orb--2" />
+        <div className="home-contact__grid-bg" />
       </div>
 
-      <div className="contact__inner">
+      <div className="home-contact__inner">
 
-        {/* Heading */}
-        <div className="contact__head" data-aos="fade-up">
-          <span className="sec-tag sec-tag--dark">Get In Touch</span>
-          <h2 className="contact__title">We're here to<br /><span className="contact__title-accent">help you travel</span></h2>
-          <p className="contact__sub">Reach out via email or book a free Google Meet consultation.</p>
+        <div className="home-contact__head" data-aos="fade-up">
+          <span className="home-sec-tag home-sec-tag--dark">Get In Touch</span>
+          <h2 className="home-contact__title">We're here to<br /><span className="home-contact__title-accent">help you travel</span></h2>
+          <p className="home-contact__sub">Reach out via email or book a free Google Meet consultation.</p>
         </div>
 
-        {/* Channel cards */}
-        <div className="contact__channels-row" data-aos="fade-up" data-aos-delay="60">
+        <div className="home-contact__channels-row" data-aos="fade-up" data-aos-delay="60">
           {channels.map((ch, i) => (
-            <div key={i} className="contact__channel" style={{ background:ch.bg, borderColor:ch.border }}>
-              <div className="contact__channel-icon" style={{ color:ch.color, background:ch.bg }}>{ch.icon}</div>
-              <div className="contact__channel-body">
-                <div className="contact__channel-label">{ch.label}</div>
-                <div className="contact__channel-value" style={{ color:ch.color }}>{ch.value}</div>
-                <div className="contact__channel-sub">{ch.sub}</div>
+            <div key={i} className="home-contact__channel" style={{ background:ch.bg, borderColor:ch.border }}>
+              <div className="home-contact__channel-icon" style={{ color:ch.color, background:ch.bg }}>{ch.icon}</div>
+              <div className="home-contact__channel-body">
+                <div className="home-contact__channel-label">{ch.label}</div>
+                <div className="home-contact__channel-value" style={{ color:ch.color }}>{ch.value}</div>
+                <div className="home-contact__channel-sub">{ch.sub}</div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Tabs */}
-        <div className="contact__tabs" data-aos="fade-up" data-aos-delay="80">
-          <button className={`contact__tab${tab==="message"?" contact__tab--active":""}`} onClick={()=>setTab("message")}>
+        <div className="home-contact__tabs" data-aos="fade-up" data-aos-delay="80">
+          <button className={`home-contact__tab${tab==="message"?" home-contact__tab--active":""}`} onClick={()=>setTab("message")}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             Send a Message
           </button>
-          <button className={`contact__tab${tab==="meeting"?" contact__tab--active":""}`} onClick={()=>setTab("meeting")}>
+          <button className={`home-contact__tab${tab==="meeting"?" home-contact__tab--active":""}`} onClick={()=>setTab("meeting")}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Schedule a Meeting
           </button>
         </div>
 
-        {/* ── MESSAGE PANEL ── */}
         {tab === "message" && (
-          <div className="contact__panel" data-aos="fade-up" data-aos-delay="100">
+          <div className="home-contact__panel" data-aos="fade-up" data-aos-delay="100">
             {submitted ? (
-              <div className="contact__success">
-                <div className="contact__success-ring">
+              <div className="home-contact__success">
+                <div className="home-contact__success-ring">
                   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
                 </div>
-                <h3 className="contact__success-title">Message sent!</h3>
-                <p className="contact__success-sub">Your email client opened with your message pre-filled. We'll reply within 2 hours.</p>
-                <button className="contact__submit contact__submit--ghost" onClick={()=>{setForm({name:"",email:"",phone:"",destination:"",message:"",enquiry:""});setSubmitted(false);setErrors({});}}>Send another message</button>
+                <h3 className="home-contact__success-title">Message sent!</h3>
+                <p className="home-contact__success-sub">Your email client opened with your message pre-filled. We'll reply within 2 hours.</p>
+                <button className="home-contact__submit home-contact__submit--ghost" onClick={()=>{setForm({name:"",email:"",phone:"",destination:"",message:"",enquiry:""});setSubmitted(false);setErrors({});}}>Send another message</button>
               </div>
             ) : (
-              <div className="contact__form">
-                <div className="contact__form-header">
-                  <h3 className="contact__form-title">Send us a message</h3>
-                  <p className="contact__form-note">We reply to every message within 2 hours on working days.</p>
+              <div className="home-contact__form">
+                <div className="home-contact__form-header">
+                  <h3 className="home-contact__form-title">Send us a message</h3>
+                  <p className="home-contact__form-note">We reply to every message within 2 hours on working days.</p>
                 </div>
 
-                {/* Enquiry dropdown */}
-                <div className="contact__field">
-                  <label className="contact__label">Enquiry Type *</label>
-                  <div className="contact__select-wrap">
-                    <select className={`contact__select${errors.enquiry?" contact__input--err":""}`} value={form.enquiry} onChange={e=>{setForm(p=>({...p,enquiry:e.target.value}));setErrors(p=>({...p,enquiry:""}));}}>
+                <div className="home-contact__field">
+                  <label className="home-contact__label">Enquiry Type *</label>
+                  <div className="home-contact__select-wrap">
+                    <select className={`home-contact__select${errors.enquiry?" home-contact__input--err":""}`} value={form.enquiry} onChange={e=>{setForm(p=>({...p,enquiry:e.target.value}));setErrors(p=>({...p,enquiry:""}));}}>
                       {enquiryOptions.map(o=><option key={o.value} value={o.value} disabled={o.value===""} hidden={o.value===""&&form.enquiry!==""?false:undefined}>{o.label}</option>)}
                     </select>
-                    <span className="contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                    <span className="home-contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
                   </div>
-                  {errors.enquiry && <span className="contact__err">{errors.enquiry}</span>}
+                  {errors.enquiry && <span className="home-contact__err">{errors.enquiry}</span>}
                 </div>
 
-                <div className="contact__row">
-                  <div className="contact__field">
-                    <label className="contact__label">Full Name *</label>
-                    <input className={`contact__input${errors.name?" contact__input--err":""}`} placeholder="e.g. Priya Sharma" value={form.name} onChange={e=>{setForm(p=>({...p,name:e.target.value}));setErrors(p=>({...p,name:""}));}} />
-                    {errors.name && <span className="contact__err">{errors.name}</span>}
+                <div className="home-contact__row">
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Full Name *</label>
+                    <input className={`home-contact__input${errors.name?" home-contact__input--err":""}`} placeholder="e.g. Priya Sharma" value={form.name} onChange={e=>{setForm(p=>({...p,name:e.target.value}));setErrors(p=>({...p,name:""}));}} />
+                    {errors.name && <span className="home-contact__err">{errors.name}</span>}
                   </div>
-                  <div className="contact__field">
-                    <label className="contact__label">Email Address *</label>
-                    <input type="email" className={`contact__input${errors.email?" contact__input--err":""}`} placeholder="you@example.com" value={form.email} onChange={e=>{setForm(p=>({...p,email:e.target.value}));setErrors(p=>({...p,email:""}));}} />
-                    {errors.email && <span className="contact__err">{errors.email}</span>}
-                  </div>
-                </div>
-
-                <div className="contact__row">
-                  <div className="contact__field">
-                    <label className="contact__label">Phone Number *</label>
-                    <input className={`contact__input${errors.phone?" contact__input--err":""}`} placeholder="+91 98765 43210" value={form.phone} onChange={e=>{setForm(p=>({...p,phone:e.target.value}));setErrors(p=>({...p,phone:""}));}} />
-                    {errors.phone && <span className="contact__err">{errors.phone}</span>}
-                  </div>
-                  <div className="contact__field">
-                    <label className="contact__label">Destination Country</label>
-                    <input className="contact__input" placeholder="e.g. Japan, UAE, UK…" value={form.destination} onChange={e=>setForm(p=>({...p,destination:e.target.value}))} />
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Email Address *</label>
+                    <input type="email" className={`home-contact__input${errors.email?" home-contact__input--err":""}`} placeholder="you@example.com" value={form.email} onChange={e=>{setForm(p=>({...p,email:e.target.value}));setErrors(p=>({...p,email:""}));}} />
+                    {errors.email && <span className="home-contact__err">{errors.email}</span>}
                   </div>
                 </div>
 
-                <div className="contact__field">
-                  <label className="contact__label">Your Message *</label>
-                  <textarea className={`contact__textarea${errors.message?" contact__input--err":""}`} placeholder="Describe your visa requirements, travel dates, or concerns…" rows={4} value={form.message} onChange={e=>{setForm(p=>({...p,message:e.target.value}));setErrors(p=>({...p,message:""}));}} />
-                  {errors.message && <span className="contact__err">{errors.message}</span>}
+                <div className="home-contact__row">
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Phone Number *</label>
+                    <input className={`home-contact__input${errors.phone?" home-contact__input--err":""}`} placeholder="+91 98765 43210" value={form.phone} onChange={e=>{setForm(p=>({...p,phone:e.target.value}));setErrors(p=>({...p,phone:""}));}} />
+                    {errors.phone && <span className="home-contact__err">{errors.phone}</span>}
+                  </div>
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Destination Country</label>
+                    <input className="home-contact__input" placeholder="e.g. Japan, UAE, UK…" value={form.destination} onChange={e=>setForm(p=>({...p,destination:e.target.value}))} />
+                  </div>
                 </div>
 
-                <button className={`contact__submit${sending?" contact__submit--sending":""}`} onClick={handleMsgSubmit} disabled={sending}>
-                  {sending ? (<><span className="contact__spinner"/> Sending…</>) : (<><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Message</>)}
+                <div className="home-contact__field">
+                  <label className="home-contact__label">Your Message *</label>
+                  <textarea className={`home-contact__textarea${errors.message?" home-contact__input--err":""}`} placeholder="Describe your visa requirements, travel dates, or concerns…" rows={4} value={form.message} onChange={e=>{setForm(p=>({...p,message:e.target.value}));setErrors(p=>({...p,message:""}));}} />
+                  {errors.message && <span className="home-contact__err">{errors.message}</span>}
+                </div>
+
+                <button className={`home-contact__submit${sending?" home-contact__submit--sending":""}`} onClick={handleMsgSubmit} disabled={sending}>
+                  {sending ? (<><span className="home-contact__spinner"/> Sending…</>) : (<><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Message</>)}
                 </button>
               </div>
             )}
           </div>
         )}
 
-        {/* ── MEETING PANEL ── */}
         {tab === "meeting" && (
-          <div className="contact__panel contact__panel--meet" data-aos="fade-up" data-aos-delay="100">
+          <div className="home-contact__panel home-contact__panel--meet" data-aos="fade-up" data-aos-delay="100">
             {meetScheduled ? (
-              <div className="contact__success">
-                <div className="contact__success-ring" style={{background:"rgba(16,185,129,.1)",borderColor:"rgba(16,185,129,.3)"}}>
+              <div className="home-contact__success">
+                <div className="home-contact__success-ring" style={{background:"rgba(16,185,129,.1)",borderColor:"rgba(16,185,129,.3)"}}>
                   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
                 </div>
-                <h3 className="contact__success-title">Meeting Scheduled! 🎉</h3>
-                <p className="contact__success-sub">
+                <h3 className="home-contact__success-title">Meeting Scheduled! 🎉</h3>
+                <p className="home-contact__success-sub">
                   Google Calendar opened in a new tab. Once you confirm, a Meet link is sent to <strong>{meet.email}</strong> and <strong>{GUEST_EMAIL}</strong>.
                 </p>
-                <a href={meetLink} target="_blank" rel="noopener noreferrer" className="contact__submit" style={{textDecoration:"none",marginTop:".5rem"}}>
+                <a href={meetLink} target="_blank" rel="noopener noreferrer" className="home-contact__submit" style={{textDecoration:"none",marginTop:".5rem"}}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   Open Google Calendar Again
                 </a>
-                <button className="contact__submit contact__submit--ghost" onClick={()=>{setMeet({name:"",email:"",phone:"",date:"",time:"",topic:"",notes:""});setMeetScheduled(false);setMeetErrors({});}}>Schedule another meeting</button>
+                <button className="home-contact__submit home-contact__submit--ghost" onClick={()=>{setMeet({name:"",email:"",phone:"",date:"",time:"",topic:"",notes:""});setMeetScheduled(false);setMeetErrors({});}}>Schedule another meeting</button>
               </div>
             ) : (
-              <div className="contact__form">
-                <div className="contact__form-header">
-                  <div className="contact__meet-badge">
+              <div className="home-contact__form">
+                <div className="home-contact__form-header">
+                  <div className="home-contact__meet-badge">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
                     Google Meet · 45 min · Free
                   </div>
-                  <h3 className="contact__form-title">Schedule a Consultation</h3>
-                  <p className="contact__form-note">Pick a slot — a Google Meet invite is sent to you and our expert automatically.</p>
+                  <h3 className="home-contact__form-title">Schedule a Consultation</h3>
+                  <p className="home-contact__form-note">Pick a slot — a Google Meet invite is sent to you and our expert automatically.</p>
                 </div>
 
-                <div className="contact__row">
-                  <div className="contact__field">
-                    <label className="contact__label">Full Name *</label>
-                    <input className={`contact__input${meetErrors.name?" contact__input--err":""}`} placeholder="e.g. Arjun Kapoor" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
-                    {meetErrors.name && <span className="contact__err">{meetErrors.name}</span>}
+                <div className="home-contact__row">
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Full Name *</label>
+                    <input className={`home-contact__input${meetErrors.name?" home-contact__input--err":""}`} placeholder="e.g. Arjun Kapoor" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
+                    {meetErrors.name && <span className="home-contact__err">{meetErrors.name}</span>}
                   </div>
-                  <div className="contact__field">
-                    <label className="contact__label">Email Address *</label>
-                    <input type="email" className={`contact__input${meetErrors.email?" contact__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
-                    {meetErrors.email && <span className="contact__err">{meetErrors.email}</span>}
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Email Address *</label>
+                    <input type="email" className={`home-contact__input${meetErrors.email?" home-contact__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
+                    {meetErrors.email && <span className="home-contact__err">{meetErrors.email}</span>}
                   </div>
                 </div>
 
-                <div className="contact__field">
-                  <label className="contact__label">Phone Number *</label>
-                  <input className={`contact__input${meetErrors.phone?" contact__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
-                  {meetErrors.phone && <span className="contact__err">{meetErrors.phone}</span>}
+                <div className="home-contact__field">
+                  <label className="home-contact__label">Phone Number *</label>
+                  <input className={`home-contact__input${meetErrors.phone?" home-contact__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
+                  {meetErrors.phone && <span className="home-contact__err">{meetErrors.phone}</span>}
                 </div>
 
-                <div className="contact__field">
-                  <label className="contact__label">Meeting Topic *</label>
-                  <div className="contact__select-wrap">
-                    <select className={`contact__select${meetErrors.topic?" contact__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
+                <div className="home-contact__field">
+                  <label className="home-contact__label">Meeting Topic *</label>
+                  <div className="home-contact__select-wrap">
+                    <select className={`home-contact__select${meetErrors.topic?" home-contact__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
                       <option value="">Select a topic…</option>
                       {topics.map(t=><option key={t} value={t}>{t}</option>)}
                     </select>
-                    <span className="contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                    <span className="home-contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
                   </div>
-                  {meetErrors.topic && <span className="contact__err">{meetErrors.topic}</span>}
+                  {meetErrors.topic && <span className="home-contact__err">{meetErrors.topic}</span>}
                 </div>
 
-                <div className="contact__row">
-                  <div className="contact__field">
-                    <label className="contact__label">Preferred Date *</label>
-                    <input type="date" className={`contact__input${meetErrors.date?" contact__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
-                    {meetErrors.date && <span className="contact__err">{meetErrors.date}</span>}
+                <div className="home-contact__row">
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Preferred Date *</label>
+                    <input type="date" className={`home-contact__input${meetErrors.date?" home-contact__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
+                    {meetErrors.date && <span className="home-contact__err">{meetErrors.date}</span>}
                   </div>
-                  <div className="contact__field">
-                    <label className="contact__label">Time Slot *</label>
-                    <div className="contact__select-wrap">
-                      <select className={`contact__select${meetErrors.time?" contact__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
+                  <div className="home-contact__field">
+                    <label className="home-contact__label">Time Slot *</label>
+                    <div className="home-contact__select-wrap">
+                      <select className={`home-contact__select${meetErrors.time?" home-contact__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
                         <option value="">Choose a slot…</option>
                         {timeSlots.map(t=><option key={t} value={t}>{t}</option>)}
                       </select>
-                      <span className="contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                      <span className="home-contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
                     </div>
-                    {meetErrors.time && <span className="contact__err">{meetErrors.time}</span>}
+                    {meetErrors.time && <span className="home-contact__err">{meetErrors.time}</span>}
                   </div>
                 </div>
 
-                {/* Quick time slot buttons */}
                 {meet.date && (
-                  <div className="contact__timegrid">
-                    <span className="contact__timegrid-label">Quick select time:</span>
-                    <div className="contact__timegrid-slots">
+                  <div className="home-contact__timegrid">
+                    <span className="home-contact__timegrid-label">Quick select time:</span>
+                    <div className="home-contact__timegrid-slots">
                       {timeSlots.map(t=>(
-                        <button key={t} className={`contact__timeslot${meet.time===t?" contact__timeslot--active":""}`} onClick={()=>{setMeet(p=>({...p,time:t}));setMeetErrors(p=>({...p,time:""}));}}>
+                        <button key={t} className={`home-contact__timeslot${meet.time===t?" home-contact__timeslot--active":""}`} onClick={()=>{setMeet(p=>({...p,time:t}));setMeetErrors(p=>({...p,time:""}));}}>
                           {t}
                         </button>
                       ))}
@@ -1662,18 +1569,17 @@ function ContactUs() {
                   </div>
                 )}
 
-                <div className="contact__field">
-                  <label className="contact__label">Additional Notes <span style={{color:"#94a3b8",fontWeight:400,fontSize:".7rem",textTransform:"none"}}>(optional)</span></label>
-                  <textarea className="contact__textarea" placeholder="Any specific questions before the call…" rows={3} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
+                <div className="home-contact__field">
+                  <label className="home-contact__label">Additional Notes <span style={{color:"#94a3b8",fontWeight:400,fontSize:".7rem",textTransform:"none"}}>(optional)</span></label>
+                  <textarea className="home-contact__textarea" placeholder="Any specific questions before the call…" rows={3} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
                 </div>
 
-                {/* Guest notice */}
-                <div className="contact__guest-notice">
+                <div className="home-contact__guest-notice">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
                   Invite will be sent to <strong>{meet.email||"your email"}</strong> and our team at <strong>{GUEST_EMAIL}</strong>
                 </div>
 
-                <button className="contact__submit contact__submit--meet" onClick={handleSchedule}>
+                <button className="home-contact__submit home-contact__submit--meet" onClick={handleSchedule}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   Schedule Google Meet
                 </button>
@@ -1748,137 +1654,121 @@ function ScheduleMeetingFloat() {
 
   return (
     <>
-      {/* ── Overlay ── */}
       {open && (
-        <div className="smf__overlay" onClick={handleClose} />
+        <div className="home-smf__overlay" onClick={handleClose} />
       )}
 
-      {/* ── Floating button ── */}
       <button
-        className={`smf__fab${open ? " smf__fab--open" : ""}`}
+        className={`home-smf__fab${open ? " home-smf__fab--open" : ""}`}
         onClick={() => setOpen(o => !o)}
         aria-label="Schedule a Meeting"
       >
         {open ? (
-          /* Close X */
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
         ) : (
-          /* Calendar icon */
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
         )}
-        <span className="smf__fab-label">{open ? "Close" : "Schedule Meeting"}</span>
+        <span className="home-smf__fab-label">{open ? "Close" : "Schedule Meeting"}</span>
       </button>
 
-      {/* ── Sliding card ── */}
-      <div className={`smf__card${open ? " smf__card--open" : ""}`}>
+      <div className={`home-smf__card${open ? " home-smf__card--open" : ""}`}>
 
-        {/* Card header */}
-        <div className="smf__card-header">
-          <div className="smf__card-badge">
+        <div className="home-smf__card-header">
+          <div className="home-smf__card-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
             </svg>
             Google Meet · 45 min · Free
           </div>
-          <h3 className="smf__card-title">Schedule a Consultation</h3>
-          <p className="smf__card-sub">Book a free slot with our visa expert.</p>
+          <h3 className="home-smf__card-title">Schedule a Consultation</h3>
+          <p className="home-smf__card-sub">Book a free slot with our visa expert.</p>
         </div>
 
-        {/* Card body */}
-        <div className="smf__card-body">
+        <div className="home-smf__card-body">
           {meetScheduled ? (
-            /* ── Success ── */
-            <div className="smf__success">
-              <div className="smf__success-ring">
+            <div className="home-smf__success">
+              <div className="home-smf__success-ring">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
               </div>
-              <h4 className="smf__success-title">Meeting Scheduled! 🎉</h4>
-              <p className="smf__success-sub">
+              <h4 className="home-smf__success-title">Meeting Scheduled! 🎉</h4>
+              <p className="home-smf__success-sub">
                 Google Calendar opened in a new tab. Once confirmed, the Meet link is sent to <strong>{meet.email}</strong> and our team.
               </p>
-              <a href={meetLink} target="_blank" rel="noopener noreferrer" className="smf__btn smf__btn--meet" style={{textDecoration:"none"}}>
+              <a href={meetLink} target="_blank" rel="noopener noreferrer" className="home-smf__btn home-smf__btn--meet" style={{textDecoration:"none"}}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Open Google Calendar Again
               </a>
-              <button className="smf__btn smf__btn--ghost" onClick={() => { setMeet({name:"",email:"",phone:"",date:"",time:"",topic:"",notes:""}); setMeetScheduled(false); setMeetErrors({}); }}>
+              <button className="home-smf__btn home-smf__btn--ghost" onClick={() => { setMeet({name:"",email:"",phone:"",date:"",time:"",topic:"",notes:""}); setMeetScheduled(false); setMeetErrors({}); }}>
                 Schedule another
               </button>
             </div>
           ) : (
-            /* ── Form ── */
-            <div className="smf__form">
+            <div className="home-smf__form">
 
-              {/* Name */}
-              <div className="smf__field">
-                <label className="smf__label">Full Name *</label>
-                <input className={`smf__input${meetErrors.name?" smf__input--err":""}`} placeholder="e.g. Priya Sharma" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
-                {meetErrors.name && <span className="smf__err">{meetErrors.name}</span>}
+              <div className="home-smf__field">
+                <label className="home-smf__label">Full Name *</label>
+                <input className={`home-smf__input${meetErrors.name?" home-smf__input--err":""}`} placeholder="e.g. Priya Sharma" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
+                {meetErrors.name && <span className="home-smf__err">{meetErrors.name}</span>}
               </div>
 
-              {/* Email */}
-              <div className="smf__field">
-                <label className="smf__label">Email Address *</label>
-                <input type="email" className={`smf__input${meetErrors.email?" smf__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
-                {meetErrors.email && <span className="smf__err">{meetErrors.email}</span>}
+              <div className="home-smf__field">
+                <label className="home-smf__label">Email Address *</label>
+                <input type="email" className={`home-smf__input${meetErrors.email?" home-smf__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
+                {meetErrors.email && <span className="home-smf__err">{meetErrors.email}</span>}
               </div>
 
-              {/* Phone */}
-              <div className="smf__field">
-                <label className="smf__label">Phone Number *</label>
-                <input className={`smf__input${meetErrors.phone?" smf__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
-                {meetErrors.phone && <span className="smf__err">{meetErrors.phone}</span>}
+              <div className="home-smf__field">
+                <label className="home-smf__label">Phone Number *</label>
+                <input className={`home-smf__input${meetErrors.phone?" home-smf__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
+                {meetErrors.phone && <span className="home-smf__err">{meetErrors.phone}</span>}
               </div>
 
-              {/* Topic */}
-              <div className="smf__field">
-                <label className="smf__label">Meeting Topic *</label>
-                <div className="smf__select-wrap">
-                  <select className={`smf__input smf__select${meetErrors.topic?" smf__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
+              <div className="home-smf__field">
+                <label className="home-smf__label">Meeting Topic *</label>
+                <div className="home-smf__select-wrap">
+                  <select className={`home-smf__input home-smf__select${meetErrors.topic?" home-smf__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
                     <option value="">Select a topic…</option>
                     {topics.map(t=><option key={t} value={t}>{t}</option>)}
                   </select>
-                  <span className="smf__select-arrow">
+                  <span className="home-smf__select-arrow">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                   </span>
                 </div>
-                {meetErrors.topic && <span className="smf__err">{meetErrors.topic}</span>}
+                {meetErrors.topic && <span className="home-smf__err">{meetErrors.topic}</span>}
               </div>
 
-              {/* Date */}
-              <div className="smf__field">
-                <label className="smf__label">Preferred Date *</label>
-                <input type="date" className={`smf__input${meetErrors.date?" smf__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
-                {meetErrors.date && <span className="smf__err">{meetErrors.date}</span>}
+              <div className="home-smf__field">
+                <label className="home-smf__label">Preferred Date *</label>
+                <input type="date" className={`home-smf__input${meetErrors.date?" home-smf__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
+                {meetErrors.date && <span className="home-smf__err">{meetErrors.date}</span>}
               </div>
 
-              {/* Time slot dropdown + quick grid */}
-              <div className="smf__field">
-                <label className="smf__label">Time Slot *</label>
-                <div className="smf__select-wrap">
-                  <select className={`smf__input smf__select${meetErrors.time?" smf__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
+              <div className="home-smf__field">
+                <label className="home-smf__label">Time Slot *</label>
+                <div className="home-smf__select-wrap">
+                  <select className={`home-smf__input home-smf__select${meetErrors.time?" home-smf__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
                     <option value="">Choose a slot…</option>
                     {timeSlots.map(t=><option key={t} value={t}>{t}</option>)}
                   </select>
-                  <span className="smf__select-arrow">
+                  <span className="home-smf__select-arrow">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                   </span>
                 </div>
-                {meetErrors.time && <span className="smf__err">{meetErrors.time}</span>}
+                {meetErrors.time && <span className="home-smf__err">{meetErrors.time}</span>}
               </div>
 
-              {/* Quick time buttons (shown after date picked) */}
               {meet.date && (
-                <div className="smf__timegrid">
-                  <span className="smf__timegrid-label">Quick select:</span>
-                  <div className="smf__timegrid-slots">
+                <div className="home-smf__timegrid">
+                  <span className="home-smf__timegrid-label">Quick select:</span>
+                  <div className="home-smf__timegrid-slots">
                     {timeSlots.map(t => (
-                      <button key={t} className={`smf__timeslot${meet.time===t?" smf__timeslot--active":""}`} onClick={()=>{setMeet(p=>({...p,time:t}));setMeetErrors(p=>({...p,time:""}));}}>
+                      <button key={t} className={`home-smf__timeslot${meet.time===t?" home-smf__timeslot--active":""}`} onClick={()=>{setMeet(p=>({...p,time:t}));setMeetErrors(p=>({...p,time:""}));}}>
                         {t}
                       </button>
                     ))}
@@ -1886,19 +1776,17 @@ function ScheduleMeetingFloat() {
                 </div>
               )}
 
-              {/* Notes */}
-              <div className="smf__field">
-                <label className="smf__label">Notes <span className="smf__optional">(optional)</span></label>
-                <textarea className="smf__input smf__textarea" placeholder="Any questions before the call…" rows={2} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
+              <div className="home-smf__field">
+                <label className="home-smf__label">Notes <span className="home-smf__optional">(optional)</span></label>
+                <textarea className="home-smf__input home-smf__textarea" placeholder="Any questions before the call…" rows={2} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
               </div>
 
-              {/* Guest notice */}
-              <div className="smf__guest-notice">
+              <div className="home-smf__guest-notice">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
                 Invite sent to <strong>{meet.email || "your email"}</strong> &amp; <strong>{GUEST_EMAIL}</strong>
               </div>
 
-              <button className="smf__btn smf__btn--meet" onClick={handleSchedule}>
+              <button className="home-smf__btn home-smf__btn--meet" onClick={handleSchedule}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Schedule Google Meet
               </button>
@@ -1928,7 +1816,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="app">
+    <div className="home-app">
       <Hero search={search} setSearch={setSearch} />
       <CountryMarquee />
       <DestGrid search={search} />

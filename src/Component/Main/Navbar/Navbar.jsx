@@ -53,6 +53,9 @@ export default function Navbar() {
     { label: "Student Visa",       to: "#" },
     { label: "Travel Insurance",   to: "#" },
     { label: "Interview",          to: "/interview" },
+    { label: "Requirements",        to: "/Requirements" },
+  
+
   ];
 
   const closeMenu = () => setMobileOpen(false);
@@ -83,7 +86,7 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-
+        
           {/* Right icons */}
           <div className="nav__right">
             {/* Desktop icons */}

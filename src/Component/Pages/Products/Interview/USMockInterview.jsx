@@ -4,11 +4,11 @@ import {
   interviewQuestions,
   voiceConfig,
   improvementTips,
-  landingStats,
   howItWorksSteps,
-  setupInfo,
   scoreCategories,
 } from "./interviewData.js";
+import { ArrowLeft, Landmark, Mic, Clock, ShieldCheck } from 'lucide-react';
+
 
 // ─── AOS HOOK ──────────────────────────────────────────────────────────────────
 function useAOS() {
@@ -16,7 +16,7 @@ function useAOS() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("aos-animate");
+          if (entry.isIntersecting) entry.target.classList.add("AIaos-animate");
         });
       },
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
@@ -29,16 +29,16 @@ function useAOS() {
 // ─── VOICE WAVE COMPONENT ─────────────────────────────────────────────────────
 function VoiceWave({ active, color = "#4f8ef7" }) {
   return (
-    <div className="voice-wave">
+    <div className="AIvoice-wave">
       {[...Array(7)].map((_, i) => (
         <div
           key={i}
-          className="voice-wave__bar"
+          className="AIvoice-wave__bar"
           style={{
             background: color,
             opacity: active ? 1 : 0.3,
             animation: active
-              ? `wave ${0.8 + i * 0.1}s ease-in-out infinite alternate`
+              ? `AIwave ${0.8 + i * 0.1}s ease-in-out infinite alternate`
               : "none",
             animationDelay: `${i * 0.1}s`,
             height: active ? `${16 + Math.sin(i) * 14}px` : "6px",
@@ -55,7 +55,7 @@ function ScoreRing({ score, label, color }) {
   const circ = 2 * Math.PI * r;
   const dash = (score / 100) * circ;
   return (
-    <div className="score-ring">
+    <div className="AIscore-ring">
       <svg width="90" height="90" viewBox="0 0 90 90">
         <circle cx="45" cy="45" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7" />
         <circle
@@ -72,7 +72,7 @@ function ScoreRing({ score, label, color }) {
           {score}%
         </text>
       </svg>
-      <span className="score-ring__label">{label}</span>
+      <span className="AIscore-ring__label">{label}</span>
     </div>
   );
 }
@@ -140,91 +140,61 @@ Applicant answered: "${a.answer}"`;
 function LandingScreen({ onStart }) {
   useAOS();
   return (
-    <div className="page">
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
-      <div className="orb orb-3" />
+    <div className="AIpage">
+      <div className="AIorb AIorb-1" />
+      <div className="AIorb AIorb-2" />
+      <div className="AIorb AIorb-3" />
 
-      {/* Minimal navbar — no brand, no start button */}
-      <nav className="navbar glass" style={{ justifyContent: "center", padding: "14px 32px" }}>
-        <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 13, letterSpacing: "1px", fontWeight: 600 }}>
-          🇺🇸 &nbsp; AI-POWERED VISA INTERVIEW PREP
-        </span>
-      </nav>
-
-      <div className="landing__container">
+      <div className="AIlanding__container">
         {/* Hero */}
-        <div className="landing__hero">
-          <div data-aos="fade-up" className="landing__badge glass">
-            <span className="landing__badge-dot" />
-            <span className="landing__badge-text">TRAINED BY US CONSULAR OFFICERS</span>
-          </div>
-
-          <h1 data-aos="fade-up" data-aos-delay="100" className="landing__h1">
+        <div className="AIlanding__hero">
+          <h1 data-aos="fade-up" data-aos-delay="100" className="AIlanding__h1">
             Ace Your{" "}
-            <span className="landing__h1-highlight">US Visa</span>
+            <span className="AIlanding__h1-highlight">US Visa</span>
             <br />Interview with AI
           </h1>
 
-          <p data-aos="fade-up" data-aos-delay="200" className="landing__sub">
-            Practice with an AI Consular Officer using real B1/B2 interview
-            questions. Get instant voice feedback, AI-graded scoring, and
-            personalized improvement tips.
-          </p>
-
-          <div data-aos="fade-up" data-aos-delay="300" className="landing__cta">
-            <button className="btn btn-primary" onClick={onStart}>
+          <div data-aos="fade-up" data-aos-delay="300" className="AIlanding__cta">
+            <button className="AIbtn AIbtn-primary" onClick={onStart}>
               Start Free Interview
             </button>
-            
           </div>
-        </div>
-
-        {/* Stats */}
-        <div className="stats-grid">
-          {landingStats.map((s, i) => (
-            <div key={i} className="stat-card glass-strong" data-aos="zoom-in" data-aos-delay={`${i * 100}`}>
-              <div className="stat-card__icon">{s.icon}</div>
-              <div className="stat-card__value">{s.value}</div>
-              <div className="stat-card__label">{s.label}</div>
-            </div>
-          ))}
         </div>
 
         {/* How It Works */}
-        <div className="section">
-          <div data-aos="fade-up" className="section__header">
-            <h2 className="section__h2">How It Works</h2>
-            <p className="section__sub">Three simple steps to a confident visa interview</p>
+        <div className="AIsection">
+          <div data-aos="fade-up" className="AIsection__header">
+            <h2 className="AIsection__h2">How It Works</h2>
+            <p className="AIsection__sub">Three simple steps to a confident visa interview</p>
           </div>
 
-          <div className="steps-grid">
+          <div className="AIsteps-grid">
             {howItWorksSteps.map((item, i) => (
-              <div key={i} className="step-card glass-strong" data-aos="fade-up" data-aos-delay={`${i * 150}`}>
-                <div className="step-card__bg-num">{item.step}</div>
-                <div className="step-card__icon-wrap">{item.icon}</div>
-                <div className="step-card__num">{item.step}</div>
-                <div className="step-card__title">{item.title}</div>
-                <div className="step-card__desc">{item.desc}</div>
+              <div key={i} className="AIstep-card AIglass-strong" data-aos="fade-up" data-aos-delay={`${i * 150}`}>
+                <div className="AIstep-card__bg-num">{item.step}</div>
+                <div className="AIstep-card__icon-wrap">{item.icon}</div>
+                <div className="AIstep-card__num">Step {item.step}</div>
+                <div className="AIstep-card__title">{item.title}</div>
+                <div className="AIstep-card__desc">{item.desc}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Questions Preview */}
-        <div className="section">
-          <div data-aos="fade-up" className="section__header">
-            <h2 className="section__h2">Sample Interview Questions</h2>
-            <p className="section__sub">Real questions asked at US visa interviews</p>
+        <div className="AIsections">
+          <div data-aos="fade-up" className="AIsection__header">
+            <h2 className="AIsection__h2">Sample Interview Questions</h2>
+            <p className="AIsection__sub">Real questions asked at US visa interviews</p>
           </div>
 
-          <div className="questions-grid">
+          <div className="AIquestions-grid">
             {interviewQuestions.slice(0, 6).map((q, i) => (
-              <div key={q.id} className="question-preview-card glass" data-aos="fade-up" data-aos-delay={`${(i % 3) * 100}`}>
-                <div className="question-preview-card__num">{q.id}</div>
+              <div key={q.id} className="AIquestion-preview-card AIglass" data-aos="fade-up" data-aos-delay={`${(i % 3) * 100}`}>
+                <div className="AIquestion-preview-card__num">{q.id}</div>
                 <div>
-                  <div className="question-preview-card__cat">{q.category}</div>
-                  <div className="question-preview-card__text">{q.question}</div>
+                  <div className="AIquestion-preview-card__cat">{q.category}</div>
+                  <div className="AIquestion-preview-card__text">{q.question}</div>
                 </div>
               </div>
             ))}
@@ -232,8 +202,8 @@ function LandingScreen({ onStart }) {
         </div>
       </div>
 
-      <footer className="footer">
-        <p className="footer__text">🇺🇸 US Visa Mock Interview • AI-Powered Preparation Tool</p>
+      <footer className="AIfooter">
+        <p className="AIfooter__text">US Visa Mock Interview • AI-Powered Preparation Tool</p>
       </footer>
     </div>
   );
@@ -242,58 +212,78 @@ function LandingScreen({ onStart }) {
 // ─── SETUP SCREEN ─────────────────────────────────────────────────────────────
 function SetupScreen({ selectedVoice, onSelectVoice, onBack, onBegin }) {
   return (
-    <div className="page page-center">
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
+    <div className="AIpage AIpage-center">
+      <div className="AIorb AIorb-1" />
+      <div className="AIorb AIorb-2" />
 
-      <div className="setup-wrapper">
-        <button className="setup-back-btn" onClick={onBack}>← Back</button>
+      <div className="AIsetup-wrapper">
+        <button className="AIsetup-back-btn" onClick={onBack}>
+          <ArrowLeft size={14} strokeWidth={2.5} />
+          Back
+        </button>
 
-        <div className="setup-card glass-strong">
-          <div className="setup-card__header">
-            <span className="setup-card__emoji">🏛️</span>
-            <h2 className="setup-card__h2">Select Your Interviewing Officer</h2>
-            <p className="setup-card__sub">Choose between our male and female AI Consular Officers</p>
+        <div className="AIsetup-card AIglass-strong">
+          <div className="AIsetup-card__header">
+            <div className="AIsetup-card__icon-wrap">
+              <Landmark size={28} color="#818cf8" strokeWidth={1.8} />
+            </div>
+            <h2 className="AIsetup-card__h2">Select Your Interviewing Officer</h2>
+            <p className="AIsetup-card__sub">Choose between our male and female AI Consular Officers</p>
           </div>
 
-          <div className="voice-cards-grid">
+          <div className="AIvoice-cards-grid">
             {Object.entries(voiceConfig).map(([key, cfg]) => (
               <div
                 key={key}
-                className={`voice-card ${selectedVoice === key ? "selected" : ""}`}
+                className={`AIvoice-card ${selectedVoice === key ? "AIselected" : ""}`}
                 onClick={() => onSelectVoice(key)}
               >
-                <div className="voice-card__avatar">{cfg.avatar}</div>
-                <div className="voice-card__name">{cfg.name}</div>
-                <div className="voice-card__badge">{cfg.badge.toUpperCase()}</div>
+                <div className="AIvoice-card__avatar">{cfg.avatar}</div>
+                <div className="AIvoice-card__name">{cfg.name}</div>
+                <div className="AIvoice-card__badge">{cfg.badge.toUpperCase()}</div>
                 {selectedVoice === key && (
-                  <div className="voice-card__selected-pill">
-                    <span className="voice-card__selected-dot" />
-                    <span className="voice-card__selected-text">Selected</span>
+                  <div className="AIvoice-card__selected-pill">
+                    <span className="AIvoice-card__selected-dot" />
+                    <span className="AIvoice-card__selected-text">Selected</span>
                   </div>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="setup-info-bar glass">
-            {setupInfo.map((item, i) => (
-              <div key={i} className="setup-info-item">
-                <span className="setup-info-item__icon">{item.icon}</span>
-                <span className="setup-info-item__text">{item.text}</span>
+          <div className="AIsetup-info-bar AIglass">
+            <div className="AIsetup-info-item">
+              <div className="AIsetup-info-item__icon-wrap">
+                <Clock size={14} color="#818cf8" strokeWidth={2} />
               </div>
-            ))}
+              <span className="AIsetup-info-item__text">~15 min session</span>
+            </div>
+            <div className="AIsetup-info-item">
+              <div className="AIsetup-info-item__icon-wrap">
+                <ShieldCheck size={14} color="#818cf8" strokeWidth={2} />
+              </div>
+              <span className="AIsetup-info-item__text">Private & secure</span>
+            </div>
+            <div className="AIsetup-info-item">
+              <div className="AIsetup-info-item__icon-wrap">
+                <Mic size={14} color="#818cf8" strokeWidth={2} />
+              </div>
+              <span className="AIsetup-info-item__text">Voice powered</span>
+            </div>
           </div>
 
           <button
-            className="btn btn-primary btn-full"
+            className="AIbtn AIbtn-primary AIbtn-full"
             style={{ fontSize: 16, padding: "16px" }}
             onClick={onBegin}
           >
             Begin Interview with {voiceConfig[selectedVoice].name} →
           </button>
 
-          <p className="setup-note">Ensure your microphone is enabled for best experience</p>
+          <p className="AIsetup-note">
+            <Mic size={11} color="rgba(255,255,255,0.25)" />
+            Ensure your microphone is enabled for best experience
+          </p>
         </div>
       </div>
     </div>
@@ -301,46 +291,51 @@ function SetupScreen({ selectedVoice, onSelectVoice, onBack, onBegin }) {
 }
 
 // ─── INTERVIEW SCREEN ─────────────────────────────────────────────────────────
-function InterviewScreen({ selectedVoice, currentQ, isAISpeaking, isListening, transcript, timer, questionPhase, onNext }) {
+function InterviewScreen({ selectedVoice, currentQ, isAISpeaking, isListening, transcript, timer, questionPhase, onNext, onBack }) {
   const progress = (currentQ / interviewQuestions.length) * 100;
   const question = interviewQuestions[currentQ];
 
   return (
-    <div className="page page-center" style={{ flexDirection: "column" }}>
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
+    <div className="AIpage AIpage-center" style={{ flexDirection: "column" }}>
+      <div className="AIorb AIorb-1" />
+      <div className="AIorb AIorb-2" />
 
-      <div className="interview-wrapper">
-        <div className="interview-header">
-          <div className="interview-header__left">
-            <div className="interview-header__flag">🇺🇸</div>
+      <div className="AIinterview-wrapper">
+        <button className="AIinterview-back-btn" onClick={onBack}>
+          <ArrowLeft size={14} strokeWidth={2.5} />
+          Back
+        </button>
+
+        <div className="AIinterview-header">
+          <div className="AIinterview-header__left">
+            <div className="AIinterview-header__flag">🇺🇸</div>
             <div>
-              <div className="interview-header__title">US Embassy Mock Interview</div>
-              <div className="interview-header__sub">B1/B2 Visa Assessment</div>
+              <div className="AIinterview-header__title">US Embassy Mock Interview</div>
+              <div className="AIinterview-header__sub">B1/B2 Visa Assessment</div>
             </div>
           </div>
-          <div className="interview-header__counter glass">
-            <span className="interview-header__counter-label">Question</span>
-            <span className="interview-header__counter-num">{Math.min(currentQ + 1, interviewQuestions.length)}</span>
-            <span className="interview-header__counter-sep">/</span>
-            <span className="interview-header__counter-total">{interviewQuestions.length}</span>
+          <div className="AIinterview-header__counter AIglass">
+            <span className="AIinterview-header__counter-label">Question</span>
+            <span className="AIinterview-header__counter-num">{Math.min(currentQ + 1, interviewQuestions.length)}</span>
+            <span className="AIinterview-header__counter-sep">/</span>
+            <span className="AIinterview-header__counter-total">{interviewQuestions.length}</span>
           </div>
         </div>
 
-        <div className="progress-bar">
-          <div className="progress-bar__fill" style={{ width: `${progress}%` }} />
+        <div className="AIprogress-bar">
+          <div className="AIprogress-bar__fill" style={{ width: `${progress}%` }} />
         </div>
 
-        <div className="officer-panel glass-strong">
-          <div className="officer-panel__identity">
-            <div className={`officer-panel__avatar ${isAISpeaking ? "speaking" : "idle"}`}>
+        <div className="AIofficer-panel AIglass-strong">
+          <div className="AIofficer-panel__identity">
+            <div className={`AIofficer-panel__avatar ${isAISpeaking ? "AIspeaking" : "AIidle"}`}>
               {voiceConfig[selectedVoice].avatar}
             </div>
-            <div className="officer-panel__info">
-              <div className="officer-panel__name">{voiceConfig[selectedVoice].name}</div>
-              <div className="officer-panel__status">
-                <span className="officer-panel__status-dot" style={{ background: isAISpeaking ? "#4f8ef7" : "#22c55e" }} />
-                <span className="officer-panel__status-text">
+            <div className="AIofficer-panel__info">
+              <div className="AIofficer-panel__name">{voiceConfig[selectedVoice].name}</div>
+              <div className="AIofficer-panel__status">
+                <span className="AIofficer-panel__status-dot" style={{ background: isAISpeaking ? "#4f8ef7" : "#22c55e" }} />
+                <span className="AIofficer-panel__status-text">
                   {isAISpeaking ? "Speaking..." : questionPhase === "listening" ? "Listening to you" : "Ready"}
                 </span>
               </div>
@@ -349,55 +344,55 @@ function InterviewScreen({ selectedVoice, currentQ, isAISpeaking, isListening, t
 
           <VoiceWave active={isAISpeaking} color="#4f8ef7" />
 
-          <div className="officer-panel__question-wrap">
-            <div className="officer-panel__category">{question?.category}</div>
-            <p className="officer-panel__question">{question?.question}</p>
-            <div className="officer-panel__hint">
-              <span className="officer-panel__hint-icon">💡</span>
-              <span className="officer-panel__hint-text">{question?.hint}</span>
+          <div className="AIofficer-panel__question-wrap">
+            <div className="AIofficer-panel__category">{question?.category}</div>
+            <p className="AIofficer-panel__question">{question?.question}</p>
+            <div className="AIofficer-panel__hint">
+              <span className="AIofficer-panel__hint-icon">💡</span>
+              <span className="AIofficer-panel__hint-text">{question?.hint}</span>
             </div>
           </div>
         </div>
 
-        <div className="response-panel glass-strong">
-          <div className="response-panel__header">
-            <div className="response-panel__mic-wrap">
-              <div className={`response-panel__mic-btn ${isListening ? "listening" : "idle"}`}>🎙️</div>
-              <span className={`response-panel__mic-label ${isListening ? "listening" : "idle"}`}>
+        <div className="AIresponse-panel AIglass-strong">
+          <div className="AIresponse-panel__header">
+            <div className="AIresponse-panel__mic-wrap">
+              <div className={`AIresponse-panel__mic-btn ${isListening ? "AIlistening" : "AIidle"}`}>🎙️</div>
+              <span className={`AIresponse-panel__mic-label ${isListening ? "AIlistening" : "AIidle"}`}>
                 {isListening ? "Recording your answer..." : questionPhase === "speaking" ? "Please wait..." : "Microphone standby"}
               </span>
             </div>
 
             {questionPhase === "listening" && (
-              <div className="response-panel__timer">
-                <span className="response-panel__timer-icon" style={{ color: timer <= 10 ? "#ef4444" : "rgba(255,255,255,0.5)" }}>⏱</span>
-                <span className={`response-panel__timer-count ${timer <= 10 ? "danger" : "normal"}`}>{timer}s</span>
+              <div className="AIresponse-panel__timer">
+                <span className="AIresponse-panel__timer-icon" style={{ color: timer <= 10 ? "#ef4444" : "rgba(255,255,255,0.5)" }}>⏱</span>
+                <span className={`AIresponse-panel__timer-count ${timer <= 10 ? "AIdanger" : "AInormal"}`}>{timer}s</span>
               </div>
             )}
           </div>
 
           <VoiceWave active={isListening} color="#22c55e" />
 
-          <div className="response-panel__transcript">
+          <div className="AIresponse-panel__transcript">
             {transcript ? (
-              <p className="response-panel__transcript-text">{transcript}</p>
+              <p className="AIresponse-panel__transcript-text">{transcript}</p>
             ) : (
-              <p className="response-panel__transcript-placeholder">
+              <p className="AIresponse-panel__transcript-placeholder">
                 {questionPhase === "listening" ? "Speak now — your answer will appear here..." : "Waiting for the question to finish..."}
               </p>
             )}
           </div>
 
           {questionPhase === "listening" && (
-            <button className="btn btn-primary btn-full" style={{ marginTop: 16 }} onClick={onNext}>
+            <button className="AIbtn AIbtn-primary AIbtn-full" style={{ marginTop: 16 }} onClick={onNext}>
               Submit Answer & Continue →
             </button>
           )}
         </div>
 
-        <div className="question-dots">
+        <div className="AIquestion-dots">
           {interviewQuestions.map((_, i) => (
-            <div key={i} className={`question-dot ${i < currentQ ? "done" : i === currentQ ? "current" : "pending"}`} />
+            <div key={i} className={`AIquestion-dot ${i < currentQ ? "AIdone" : i === currentQ ? "AIcurrent" : "AIpending"}`} />
           ))}
         </div>
       </div>
@@ -408,16 +403,16 @@ function InterviewScreen({ selectedVoice, currentQ, isAISpeaking, isListening, t
 // ─── ANALYZING SCREEN ─────────────────────────────────────────────────────────
 function AnalyzingScreen() {
   return (
-    <div className="page">
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
-      <div className="analyzing-wrapper">
-        <div className="analyzing-spinner" />
-        <div className="analyzing-title">Analyzing Your Interview</div>
-        <div className="analyzing-sub">
+    <div className="AIpage">
+      <div className="AIorb AIorb-1" />
+      <div className="AIorb AIorb-2" />
+      <div className="AIanalyzing-wrapper">
+        <div className="AIanalyzing-spinner" />
+        <div className="AIanalyzing-title">Analyzing Your Interview</div>
+        <div className="AIanalyzing-sub">
           Our AI is generating ideal answers and evaluating your responses. This takes a few seconds…
         </div>
-        <div className="analyzing-shimmer" />
+        <div className="AIanalyzing-shimmer" />
       </div>
     </div>
   );
@@ -434,40 +429,40 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
     ? Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length)
     : Math.round(evaluations.reduce((sum, e) => sum + (e.score || 0), 0) / Math.max(evaluations.length, 1));
 
-  const pillClass = overall >= 80 ? "good" : overall >= 65 ? "average" : "poor";
+  const pillClass = overall >= 80 ? "AIgood" : overall >= 65 ? "AIaverage" : "AIpoor";
   const pillLabel = overall >= 80 ? "Likely to be Approved" : overall >= 65 ? "Needs Improvement" : "Requires Significant Work";
   const pillEmoji = overall >= 80 ? "🟢" : overall >= 65 ? "🟡" : "🔴";
 
-  const getScoreClass = (score) => score >= 75 ? "good" : score >= 55 ? "average" : "poor";
+  const getScoreClass = (score) => score >= 75 ? "AIgood" : score >= 55 ? "AIaverage" : "AIpoor";
 
   return (
-    <div className="page">
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
+    <div className="AIpage">
+      <div className="AIorb AIorb-1" />
+      <div className="AIorb AIorb-2" />
 
-      <div className="results-wrapper">
-        <div data-aos="fade-up" className="results-header">
-          <span className="results-header__emoji">🎉</span>
-          <h2 className="results-header__h2">Interview Complete!</h2>
-          <p className="results-header__sub">
+      <div className="AIresults-wrapper">
+        <div data-aos="fade-up" className="AIresults-header">
+          <span className="AIresults-header__emoji">🎉</span>
+          <h2 className="AIresults-header__h2">Interview Complete!</h2>
+          <p className="AIresults-header__sub">
             Here is your AI-powered performance analysis — {voiceConfig[selectedVoice].name} has assessed your responses
           </p>
         </div>
 
         {/* Overall Score */}
-        <div data-aos="zoom-in" className="overall-score-card glass-strong">
-          <div className={`overall-score-card__pill ${pillClass}`}>
+        <div data-aos="zoom-in" className="AIoverall-score-card AIglass-strong">
+          <div className={`AIoverall-score-card__pill ${pillClass}`}>
             <span>{pillEmoji}</span>
-            <span className={`overall-score-card__pill-text ${pillClass}`}>{pillLabel}</span>
+            <span className={`AIoverall-score-card__pill-text ${pillClass}`}>{pillLabel}</span>
           </div>
-          <div className="overall-score-card__number">{overall}<span>%</span></div>
-          <div className="overall-score-card__label">Overall Interview Score</div>
+          <div className="AIoverall-score-card__number">{overall}<span>%</span></div>
+          <div className="AIoverall-score-card__label">Overall Interview Score</div>
         </div>
 
         {/* Score Breakdown */}
-        <div data-aos="fade-up" data-aos-delay="100" className="score-breakdown-card glass-strong">
-          <h3 className="score-breakdown-card__title">Performance Breakdown</h3>
-          <div className="score-rings-grid">
+        <div data-aos="fade-up" data-aos-delay="100" className="AIscore-breakdown-card AIglass-strong">
+          <h3 className="AIscore-breakdown-card__title">Performance Breakdown</h3>
+          <div className="AIscore-rings-grid">
             {scoreCategories.map((cat) => (
               <ScoreRing key={cat.key} score={scores[cat.key] ?? 0} label={cat.label} color={cat.color} />
             ))}
@@ -475,26 +470,26 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
         </div>
 
         {/* Answer Review with AI Evaluations */}
-        <div data-aos="fade-up" data-aos-delay="200" className="answer-review-card glass-strong">
-          <h3 className="answer-review-card__title">Your Answers & AI Evaluation</h3>
-          <div className="answer-list">
+        <div data-aos="fade-up" data-aos-delay="200" className="AIanswer-review-card AIglass-strong">
+          <h3 className="AIanswer-review-card__title">Your Answers & AI Evaluation</h3>
+          <div className="AIanswer-list">
             {interviewQuestions.map((q, i) => {
               const evalData = evaluations.find((e) => e.questionId === q.id);
               const answerText = answers[i]?.answer || "Not answered";
               const score = evalData?.score ?? null;
-              const scoreClass = score !== null ? getScoreClass(score) : "average";
+              const scoreClass = score !== null ? getScoreClass(score) : "AIaverage";
 
               return (
-                <div key={q.id} className="answer-item glass">
-                  <div className="answer-item__inner">
-                    <div className="answer-item__num">{q.id}</div>
+                <div key={q.id} className="AIanswer-item AIglass">
+                  <div className="AIanswer-item__inner">
+                    <div className="AIanswer-item__num">{q.id}</div>
                     <div style={{ flex: 1 }}>
-                      <div className="answer-item__cat">{q.category}</div>
-                      <div className="answer-item__question">{q.question}</div>
+                      <div className="AIanswer-item__cat">{q.category}</div>
+                      <div className="AIanswer-item__question">{q.question}</div>
 
                       {/* User's actual answer */}
                       <div
-                        className="answer-item__answer"
+                        className="AIanswer-item__answer"
                         style={{ fontStyle: answerText.includes("No answer") ? "italic" : "normal" }}
                       >
                         {answerText}
@@ -503,7 +498,7 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
                       {/* AI Evaluation Block */}
                       {evalData && (
                         <div
-                          className="answer-item__eval"
+                          className="AIanswer-item__eval"
                           style={{
                             background: score >= 75
                               ? "rgba(34,197,94,0.05)"
@@ -512,23 +507,23 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
                               : "rgba(239,68,68,0.05)",
                           }}
                         >
-                          <div className="answer-item__eval-header">
-                            <span className="answer-item__eval-label">🤖 AI Evaluation</span>
+                          <div className="AIanswer-item__eval-header">
+                            <span className="AIanswer-item__eval-label">🤖 AI Evaluation</span>
                             {score !== null && (
-                              <span className={`answer-item__eval-score ${scoreClass}`}>
+                              <span className={`AIanswer-item__eval-score ${scoreClass}`}>
                                 {score}/100
                               </span>
                             )}
                           </div>
 
                           {evalData.idealAnswer && (
-                            <div className="answer-item__eval-ideal">
+                            <div className="AIanswer-item__eval-ideal">
                               <strong>Ideal answer:</strong> {evalData.idealAnswer}
                             </div>
                           )}
 
                           {evalData.remark && (
-                            <div className="answer-item__eval-remark">"{evalData.remark}"</div>
+                            <div className="AIanswer-item__eval-remark">"{evalData.remark}"</div>
                           )}
                         </div>
                       )}
@@ -541,15 +536,15 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
         </div>
 
         {/* Tips */}
-        <div data-aos="fade-up" data-aos-delay="300" className="tips-card glass-strong">
-          <h3 className="tips-card__title">💡 Key Improvement Tips</h3>
-          <div className="tips-list">
+        <div data-aos="fade-up" data-aos-delay="300" className="AItips-card AIglass-strong">
+          <h3 className="AItips-card__title">💡 Key Improvement Tips</h3>
+          <div className="AItips-list">
             {improvementTips.map((item, i) => (
-              <div key={i} className="tip-item">
-                <span className="tip-item__check">✓</span>
+              <div key={i} className="AItip-item">
+                <span className="AItip-item__check">✓</span>
                 <div>
-                  <div className="tip-item__title">{item.tip}</div>
-                  <div className="tip-item__detail">{item.detail}</div>
+                  <div className="AItip-item__title">{item.tip}</div>
+                  <div className="AItip-item__detail">{item.detail}</div>
                 </div>
               </div>
             ))}
@@ -557,9 +552,9 @@ function ResultsScreen({ selectedVoice, answers, aiResult, onRetake, onHome }) {
         </div>
 
         {/* CTA */}
-        <div className="results-cta">
-          <button className="btn btn-primary" onClick={onRetake}>🔄 Retake Interview</button>
-          <button className="btn btn-ghost" onClick={onHome}>← Back to Home</button>
+        <div className="AIresults-cta">
+          <button className="AIbtn AIbtn-primary" onClick={onRetake}>🔄 Retake Interview</button>
+          <button className="AIbtn AIbtn-ghost" onClick={onHome}>← Back to Home</button>
         </div>
       </div>
     </div>
@@ -648,7 +643,6 @@ export default function USMockInterview() {
         setAiResult(result);
       } catch (err) {
         console.error("AI evaluation failed:", err);
-        // Fallback: generate basic scores so results still render
         setAiResult({
           evaluations: finalAnswers.map((a) => ({
             questionId: a.questionId,
@@ -782,6 +776,7 @@ export default function USMockInterview() {
         timer={timer}
         questionPhase={questionPhase}
         onNext={handleNext}
+        onBack={() => setScreen("landing")}
       />
     );
 

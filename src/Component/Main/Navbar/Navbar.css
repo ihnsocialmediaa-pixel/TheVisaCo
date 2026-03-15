@@ -340,7 +340,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── DESKTOP LARGE (1280px+) ── */
 @media (min-width: 1280px) {
-  .nav__inner { padding: 0.85rem 4rem; margin: 10px auto;  gap: 3px;}
+  .nav__inner { padding: 0.85rem 4rem; margin: 10px auto;  gap: 3px; }
   .logo__main { font-size: 2.2rem; }
   .nav__link { font-size: 0.9rem; padding: 0.45rem 0.9rem; }
   .nav__feat-menu { min-width: 260px; }
@@ -348,14 +348,14 @@ a { text-decoration: none; color: inherit; }
 
 /* ── DESKTOP (1025px–1279px) ── */
 @media (min-width: 1025px) and (max-width: 1279px) {
-  .nav__inner { padding: 0.75rem 2rem; gap: 3px;}
+  .nav__inner { padding: 0.75rem 2rem; }
   .logo { margin-right: 2rem; }
   .nav__link { font-size: 0.84rem; padding: 0.38rem 0.7rem; }
 }
 
 /* ── TABLET LANDSCAPE (992px–1024px) ── */
 @media (min-width: 992px) and (max-width: 1024px) {
-  .nav__inner { padding: 0.75rem 1.5rem; gap: 1.5rem;}
+  .nav__inner { padding: 0.75rem 1.5rem; gap: 1.5rem; }
   .logo { margin-right: 1.5rem; }
   .logo__main { font-size: 1.75rem; }
   .nav__link { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
@@ -364,7 +364,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── TABLET (768px–991px) ── */
 @media (max-width: 991px) {
-  .nav__inner { padding: 0.75rem 1.25rem; gap: 30px; }
+  .nav__inner { padding: 0.75rem 1.25rem; gap: 30rem; }
   .logo__main  { font-size: 1.6rem; margin-top: 6px; }
   .logo__plane { margin-top: 16px; }
   .logo__sub   { font-size: 0.46rem; }
@@ -374,7 +374,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── TABLET LANDSCAPE orientation ── */
 @media (max-width: 991px) and (orientation: landscape) {
-  .nav__inner { padding: 0.55rem 1.25rem; margin: 4px auto; gap: 20px!important; }
+  .nav__inner { padding: 0.55rem 1.25rem; margin: 4px auto; }
   .logo__main { font-size: 1.45rem; margin-top: 4px; }
   .logo__plane { margin-top: 8px; }
   .logo__sub { font-size: 0.42rem; }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 
@@ -29,40 +29,98 @@ const IconPlane = () => (
   </svg>
 );
 
+const IconChevron = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9"/>
+  </svg>
+);
+
+/* ── Feature sub-links ──────────────────────────────────────────────────────── */
+const featureLinks = [
+  {
+    label: "Interview Prep",
+    to: "/interview",
+    desc: "Ace your visa interview",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Requirements",
+    to: "/Requirements",
+    desc: "Documents checklist",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Refund Policy",
+    to: "/Refund",
+    desc: "Our refund guidelines",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="1 4 1 10 7 10"/>
+        <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+      </svg>
+    ),
+  },
+];
+
+/* ── Main nav links (no Interview / Requirements / Refund here) ─────────────── */
+const mainLinks = [
+  { label: "Visa on Arrival",  to: "#" },
+  { label: "Tourist Visa",     to: "#" },
+  { label: "Business Visa",    to: "#" },
+  { label: "Student Visa",     to: "#" },
+  { label: "Travel Insurance", to: "#" },
+];
+
 /* ── Component ─────────────────────────────────────────────────────────────── */
 export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
+  const [scrolled,       setScrolled]       = useState(false);
+  const [mobileOpen,     setMobileOpen]     = useState(false);
+  const [featOpen,       setFeatOpen]       = useState(false);
+  const [mobileFeatOpen, setMobileFeatOpen] = useState(false);
+  const featRef = useRef(null);
 
+  /* scroll listener */
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Lock body scroll when drawer is open
+  /* lock body scroll when mobile drawer open */
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  const links = [
-    { label: "Visa on Arrival",    to: "#" },
-    { label: "Tourist Visa",       to: "#" },
-    { label: "Business Visa",      to: "#" },
-    { label: "Student Visa",       to: "#" },
-    { label: "Travel Insurance",   to: "#" },
-    { label: "Interview",          to: "/interview" },
-    { label: "Requirements",        to: "/Requirements" },
-    { label: "RefundPolicy",       to: "/Refund" },
-  
-
-  ];
+  /* close desktop dropdown on outside click */
+  useEffect(() => {
+    const handler = (e) => {
+      if (featRef.current && !featRef.current.contains(e.target)) {
+        setFeatOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const closeMenu = () => setMobileOpen(false);
 
   return (
     <>
+      {/* ── NAV BAR ── */}
       <nav className={`nav ${scrolled ? "nav--scrolled" : "nav--hero"}`}>
         <div className="nav__inner">
 
@@ -75,27 +133,56 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop links — centre, only visible when scrolled */}
+          {/* Desktop links — visible only when scrolled */}
           <div className={`nav__links ${scrolled ? "nav__links--visible" : "nav__links--hidden"}`}>
-            {links.map(l => (
-              <Link
-                to={l.to}
-                className={`nav__link${l.label === "Interview" ? " nav__link--highlight" : ""}`}
-                key={l.label}
-              >
-                {l.label}
-              </Link>
+
+            {mainLinks.map(l => (
+              <Link to={l.to} className="nav__link" key={l.label}>{l.label}</Link>
             ))}
+
+            {/* Features dropdown */}
+            <div className="nav__feat" ref={featRef}>
+              <button
+                className={`nav__link nav__feat-btn${featOpen ? " nav__feat-btn--open" : ""}`}
+                onClick={() => setFeatOpen(o => !o)}
+                aria-haspopup="true"
+                aria-expanded={featOpen}
+              >
+                Features
+                <span className={`nav__feat-chevron${featOpen ? " nav__feat-chevron--up" : ""}`}>
+                  <IconChevron />
+                </span>
+              </button>
+
+              {featOpen && (
+                <div className="nav__feat-menu" role="menu">
+                  {featureLinks.map(f => (
+                    <Link
+                      key={f.label}
+                      to={f.to}
+                      className="nav__feat-item"
+                      role="menuitem"
+                      onClick={() => setFeatOpen(false)}
+                    >
+                      <span className="nav__feat-item-icon">{f.icon}</span>
+                      <span className="nav__feat-item-body">
+                        <span className="nav__feat-item-label">{f.label}</span>
+                        <span className="nav__feat-item-desc">{f.desc}</span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
-        
+
           {/* Right icons */}
           <div className="nav__right">
-            {/* Desktop icons */}
             <Link to="#" className="nav__wa"      title="WhatsApp"><IconWA /></Link>
             <Link to="#" className="nav__profile" title="Profile / Login"><IconProfile /></Link>
             <Link to="#" className="nav__share"   title="Share"><IconShare /></Link>
 
-            {/* Hamburger — mobile/tablet only */}
             <button
               className="nav__hamburger"
               onClick={() => setMobileOpen(o => !o)}
@@ -106,58 +193,96 @@ export default function Navbar() {
               </span>
             </button>
           </div>
+
         </div>
       </nav>
 
-      {/* Overlay behind drawer */}
+      {/* Overlay behind mobile drawer */}
       <div
         className={`mobile-overlay ${mobileOpen ? "is-open" : ""}`}
         onClick={closeMenu}
       />
 
-      {/* Full-screen mobile drawer — slides from left */}
+      {/* ── MOBILE / TABLET DRAWER ── */}
       <div className={`mobile-menu ${mobileOpen ? "is-open" : ""}`}>
 
-        {/* Drawer header */}
+        {/* Header */}
         <div className="mobile-menu__header">
           <Link to="/" className="mobile-menu__logo" onClick={closeMenu}>
             <span className="mobile-menu__logo-plane"><IconPlane /></span>
             <span className="mobile-menu__logo-text">TheVisaCo</span>
           </Link>
           <button className="mobile-menu__close" onClick={closeMenu} aria-label="Close menu">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
           </button>
         </div>
 
         {/* Links */}
         <div className="mobile-menu__links">
-          {links.map(l => (
+
+          {mainLinks.map(l => (
             <Link
               to={l.to}
-              className={`mobile-menu__link${l.label === "Interview" ? " mobile-menu__link--highlight" : ""}`}
+              className="mobile-menu__link"
               key={l.label}
               onClick={closeMenu}
             >
               {l.label}
             </Link>
           ))}
+
+          {/* Features accordion */}
+          <div className="mobile-feat">
+            <button
+              className={`mobile-menu__link mobile-feat__toggle${mobileFeatOpen ? " mobile-feat__toggle--open" : ""}`}
+              onClick={() => setMobileFeatOpen(o => !o)}
+            >
+              <span>Features</span>
+              <span className={`mobile-feat__chevron${mobileFeatOpen ? " mobile-feat__chevron--up" : ""}`}>
+                <IconChevron />
+              </span>
+            </button>
+
+            <div
+              className="mobile-feat__body"
+              style={{
+                maxHeight: mobileFeatOpen ? `${featureLinks.length * 76}px` : "0",
+                opacity:   mobileFeatOpen ? 1 : 0,
+                overflow:  "hidden",
+                transition: "max-height .35s cubic-bezier(.4,0,.2,1), opacity .25s ease",
+              }}
+            >
+              {featureLinks.map(f => (
+                <Link
+                  key={f.label}
+                  to={f.to}
+                  className="mobile-feat__item"
+                  onClick={closeMenu}
+                >
+                  <span className="mobile-feat__item-icon">{f.icon}</span>
+                  <span className="mobile-feat__item-body">
+                    <span className="mobile-feat__item-label">{f.label}</span>
+                    <span className="mobile-feat__item-desc">{f.desc}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
         </div>
 
-        {/* Footer — icons */}
+        {/* Footer icons */}
         <div className="mobile-menu__footer">
           <span className="mobile-menu__footer-label">Quick actions</span>
-          <Link to="#" className="mobile-icon-btn" title="WhatsApp" onClick={closeMenu}>
-            <IconWA />
-          </Link>
-          <Link to="#" className="mobile-icon-btn" title="Profile / Login" onClick={closeMenu}>
-            <IconProfile />
-          </Link>
-          <Link to="#" className="mobile-icon-btn" title="Share" onClick={closeMenu}>
-            <IconShare />
-          </Link>
+          <Link to="#" className="mobile-icon-btn" title="WhatsApp"       onClick={closeMenu}><IconWA /></Link>
+          <Link to="#" className="mobile-icon-btn" title="Profile / Login" onClick={closeMenu}><IconProfile /></Link>
+          <Link to="#" className="mobile-icon-btn" title="Share"           onClick={closeMenu}><IconShare /></Link>
         </div>
+
       </div>
     </>
   );

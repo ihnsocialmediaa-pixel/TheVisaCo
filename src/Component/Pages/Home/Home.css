@@ -4,7 +4,7 @@
 /* ── VARIABLES ─────────────────────────────────────────────────────────────── */
 :root {
   --navy:        #1a3a5c;
-  --navy-mid:    #2a5080;
+  --navy-mid:    #33609779;
   --navy-light:  #3a6fa8;
   --navy-soft:   #1e4570;
   --amber:       #92400E;
@@ -34,7 +34,7 @@
   --t: 0.25s ease;
 
   /* Gradient text for headings */
-  --grad-heading: linear-gradient(120deg, #1a3a5c 0%, #2a6090 40%, #769FCD 70%, #1a3a5c 100%);
+  --grad-heading: linear-gradient(120deg, #1a3a5c 0%, #2a6090 40%, #2b72c3 70%, #1a3a5c 100%);
   --grad-heading-size: 200%;
 }
 
@@ -87,7 +87,7 @@ img   { display: block; }
 ══════════════════════════════════════════════════════════════════════════════ */
 .home-hero {
   position: relative; overflow: hidden;
-  background: linear-gradient(160deg, #1a3a5c 0%, #2a5a8c 45%, #3a7ab8 75%, #1e4d7a 100%);
+  background: linear-gradient(160deg, #2a4d73 0%, #3b6ea3 45%, #4c8fd0 75%, #2f6aa0 100%);
   padding: calc(var(--nav-height) + 5rem) 1.5rem 5rem;
   text-align: center; max-height: 65vh;
   display: flex; align-items: center; justify-content: center;
@@ -576,7 +576,7 @@ img   { display: block; }
   font-family: var(--ff2);
   font-size: .7rem;
   font-weight: 500;
-  color: rgba(255,255,255,.5);
+  color: white;
   text-decoration: line-through;
   text-decoration-color: #ef4444;
   text-decoration-thickness: 1.5px;
@@ -1662,7 +1662,7 @@ img   { display: block; }
     align-items: center;
     text-align: left;
     padding-bottom: 0;
-    max-width: 1000px;
+    max-width: 900px;
   }
   .home-hero__badge { margin-bottom: .6rem; }
   .home-hero__title {
@@ -1670,7 +1670,7 @@ img   { display: block; }
     margin-top: .5rem;
     margin-bottom: .4rem;
   }
-  .home-hero__sub {
+   .home-hero__sub {
     font-size: .88rem;
     margin-bottom: 0;
     text-align: centre;

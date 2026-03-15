@@ -7,6 +7,7 @@ import ApplicationForm from "../Pages/ApplicationForm/ApplicationForm";
 import LandingPage from "../Pages/LandingPage/LandingPage";
 import USMockInterview from "../Pages/Products/Interview/USMockInterview";
 import Requirements from "../Pages/Products/visaRequirement/Requirements";
+import RefundPolicy from "../Pages/Products/Refund/RefundPolicy";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/application-form" element={<ApplicationForm />} />
         <Route path="/interview" element={<USMockInterview />} />
         <Route path="/Requirements" element={<Requirements />} />
+        <Route path="/Refund" element={<RefundPolicy />} />
       </Routes>
 
       <Footer />

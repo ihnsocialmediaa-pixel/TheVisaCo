@@ -4,13 +4,14 @@ import "./Home.css";
 import { visaList } from "../Booking/visaData";
 
 // ─── DATA IMPORTS ─────────────────────────────────────────────────────────────
-import { destinations } from "./homeData/destinations";
+import { destinations, REGIONS, VISA_TYPES} from "./homeData/destinations";
 import { faqs } from "./homeData/faqs";
 import { POPULARITY_STYLES } from "./homeData/popularityStyles";
 import { countries } from "./homeData/countries";
 import { steps } from "./homeData/steps";
 import { reviews } from "./homeData/reviews";
 import { GUEST_EMAIL, enquiryOptions, topics, timeSlots } from "./homeData/contactData";
+
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -70,14 +71,6 @@ function Hero({ search, setSearch }) {
             <button className="home-search__btn">Search</button>
           </div>
 
-          <div className="home-search__suggestions">
-            {["UAE 🇦🇪","Thailand 🇹🇭","Japan 🇯🇵","USA 🇺🇸","UK 🇬🇧"].map(s => (
-              <button key={s} className="home-search__pill"
-                onClick={() => setSearch(s.split(" ")[0])}>
-                {s}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
     </section>
@@ -104,11 +97,10 @@ function CountryMarquee() {
     </section>
   );
 }
-
 // ─── DEST CARD ────────────────────────────────────────────────────────────────
 function DestCard({ dest, index }) {
   const visaId = getVisaIdForDestination(dest.name);
-  const popStyle = POPULARITY_STYLES[dest.popularity] || { color: "#374151", bg: "#f3f4f6" };
+  const popStyle = POPULARITY_STYLES[dest.popularity] || { color: "#e5e7eb", bg: "rgba(255,255,255,.15)" };
 
   return (
     <Link
@@ -118,7 +110,7 @@ function DestCard({ dest, index }) {
       data-aos="fade-up"
       data-aos-delay={Math.min((index % 5) * 60, 240)}
     >
-      {/* ── Image block ── */}
+      {/* ── Full-bleed image ── */}
       <div className="home-dcard__img-wrap">
         <img
           className="home-dcard__img"
@@ -131,23 +123,26 @@ function DestCard({ dest, index }) {
           }}
         />
         <div className="home-dcard__fallback">🌍</div>
-
-        {/* Visa type — top right */}
-        <div className="home-dcard__tag">{dest.tag}</div>
-
-        {/* Visa count — bottom left */}
-        <div className="home-dcard__badge">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
-            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955
-              11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9
-              11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-          </svg>
-          {dest.visaCount} Visas
-        </div>
       </div>
 
-      {/* ── Body ── */}
+      {/* ── Gradient scrim ── */}
+      <div className="home-dcard__scrim" />
+
+      {/* ── Visa type — top right ── */}
+      <div className="home-dcard__tag">{dest.tag}</div>
+
+      {/* ── Visa count — top left ── */}
+      <div className="home-dcard__badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+          <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955
+            11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9
+            11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+        {dest.visaCount} Visas
+      </div>
+
+      {/* ── Body — pinned to bottom ── */}
       <div className="home-dcard__body">
 
         {/* Name row + popularity badge */}
@@ -162,6 +157,11 @@ function DestCard({ dest, index }) {
             </span>
           )}
         </div>
+
+        {/* Timing */}
+        {dest.timing && (
+          <p className="home-dcard__timing">{dest.timing}</p>
+        )}
 
         <div className="home-dcard__divider" />
 
@@ -187,8 +187,7 @@ function DestCard({ dest, index }) {
     </Link>
   );
 }
-
-// ─── DEST GRID ────────────────────────────────────────────────────────────────
+// ─── useCardLimit hook (must be before DestGrid) ──────────────────────────────
 function useCardLimit() {
   const [limit, setLimit] = React.useState(15);
   React.useEffect(() => {
@@ -205,43 +204,143 @@ function useCardLimit() {
   return limit;
 }
 
+
+// ─── REPLACE the entire DestGrid function with this ──────────────────────────
+ 
 function DestGrid({ search }) {
-  const [filter, setFilter] = React.useState("All");
-  const filters = ["All", "eVisa", "Sticker", "Free", "eTA"];
+  const [region, setRegion] = React.useState("All");
+  const [type,   setType]   = React.useState("All");
+ 
+  // Track which dropdown is open
+  const [openDrop, setOpenDrop] = React.useState(null); // "region" | "type" | null
+ 
   const limit = useCardLimit();
-
+ 
   const filtered = destinations.filter(d => {
-    const q = d.name.toLowerCase().includes(search.toLowerCase());
-    const f = filter === "All" || d.tag === filter;
-    return q && f;
+    const matchSearch = d.name.toLowerCase().includes(search.toLowerCase());
+    const matchRegion = region === "All" || d.region === region;
+    const matchType   = type   === "All" || d.tag    === type;
+    return matchSearch && matchRegion && matchType;
   });
-
+ 
   const shown = filtered.slice(0, limit);
-
+ 
+  const activeRegionLabel = REGIONS.find(r => r.value === region)?.label || "🌍 All Regions";
+  const activeTypeLabel   = VISA_TYPES.find(t => t.value === type)?.label   || "🗂️ All Types";
+ 
+  const hasFilters = region !== "All" || type !== "All";
+ 
+  const clearAll = () => { setRegion("All"); setType("All"); };
+ 
+  // Close dropdowns when clicking outside
+  React.useEffect(() => {
+    const handler = () => setOpenDrop(null);
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, []);
+ 
   return (
     <section className="home-dest-section">
       <div className="home-dest-section__inner">
-
+ 
         <div className="home-dest-section__head" data-aos="fade-up">
           <div>
             <span className="home-sec-tag home-sec-tag--dark">Explore Destinations</span>
             <h2 className="home-dest-section__title">Where do you want to go?</h2>
           </div>
         </div>
-
+ 
+        {/* ── Filter Bar with two dropdowns ── */}
         <div className="home-filter-bar" data-aos="fade-up" data-aos-delay="100">
-          <div className="home-filter-bar__tabs">
-            {filters.map(f => (
-              <button
-                key={f}
-                className={`home-filter-tab${filter === f ? " home-filter-tab--active" : ""}`}
-                onClick={() => setFilter(f)}
-              >{f}</button>
-            ))}
+ 
+          {/* Region Dropdown */}
+          <div
+            className="home-filter-dropdown"
+            onClick={e => { e.stopPropagation(); setOpenDrop(openDrop === "region" ? null : "region"); }}
+          >
+            <button className={`home-filter-dropdown__btn${region !== "All" ? " home-filter-dropdown__btn--active" : ""}`}>
+              <span>{activeRegionLabel}</span>
+              <svg
+                width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                style={{ transition: "transform .22s ease", transform: openDrop === "region" ? "rotate(180deg)" : "rotate(0deg)", flexShrink: 0 }}
+              >
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+ 
+            {openDrop === "region" && (
+              <div className="home-filter-dropdown__menu" onClick={e => e.stopPropagation()}>
+                {REGIONS.map(r => (
+                  <button
+                    key={r.value}
+                    className={`home-filter-dropdown__item${region === r.value ? " home-filter-dropdown__item--active" : ""}`}
+                    onClick={() => { setRegion(r.value); setOpenDrop(null); }}
+                  >
+                    {r.label}
+                    {region === r.value && (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
+ 
+          {/* Visa Type Dropdown */}
+          <div
+            className="home-filter-dropdown"
+            onClick={e => { e.stopPropagation(); setOpenDrop(openDrop === "type" ? null : "type"); }}
+          >
+            <button className={`home-filter-dropdown__btn${type !== "All" ? " home-filter-dropdown__btn--active" : ""}`}>
+              <span>{activeTypeLabel}</span>
+              <svg
+                width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                style={{ transition: "transform .22s ease", transform: openDrop === "type" ? "rotate(180deg)" : "rotate(0deg)", flexShrink: 0 }}
+              >
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+ 
+            {openDrop === "type" && (
+              <div className="home-filter-dropdown__menu" onClick={e => e.stopPropagation()}>
+                {VISA_TYPES.map(t => (
+                  <button
+                    key={t.value}
+                    className={`home-filter-dropdown__item${type === t.value ? " home-filter-dropdown__item--active" : ""}`}
+                    onClick={() => { setType(t.value); setOpenDrop(null); }}
+                  >
+                    {t.label}
+                    {type === t.value && (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+ 
+          {/* Clear filters pill (only when filters are active) */}
+          {hasFilters && (
+            <button className="home-filter-clear" onClick={clearAll}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.8" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Clear
+            </button>
+          )}
+ 
           <span className="home-filter-bar__count">{filtered.length} destinations</span>
         </div>
-
+ 
         {shown.length > 0 ? (
           <div className="home-dest-grid">
             {shown.map((d, i) => <DestCard key={d.id} dest={d} index={i} />)}
@@ -249,11 +348,11 @@ function DestGrid({ search }) {
         ) : (
           <div className="home-empty" data-aos="fade-up">
             <div className="home-empty__emoji">🔍</div>
-            <h3>No results for "{search}"</h3>
-            <p>Try a different country name or clear filters.</p>
+            <h3>No results found</h3>
+            <p>Try a different region, visa type, or search term.</p>
           </div>
         )}
-
+ 
       </div>
     </section>
   );
@@ -724,6 +823,7 @@ function Popular() {
                 >
                   <div className={`home-popular__item${isActive ? " home-popular__item--active" : ""}`}>
 
+                    {/* ── Full-bleed image ── */}
                     <div className="home-popular__thumb-wrap">
                       <img
                         src={d.img}
@@ -731,21 +831,27 @@ function Popular() {
                         className="home-popular__thumb"
                         onError={e => (e.target.style.display = "none")}
                       />
-                      <span className="home-popular__rank">#{i + 1}</span>
-                      <span className="home-popular__thumb-tag">{d.tag}</span>
                     </div>
 
+                    {/* ── Gradient scrim ── */}
+                    <div className="home-popular__scrim" />
+
+                    {/* ── Rank — top left ── */}
+                    <span className="home-popular__rank">#{i + 1}</span>
+
+                    {/* ── Visa type — top right ── */}
+                    <span className="home-popular__thumb-tag">{d.tag}</span>
+
+                    {/* ── Body — pinned to bottom ── */}
                     <div className="home-popular__body">
-                      <div>
-                        <div className="home-popular__pname">{d.name}</div>
-                        <div className="home-popular__pmeta">
-                          <svg width="8" height="8" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="2.2">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                          </svg>
-                          {d.visaCount} issued
-                        </div>
+                      <div className="home-popular__pname">{d.name}</div>
+                      <div className="home-popular__pmeta">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" strokeWidth="2.2">
+                          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                          <circle cx="9" cy="7" r="4"/>
+                        </svg>
+                        {d.visaCount} issued
                       </div>
 
                       <div className="home-popular__footer-row">

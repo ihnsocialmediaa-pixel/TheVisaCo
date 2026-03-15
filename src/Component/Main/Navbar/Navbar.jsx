@@ -54,6 +54,7 @@ export default function Navbar() {
     { label: "Travel Insurance",   to: "#" },
     { label: "Interview",          to: "/interview" },
     { label: "Requirements",        to: "/Requirements" },
+    { label: "RefundPolicy",       to: "/Refund" },
   
 
   ];
@@ -69,7 +70,7 @@ export default function Navbar() {
           <Link to="/" className="logo">
             <span className="logo__plane"><IconPlane /></span>
             <div className="logo__words">
-              <span className="logo__main">TheVisa</span>
+              <span className="logo__main">TheVisaCo</span>
               <span className="logo__sub">VISAS ON TIME</span>
             </div>
           </Link>
@@ -121,7 +122,7 @@ export default function Navbar() {
         <div className="mobile-menu__header">
           <Link to="/" className="mobile-menu__logo" onClick={closeMenu}>
             <span className="mobile-menu__logo-plane"><IconPlane /></span>
-            <span className="mobile-menu__logo-text">TheVisa</span>
+            <span className="mobile-menu__logo-text">TheVisaCo</span>
           </Link>
           <button className="mobile-menu__close" onClick={closeMenu} aria-label="Close menu">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

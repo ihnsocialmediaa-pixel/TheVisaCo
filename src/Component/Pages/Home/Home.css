@@ -89,7 +89,7 @@ img   { display: block; }
   position: relative; overflow: hidden;
   background: linear-gradient(160deg, #1a3a5c 0%, #2a5a8c 45%, #3a7ab8 75%, #1e4d7a 100%);
   padding: calc(var(--nav-height) + 5rem) 1.5rem 5rem;
-  text-align: center; max-height: 75vh;
+  text-align: center; max-height: 65vh;
   display: flex; align-items: center; justify-content: center;
 }
 .home-hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -210,20 +210,6 @@ img   { display: block; }
   color: #7a9ab8; font-size: .85rem; transition: color var(--t); padding: 0 .25rem;
 }
 .home-search__clear:hover { color: var(--text); }
-.home-search__suggestions {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: .5rem; margin-top: .75rem;
-}
-.home-search__pill {
-  font-family: var(--ff2); font-size: .78rem; font-weight: 500;
-  color: rgba(255,255,255,.75); background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.18); border-radius: 6px;
-  padding: .28rem .85rem; cursor: pointer;
-  transition: background var(--t), color var(--t), border-color var(--t);
-}
-.home-search__pill:hover {
-  background: rgba(185,215,234,.25); border-color: rgba(185,215,234,.5); color: #fff;
-}
 
 /* ── MARQUEE ── */
 .home-ve-marquee-section {
@@ -266,81 +252,14 @@ img   { display: block; }
   background-clip: text;
   animation: home-gradShift 7s ease infinite; letter-spacing: -.02em; margin-top: .4rem; line-height: 1.2;
 }
-/* ── Popularity badge ── */
-.home-dcard__popularity {
-  font-family: var(--ff2);
-  font-size: .58rem;
-  font-weight: 800;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  padding: .2rem .5rem;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: .12rem;
-  line-height: 1.5;
-}
 
-/* ── Footer: price block left · fee pill right ── */
-.home-dcard__footer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: .5rem;
-  margin-top: auto;
-}
-
-/* Left column: "Best Price" label + strikethrough */
-.home-dcard__price-block {
-  display: flex;
-  flex-direction: column;
-  gap: .08rem;
-}
-
-/* Green "✓ Best Price" label */
-.home-dcard__best-label {
-  font-family: var(--ff2);
-  font-size: .68rem;
-  font-weight: 700;
-  color: #16a34a;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-  line-height: 1.3;
-  display: flex;
-  align-items: center;
-}
-
-/* Strikethrough original price */
-.home-dcard__original-fee {
-  font-family: var(--ff2);
-  font-size: .72rem;
-  font-weight: 500;
-  color: #94a3b8;
-  text-decoration: line-through;
-  text-decoration-color: #ef4444;
-  text-decoration-thickness: 1.5px;
-  line-height: 1.2;
-}
-
-/* ── Discounted fee pill ── */
-.home-dcard__fee {
-  font-family: var(--ff2);
-  font-size: .9rem;
-  font-weight: 800;
-  color: #ffffff;
-  background: var(--navy);
-  border-radius: 6px;
-  padding: .3rem .85rem;
-  white-space: nowrap;
-  letter-spacing: .01em;
-  transition: background var(--t);
-  flex-shrink: 0;
-}
-.home-dcard:hover .home-dcard__fee {
-  background: var(--navy-mid);
-}
 /* ── Filter bar ── */
-.home-filter-bar { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.6rem; flex-wrap: wrap; }
+.home-filter-bar {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: 1.6rem; flex-wrap: wrap;
+  position: relative;   /* ← add */
+  z-index: 100;         /* ← add */
+}
 .home-filter-bar__tabs { display: flex; gap: .45rem; flex-wrap: wrap; }
 .home-filter-tab {
   font-family: var(--ff2); font-size: .82rem; font-weight: 600;
@@ -348,7 +267,6 @@ img   { display: block; }
   border: 1.5px solid var(--border); background: var(--white);
   color: var(--navy); cursor: pointer; transition: all var(--t); letter-spacing: .01em;
 }
-
 .home-filter-tab--active {
   background: var(--navy); color: var(--white); border-color: var(--navy);
   box-shadow: 0 4px 14px rgba(0,34,54,.22);
@@ -360,28 +278,179 @@ img   { display: block; }
   border-radius: 20px; padding: .22rem .75rem;
 }
 
+/* ── Dropdown wrapper ── */
+.home-filter-dropdown {
+  position: relative;
+  flex-shrink: 0;
+}
+ 
+/* ── Trigger button ── */
+.home-filter-dropdown__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--ff2);
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: .44rem 1rem;
+  cursor: pointer;
+  transition: border-color var(--t), background var(--t), box-shadow var(--t);
+  white-space: nowrap;
+  letter-spacing: .01em;
+  user-select: none;
+}
+.home-filter-dropdown__btn:hover {
+  border-color: var(--sky);
+  box-shadow: 0 2px 10px rgba(118,159,205,.15);
+}
+.home-filter-dropdown__btn--active {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+  box-shadow: 0 4px 14px rgba(26,58,92,.22);
+}
+ 
+/* ── Dropdown menu panel ── */
+.home-filter-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 192px;
+  background: #ffffffe0;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(26,58,92,.14), 0 2px 8px rgba(26,58,92,.06);
+  padding: .4rem;
+  z-index: 1000;
+  animation: home-dropIn .2s cubic-bezier(.2,0,.2,1.3);
+}
+@keyframes home-dropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);   }
+}
+ 
+/* ── Menu items ── */
+.home-filter-dropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--ff2);
+  font-size: .84rem;
+  font-weight: 500;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: .52rem .85rem;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+  text-align: left;
+  gap: .5rem;
+}
+.home-filter-dropdown__item:hover {
+  background: var(--sky-light);
+  color: var(--navy);
+}
+.home-filter-dropdown__item--active {
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+}
+.home-filter-dropdown__item--active:hover {
+  background: var(--navy-mid);
+}
+ 
+/* ── Clear filters pill ── */
+.home-filter-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: var(--ff2);
+  font-size: .78rem;
+  font-weight: 600;
+  color: #ef4444;
+  background: rgba(239,68,68,.07);
+  border: 1.5px solid rgba(239,68,68,.22);
+  border-radius: 8px;
+  padding: .38rem .85rem;
+  cursor: pointer;
+  transition: background var(--t), border-color var(--t);
+  white-space: nowrap;
+}
+.home-filter-clear:hover {
+  background: rgba(239,68,68,.14);
+  border-color: rgba(239,68,68,.4);
+}
+ 
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .home-filter-dropdown__btn { font-size: .78rem; padding: .38rem .8rem; }
+  .home-filter-dropdown__menu { min-width: 170px; }
+  .home-filter-dropdown__item { font-size: .8rem; padding: .46rem .72rem; }
+}
+
+/* ── Active filter pills ── */
+.home-filter-pills {
+  display: flex; gap: .4rem; flex-wrap: wrap;
+}
+.home-filter-pill {
+  font-family: var(--ff2); font-size: .75rem; font-weight: 600;
+  color: var(--navy); background: rgba(0,34,54,.07);
+  border: 1px solid rgba(0,34,54,.15);
+  border-radius: 20px; padding: .2rem .6rem .2rem .75rem;
+  display: inline-flex; align-items: center; gap: .35rem;
+  white-space: nowrap;
+}
+.home-filter-pill__remove {
+  background: none; border: none; cursor: pointer;
+  font-size: .65rem; color: var(--text-muted);
+  padding: 0; line-height: 1;
+  transition: color var(--t);
+  display: flex; align-items: center;
+}
+.home-filter-pill__remove:hover { color: #ef4444; }
+
 /* ── Dest grid ─ Desktop: 5 cols ── */
 .home-dest-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2rem; }
 
-/* ── DEST CARD ── */
+/* ══════════════════════════════════════════════════════════════════
+   DEST CARD — full-bleed image, all content overlaid from bottom
+══════════════════════════════════════════════════════════════════ */
 .home-dcard {
-  display: flex; flex-direction: column; cursor: pointer;
-  border-radius: 12px; overflow: hidden; background: var(--white);
-  border: 1.5px solid var(--border); box-shadow: 0 1px 4px rgba(0,34,54,.06);
+  position: relative;
+  display: block;
+  cursor: pointer;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(0,34,54,.10);
+  border: 1.5px solid var(--border);
   transition: transform .32s cubic-bezier(.2,0,.2,1), box-shadow .32s ease, border-color .32s ease;
-  text-decoration: none; color: inherit;
 }
 .home-dcard:hover {
-  transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,34,54,.16);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 22px 56px rgba(0,34,54,.28);
   border-color: var(--navy-mid);
 }
+
+/* ── Full-bleed image ── */
 .home-dcard__img-wrap {
-  position: relative; width: 100%; aspect-ratio: 16/10;
-  overflow: hidden; background: #c8d6e0; flex-shrink: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #c8d6e0;
 }
 .home-dcard__img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .55s cubic-bezier(.2,0,.2,1); display: block;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .55s cubic-bezier(.2,0,.2,1);
 }
 .home-dcard:hover .home-dcard__img { transform: scale(1.07); }
 .home-dcard__fallback {
@@ -389,36 +458,170 @@ img   { display: block; }
   align-items: center; justify-content: center; font-size: 2.8rem;
   background: linear-gradient(135deg, #c5d8e8, #dceaf4);
 }
+
+/* ── Gradient scrim — dark at bottom, fades to transparent ── */
+.home-dcard__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 22, 40, .88)  0%,
+    rgba(0, 22, 40, .52)  42%,
+    rgba(0, 22, 40, .10)  70%,
+    transparent           100%
+  );
+  pointer-events: none;
+}
+
+/* ── Visa type tag — top right ── */
 .home-dcard__tag {
   position: absolute; top: 10px; right: 10px;
   font-family: var(--ff2); font-size: .6rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: .08em;
-  background: rgba(0,34,54,.82); color: rgba(255,255,255,.92);
+  background: rgba(0,34,54,.72); color: rgba(255,255,255,.92);
   padding: .2rem .55rem; border-radius: 4px; backdrop-filter: blur(6px);
 }
+
+/* ── Visa count badge — top left ── */
 .home-dcard__badge {
-  position: absolute; bottom: 10px; left: 10px;
+  position: absolute; top: 10px; left: 10px;
   display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(255,255,255,.92); color: var(--navy);
-  font-family: var(--ff2); font-size: .68rem; font-weight: 700;
-  padding: .24rem .6rem; border-radius: 6px; backdrop-filter: blur(6px);
-  border: 1px solid rgba(0,34,54,.12); white-space: nowrap; letter-spacing: .01em;
+  background: rgba(255,255,255,.18); color: #fff;
+  font-family: var(--ff2); font-size: .65rem; font-weight: 700;
+  padding: .22rem .6rem; border-radius: 6px; backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.28); white-space: nowrap; letter-spacing: .01em;
 }
-.home-dcard__body { display: flex; flex-direction: column; gap: .5rem; padding: .85rem 1rem 1rem; flex: 1; }
+
+/* ── All content anchored to the bottom ── */
+.home-dcard__body {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .48rem;
+  padding: .85rem 1rem .9rem;
+}
+
+/* ── Destination name ── */
+.home-dcard__name-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .4rem;
+}
 .home-dcard__name {
-  font-family: 'PT Serif', serif; font-size: 1rem; font-weight: 700;
-  color: var(--navy); overflow: hidden;
+  font-family: 'PT Serif', serif; font-size: 1.05rem; font-weight: 700;
+  color: #fff; overflow: hidden;
   text-overflow: ellipsis; line-height: 1.3;
+  text-shadow: 0 1px 6px rgba(0,0,0,.4);
 }
-.home-dcard__divider { height: 1px; background: var(--border); margin: 0; }
-.home-dcard__timing { font-family: var(--ff2); font-size: .75rem; color: var(--text-muted); line-height: 1.4; }
-.home-dcard__date--normal { color: var(--amber-mid); font-weight: 600; }
-.home-dcard__date--urgent { color: #dc2626; font-weight: 600; }
+
+/* ── Popularity badge ── */
+.home-dcard__popularity {
+  font-family: var(--ff2);
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: .18rem .48rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: .1rem;
+  line-height: 1.5;
+}
+
+/* ── Timing line ── */
+.home-dcard__timing {
+  font-family: var(--ff2); font-size: .72rem;
+  color: rgba(255,255,255,.72); line-height: 1.4;
+}
+.home-dcard__date--normal { color: #fbbf24; font-weight: 600; }
+.home-dcard__date--urgent { color: #f87171; font-weight: 600; }
+
+/* ── Thin divider ── */
+.home-dcard__divider { height: 1px; background: rgba(255,255,255,.18); margin: .04rem 0; }
+
+/* ── Footer: price block left · fee pill right ── */
+.home-dcard__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: auto;
+}
+
+/* Left column: "Actual Price" label + strikethrough */
+.home-dcard__price-block {
+  display: flex;
+  flex-direction: column;
+  gap: .06rem;
+}
+
+/* Green "✓ Actual Price" label */
+.home-dcard__best-label {
+  font-family: var(--ff2);
+  font-size: .62rem;
+  font-weight: 700;
+  color: #4ade80;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+
+/* Strikethrough original price */
+.home-dcard__original-fee {
+  font-family: var(--ff2);
+  font-size: .7rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.5);
+  text-decoration: line-through;
+  text-decoration-color: #ef4444;
+  text-decoration-thickness: 1.5px;
+  line-height: 1.2;
+}
+
+/* ── Discounted fee pill ── */
+.home-dcard__fee {
+  font-family: var(--ff2);
+  font-size: .9rem;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 8px;
+  padding: .28rem .82rem;
+  white-space: nowrap;
+  letter-spacing: .01em;
+  backdrop-filter: blur(6px);
+  transition: background var(--t);
+  flex-shrink: 0;
+}
+.home-dcard:hover .home-dcard__fee {
+  background: rgba(255,255,255,.28);
+}
+
+/* ── Empty state ── */
 .home-empty { text-align: center; padding: 4rem 1rem; }
 .home-empty__emoji { font-size: 3rem; margin-bottom: 1rem; }
 .home-empty h3 { font-family: 'PT Serif', serif; font-size: 1.2rem; color: var(--text); margin-bottom: .5rem; }
 .home-empty p  { font-size: .9rem; color: var(--text-muted); }
 
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .home-dest-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 991px) {
+  .home-dest-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .home-dest-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  .home-dcard__name { font-size: .92rem; }
+  .home-dcard__fee { font-size: .8rem; padding: .24rem .65rem; }
+  .home-filter-dropdown__menu { min-width: 160px; }
+}
 /* ══════════════════════════════════════════════════════════════════
    HOW IT WORKS
 ══════════════════════════════════════════════════════════════════ */
@@ -839,57 +1042,118 @@ img   { display: block; }
   transform-style: preserve-3d; backface-visibility: hidden;
   -webkit-backface-visibility: hidden; transition: opacity 0.75s ease;
 }
+
+/* ── Card — full-bleed image, content from bottom ── */
 .home-popular__item {
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: space-between; gap: 0;
-  width: 200px; height: 200px; background: #ffffff;
-  border: 1.5px solid var(--border-light); border-radius: 8px;
-  padding: 0; overflow: hidden; text-decoration: none; color: inherit;
+  position: relative;
+  width: 200px; height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid var(--border-light);
   box-shadow: 0 2px 10px rgba(26,58,92,.08), 0 1px 3px rgba(26,58,92,.1),
     inset 0 1px 0 rgba(255,255,255,.9);
-  transition: box-shadow .3s ease, border-color .3s ease; position: relative; cursor: pointer;
+  transition: box-shadow .3s ease, border-color .3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 .home-popular__item--active {
   border-color: rgba(118,159,205,.5);
   box-shadow: 0 2px 8px rgba(26,58,92,.08), 0 1px 2px rgba(26,58,92,.15),
     inset 0 1px 0 rgba(255,255,255,.9);
 }
-.home-popular__thumb-wrap { position: relative; width: 100%; flex: 0 0 130px; overflow: hidden; }
-.home-popular__thumb { width: 100%; height: 125px; object-fit: cover; display: block; transition: transform .55s ease; }
+
+/* ── Full-bleed image ── */
+.home-popular__thumb-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.home-popular__thumb {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .55s ease;
+}
 .home-popular__item:hover .home-popular__thumb { transform: scale(1.06); }
+
+/* ── Gradient scrim ── */
+.home-popular__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 22, 40, .88) 0%,
+    rgba(0, 22, 40, .48) 45%,
+    rgba(0, 22, 40, .08) 72%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Visa type tag — top right ── */
 .home-popular__thumb-tag {
   position: absolute; top: 7px; right: 7px; font-size: .5rem; font-weight: 800;
   letter-spacing: .07em; text-transform: uppercase;
-  background: rgba(26,58,92,.82); color: #fff; padding: .15rem .45rem;
+  background: rgba(26,58,92,.72); color: #fff; padding: .15rem .45rem;
   border-radius: 4px; backdrop-filter: blur(4px); white-space: nowrap;
 }
+
+/* ── Rank badge — top left ── */
 .home-popular__rank {
   position: absolute; top: 7px; left: 7px; font-size: .62rem; font-weight: 900;
   color: #fff; background: var(--amber-light); padding: .14rem .42rem;
   border-radius: 4px; letter-spacing: .03em; line-height: 1.4;
 }
+
+/* ── Body — pinned to bottom ── */
 .home-popular__body {
-  flex: 1; width: 100%; display: flex; flex-direction: column;
-  align-items: flex-start; justify-content: space-between;
-  padding: 0 .75rem .65rem; gap: .3rem;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .28rem;
+  padding: 0 .75rem .65rem;
 }
+
 .home-popular__pname {
-  font-size: .84rem; font-weight: 700; color: var(--navy);
+  font-size: .84rem; font-weight: 700; color: #fff;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   width: 100%; font-family: 'PT Serif', serif; line-height: 1.2; text-align: left;
+  text-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
-.home-popular__pmeta { font-size: .65rem; color: var(--text-muted); font-family: var(--ff2); display: flex; align-items: center; gap: .28rem; }
-.home-popular__footer-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: .3rem; margin-top: .1rem; }
-.home-popular__price-col { display: flex; flex-direction: column; align-items: flex-start; gap: .06rem; }
-.home-popular__pfee-orig { font-size: .6rem; font-weight: 500; color: #94a3b8; text-decoration: line-through; text-decoration-color: #ef4444; font-family: var(--ff2); line-height: 1; }
-.home-popular__pfee { font-size: .88rem; font-weight: 800; color: var(--navy); font-family: var(--ff2); line-height: 1; }
+.home-popular__pmeta {
+  font-size: .65rem; color: rgba(255,255,255,.72);
+  font-family: var(--ff2); display: flex; align-items: center; gap: .28rem;
+}
+.home-popular__footer-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; gap: .3rem; margin-top: .1rem;
+}
+.home-popular__price-col {
+  display: flex; flex-direction: column; align-items: flex-start; gap: .04rem;
+}
+.home-popular__pfee-orig {
+  font-size: .6rem; font-weight: 500;
+  color: rgba(255,255,255,.45);
+  text-decoration: line-through; text-decoration-color: #ef4444;
+  font-family: var(--ff2); line-height: 1;
+}
+.home-popular__pfee {
+  font-size: .88rem; font-weight: 800; color: #fff;
+  font-family: var(--ff2); line-height: 1;
+}
 .home-popular__btn {
   font-family: var(--ff2); font-size: .65rem; font-weight: 700; letter-spacing: .03em;
-  background: var(--navy); color: var(--white); border: none; border-radius: 6px;
-  padding: .28rem .7rem; cursor: pointer; transition: background var(--t);
-  white-space: nowrap; text-decoration: none; display: inline-block; flex-shrink: 0;
+  background: rgba(255,255,255,.18); color: #fff;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 6px; padding: .28rem .7rem;
+  cursor: pointer; transition: background var(--t);
+  white-space: nowrap; text-decoration: none;
+  display: inline-block; flex-shrink: 0;
+  backdrop-filter: blur(6px);
 }
-.home-popular__btn:hover { background: var(--navy-mid); }
+.home-popular__btn:hover { background: rgba(255,255,255,.28); }
+
 .home-popular__nav { display: flex; align-items: center; justify-content: center; gap: 1.4rem; margin-top: 2.2rem; }
 .home-popular__nav-btn {
   width: 46px; height: 46px; border-radius: 50%;
@@ -907,8 +1171,6 @@ img   { display: block; }
   .home-popular__scene { height: 310px; }
   .home-popular__slide { width: 170px; margin-left: -85px; margin-top: -85px; }
   .home-popular__item  { width: 170px; height: 170px; }
-  .home-popular__thumb-wrap { flex: 0 0 90px; }
-  .home-popular__thumb { height: 90px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1355,7 +1617,11 @@ img   { display: block; }
   .home-how__head { margin-bottom: 2rem; }
   .home-popular { padding: 40px 1rem; }
   .home-cta-banner { padding: 45px 1rem; }
-  
+  .home-hero__inner {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 720px; margin: 0 auto;
+  padding-top: 1rem;
+}
 }
 
 @media (max-width: 480px) {
@@ -1366,7 +1632,7 @@ img   { display: block; }
   .home-ve-marquee-name     { font-size: .7rem; }
   .home-search { flex-wrap: wrap; border-radius: 8px; }
   .home-search__btn { width: 100%; text-align: center; margin-top: .3rem; }
-  .home-hero { max-height: 70vh!important;}
+  .home-hero { max-height: 60vh!important;}
 }
 
 @media (max-width: 400px) {

@@ -1,4 +1,7 @@
-/* Refund.css — All classes prefixed with "Refund" for full isolation */
+/* ============================================================
+   Refund.css — All classes prefixed with "Refund" for full isolation
+   FULLY RESPONSIVE: Mobile / Tablet / Landscape / Desktop
+   ============================================================ */
 
 /* ─── Google Fonts ─────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
@@ -168,9 +171,17 @@
   box-shadow: var(--Refund-shadow-sm);
   background: var(--Refund-surface);
   animation: RefundFadeUp 0.3s var(--Refund-ease) both;
+  /* Allow horizontal scroll on narrow screens */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.RefundTable { width: 100%; border-collapse: collapse; }
+.RefundTable {
+  width: 100%;
+  border-collapse: collapse;
+  /* Prevent table from collapsing too much */
+  min-width: 480px;
+}
 .RefundTable__head { background: #f0ece5; }
 
 .RefundTable__th {
@@ -182,6 +193,7 @@
   color: var(--Refund-text-3);
   text-align: left;
   border-bottom: 1.5px solid var(--Refund-border);
+  white-space: nowrap;
 }
 
 .RefundTable__td {
@@ -253,7 +265,6 @@
 /* ─── Reviews Section ────────────────────────────────── */
 .RefundReviews { padding: 64px 0 88px; }
 
-/* ── Divider between WriteReview and reviews list ── */
 .RefundReviews__divider {
   height: 1.5px;
   background: var(--Refund-border);
@@ -261,7 +272,6 @@
   border-radius: 100px;
 }
 
-/* ── Header row: title + search ── */
 .RefundReviews__top {
   display: flex;
   align-items: flex-end;
@@ -732,32 +742,45 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Tablet: 641–1024px → page carousel, 2×2 grid per page ─── */
-@media (min-width: 641px) and (max-width: 1024px) {
+/* ══════════════════════════════════════════════════════
+   COMPREHENSIVE RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════ */
+
+/* ── DESKTOP LARGE (1280px+) ── */
+@media (min-width: 1280px) {
+  .RefundContainer { padding: 0 48px; }
+  .RefundReviews__grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+
+/* ── DESKTOP (1025px–1279px) ── */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .RefundContainer { padding: 0 32px; }
+  .RefundReviews__grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+}
+
+/* ── TABLET LANDSCAPE (768px–1024px) ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .RefundContainer { padding: 0 24px; }
+  .RefundHero { padding: 56px 0 40px; }
+  .RefundHero__title { margin: 24px auto; }
+  .RefundPolicy { padding: 0 0 56px; }
+  .RefundReviews { padding: 48px 0 64px; }
   .RefundReviews__viewport { display: none; }
   .RefundReviews__fade     { display: none; }
   .RefundCarousel          { display: block; }
-  .RefundHero__title { margin: 50px auto;}
-
-  .RefundCarousel__slide {
-    width: 100%;
-    padding: 0;
-  }
-
+  .RefundCarousel__slide   { width: 100%; padding: 0; }
   .RefundCarousel__page-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 16px;
   }
-
   .RefundCarousel .RefundReviewCard {
     height: auto;
     overflow: visible;
     gap: 12px;
     padding: 20px 18px;
   }
-
   .RefundCarousel .RefundReviewCard__text {
     display: -webkit-box;
     -webkit-line-clamp: 5;
@@ -767,42 +790,186 @@
     line-height: 1.65;
     flex: none;
   }
-
   .RefundCarousel .RefundReviewCard__quote-mark { display: none; }
+  .RefundWriteReview { padding: 28px 32px; }
+  .RefundReviews__divider { margin: 36px 0 32px; }
+  .RefundTable__th { padding: 12px 16px; }
+  .RefundTable__td { padding: 16px; }
 }
 
-/* ─── Mobile: ≤640px ─────── */
-@media (max-width: 640px) {
-  .RefundContainer { padding: 0 16px; }
-  .RefundHero { padding: 48px 0 36px; }
+/* ── TABLET LANDSCAPE orientation ── */
+@media (min-width: 600px) and (max-width: 1024px) and (orientation: landscape) {
+  .RefundHero { padding: 40px 0 28px; }
+  .RefundHero__title { font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 16px auto; }
+  .RefundPolicy { padding: 0 0 40px; }
+  .RefundReviews { padding: 36px 0 48px; }
+  .RefundReviews__divider { margin: 28px 0 24px; }
+  .RefundWriteReview { padding: 24px 28px; }
+  .RefundWriteReview__form { gap: 12px; }
+  .RefundReviews__viewport { height: 480px; }
+}
+
+/* ── MOBILE LANDSCAPE (≤767px, landscape) ── */
+@media (max-width: 767px) and (orientation: landscape) {
+  .RefundContainer { padding: 0 20px; }
+  .RefundHero { padding: 28px 0 20px; }
+  .RefundHero__title { font-size: clamp(1.5rem, 4vw, 2.2rem); margin: 12px auto; }
+  .RefundHero__pill { margin-bottom: 16px; font-size: 0.68rem; }
+  .RefundPolicy { padding: 0 0 32px; }
+  .RefundPolicy__header { flex-direction: row; gap: 16px; margin-bottom: 18px; }
+  .RefundPolicy__tabs { gap: 6px; }
+  .RefundPolicy__tab { padding: 7px 14px; font-size: 0.78rem; }
+  .RefundTable__th { padding: 10px 14px; font-size: 0.68rem; }
+  .RefundTable__td { padding: 12px 14px; font-size: 0.83rem; }
+  .RefundReviews { padding: 28px 0 40px; }
+  .RefundReviews__top { flex-direction: row; align-items: center; margin-bottom: 20px; }
+  .RefundReviews__divider { margin: 24px 0 20px; }
+  .RefundReviews__viewport { display: none; }
+  .RefundReviews__fade { display: none; }
+  .RefundCarousel { display: block; }
+  .RefundCarousel__slide { width: 100%; padding: 0; }
+  .RefundCarousel__page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .RefundCarousel .RefundReviewCard {
+    height: auto;
+    padding: 16px;
+    gap: 10px;
+  }
+  .RefundCarousel .RefundReviewCard__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.8rem;
+    flex: none;
+  }
+  .RefundCarousel .RefundReviewCard__quote-mark { display: none; }
+  .RefundWriteReview { padding: 20px; }
+  .RefundWriteReview__form { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .RefundWriteReview__field--full { grid-column: 1 / -1; }
+  .RefundWriteReview__submit { padding: 10px 20px; font-size: 0.82rem; }
+}
+
+/* ── TABLET PORTRAIT (641px–767px) ── */
+@media (min-width: 641px) and (max-width: 767px) {
+  .RefundContainer { padding: 0 20px; }
+  .RefundHero { padding: 52px 0 36px; }
+  .RefundHero__title { margin: 24px auto; font-size: clamp(2rem, 4.5vw, 2.8rem); }
   .RefundPolicy__header { flex-direction: column; }
   .RefundReviews__top { flex-direction: column; align-items: flex-start; }
   .RefundReviews__search-wrap { width: 100%; }
-  .RefundHero__title { margin: 50px auto;}
+  .RefundReviews__viewport { display: none; }
+  .RefundReviews__fade     { display: none; }
+  .RefundCarousel          { display: block; }
+  .RefundCarousel__slide   { width: 100%; padding: 0; }
+  .RefundCarousel__page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 14px;
+  }
+  .RefundCarousel .RefundReviewCard {
+    height: auto;
+    overflow: visible;
+    gap: 12px;
+    padding: 18px;
+  }
+  .RefundCarousel .RefundReviewCard__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.845rem;
+    flex: none;
+  }
+  .RefundCarousel .RefundReviewCard__quote-mark { display: none; }
+  .RefundWriteReview { padding: 28px 24px; }
+  .RefundWriteReview__form { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .RefundReviews__divider { margin: 36px 0 32px; }
+  .RefundTable__reason-wrap { white-space: normal; word-break: break-word; }
+}
 
-  /* Reason column: allow wrapping on mobile */
+/* ── MOBILE (≤640px) ── */
+@media (max-width: 640px) {
+  .RefundContainer { padding: 0 16px; }
+  .RefundHero { padding: 48px 0 36px; }
+  .RefundHero__title { margin: 50px auto; }
+  .RefundPolicy__header { flex-direction: column; }
+  .RefundReviews__top { flex-direction: column; align-items: flex-start; }
+  .RefundReviews__search-wrap { width: 100%; }
   .RefundTable__reason-wrap {
     white-space: normal;
     word-break: break-word;
     align-items: flex-start;
   }
-
   .RefundTable__reason-dot {
     margin-top: 5px;
     flex-shrink: 0;
   }
-
-  /* Hide desktop grid, show carousel */
   .RefundReviews__viewport { display: none; }
   .RefundReviews__fade     { display: none; }
   .RefundCarousel          { display: block; }
-
   .RefundCarousel__slide   { width: 100%; padding: 0; }
-
   .RefundWriteReview { padding: 28px 20px; }
   .RefundWriteReview__form { grid-template-columns: 1fr; }
   .RefundWriteReview__field--full { grid-column: 1; }
-
-  /* Divider spacing on mobile */
   .RefundReviews__divider { margin: 36px 0 32px; }
+  .RefundPolicy { padding: 0 0 48px; }
+  .RefundReviews { padding: 48px 0 64px; }
+  .RefundTable__th { padding: 10px 14px; font-size: 0.68rem; }
+  .RefundTable__td { padding: 14px; font-size: 0.85rem; }
+}
+
+/* ── SMALL MOBILE (≤400px) ── */
+@media (max-width: 400px) {
+  .RefundContainer { padding: 0 12px; }
+  .RefundHero { padding: 36px 0 28px; }
+  .RefundHero__title { font-size: clamp(1.6rem, 7vw, 2.2rem); margin: 24px auto; }
+  .RefundHero__pill { font-size: 0.65rem; padding: 4px 12px; }
+  .RefundPolicy__tab { padding: 7px 14px; font-size: 0.78rem; }
+  .RefundWriteReview { padding: 20px 14px; }
+  .RefundWriteReview__title { font-size: 1.2rem; }
+  .RefundWriteReview__star-btn { font-size: 1.3rem; }
+  .RefundWriteReview__submit { width: 100%; text-align: center; }
+  .RefundReviewCard { padding: 18px; }
+  .RefundAvatar { width: 36px; height: 36px; font-size: 0.7rem; }
+  .RefundTable { min-width: 400px; }
+  .RefundTable__th { padding: 8px 10px; font-size: 0.62rem; }
+  .RefundTable__td { padding: 10px; font-size: 0.8rem; }
+  .RefundBadge { font-size: 0.68rem; padding: 4px 10px; }
+  .RefundReviews { padding: 36px 0 48px; }
+  .RefundCarousel__btn { width: 36px; height: 36px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  .RefundHero,
+  .RefundTableWrap,
+  .RefundReviewCard {
+    animation: none;
+  }
+  .RefundReviewCard:hover,
+  .RefundPolicy__tab:hover,
+  .RefundWriteReview__submit:hover {
+    transform: none;
+  }
+}
+
+/* ── PRINT ── */
+@media print {
+  .RefundCarousel,
+  .RefundWriteReview,
+  .RefundCarousel__controls { display: none !important; }
+  .RefundPage { background: white; }
+  .RefundReviews__viewport {
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+  .RefundReviews__grid { grid-template-columns: repeat(2, 1fr); }
+  .RefundReviews__fade { display: none; }
+  .RefundTableWrap { box-shadow: none; border: 1px solid #ddd; }
 }

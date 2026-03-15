@@ -224,7 +224,6 @@ body {
 
 .AIlanding__h1-highlight {
   color: #355872;
-  
   margin-bottom: 28px;
 }
 
@@ -312,7 +311,6 @@ body {
   box-shadow: 0 0 20px rgba(53,88,114,0.06);
 }
 
-/* ── Step card numbers: all navy blue ── */
 .AIstep-card__num {
   font-size: 11px;
   font-weight: 800;
@@ -1055,28 +1053,180 @@ body {
   transition: height 0.3s ease, opacity 0.3s ease;
 }
 
-/* ─── RESPONSIVE BREAKPOINTS ─────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .AIlanding__container { padding: calc(60px + 24px) 16px 32px; }
-  .AIlanding__hero { min-height: calc(50vh - 60px); }
-  .AIsteps-grid { grid-template-columns: 1fr; }
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS — FULLY COMPREHENSIVE
+   ═══════════════════════════════════════════════════ */
+
+/* ── DESKTOP LARGE (1280px+) ── */
+@media (min-width: 1280px) {
+  .AIlanding__container { padding: calc(68px + 48px) 48px 60px; }
+  .AIresults-wrapper { padding: 80px 32px 80px; }
+}
+
+/* ── DESKTOP (1024px–1279px) ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .AIlanding__container { padding: calc(68px + 36px) 32px 48px; }
+}
+
+/* ── TABLET LANDSCAPE (768px–1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .AIlanding__container { padding: calc(60px + 28px) 28px 36px; }
+  .AIlanding__hero { min-height: calc(45vh - 60px); }
+  .AIsteps-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .AIquestions-grid { grid-template-columns: 1fr; }
+  .AIinterview-wrapper { max-width: 600px; margin-top: 60px; }
+  .AIresults-wrapper { padding: 48px 24px; max-width: 680px; }
+  .AIscore-rings-grid { grid-template-columns: repeat(3, 1fr); }
+  .AIsetup-wrapper { max-width: 500px; margin-top: 40px; }
+  .AIofficer-panel { padding: 28px 32px; }
+}
+
+/* ── TABLET PORTRAIT (641px–767px) ── */
+@media (min-width: 641px) and (max-width: 767px) {
+  .AIlanding__container { padding: calc(56px + 24px) 20px 32px; }
+  .AIlanding__hero { min-height: calc(40vh - 56px); }
+  .AIsteps-grid { grid-template-columns: 1fr; gap: 14px; }
   .AIquestions-grid { grid-template-columns: 1fr; }
   .AIvoice-cards-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .AIsetup-info-bar { gap: 8px; }
-  .AIinterview-wrapper { padding: 0; }
-  .AIresults-wrapper { padding: 32px 16px 60px; }
+  .AIsetup-info-bar { gap: 10px; flex-direction: row; }
+  .AIinterview-wrapper { padding: 0; max-width: 100%; margin-top: 48px; }
+  .AIresults-wrapper { padding: 36px 20px 48px; }
   .AIscore-rings-grid { grid-template-columns: repeat(2, 1fr); }
   .AIresults-cta { flex-direction: column; align-items: stretch; }
   .AIresults-cta .AIbtn { text-align: center; }
-  .AIsection { margin-top: 40px; }
+  .AIsection { margin-top: 32px; }
+  .AIofficer-panel__identity { padding: 10px 16px; }
 }
 
+/* ── MOBILE LANDSCAPE (480px–767px, landscape orientation) ── */
+@media (max-width: 767px) and (orientation: landscape) {
+  .AIlanding__container { padding: calc(52px + 16px) 20px 24px; }
+  .AIlanding__hero { min-height: auto; padding-top: 8px; }
+  .AIlanding__h1 { font-size: clamp(24px, 5vw, 40px); }
+  .AIsections { margin-top: 32px; }
+  .AIsection { margin-top: 24px; }
+  .AIsteps-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .AIstep-card { padding: 20px 16px; }
+  .AIstep-card__bg-num { font-size: 60px; }
+  .AIquestions-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .AIquestion-preview-card { padding: 14px 16px; }
+  .AIsetup-wrapper { margin-top: 24px; max-width: 520px; }
+  .AIsetup-card { padding: 24px; }
+  .AIsetup-card__header { margin-bottom: 20px; }
+  .AIvoice-cards-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .AIvoice-card { padding: 16px 12px; }
+  .AIvoice-card__avatar { width: 44px; height: 44px; font-size: 20px; margin-bottom: 8px; }
+  .AIvoice-card__name { font-size: 13px; }
+  .AIinterview-wrapper { margin-top: 40px; }
+  .AIinterview-header { flex-direction: row; }
+  .AIofficer-panel { padding: 16px 20px; }
+  .AIofficer-panel__identity { margin-bottom: 16px; }
+  .AIofficer-panel__question-wrap { margin-top: 12px; }
+  .AIofficer-panel__question { font-size: 14px; }
+  .AIresponse-panel { padding: 16px 20px; margin-bottom: 12px; }
+  .AIresponse-panel__transcript { min-height: 50px; }
+  .AIprogress-bar { margin-bottom: 16px; }
+  .AIresults-wrapper { padding: 24px 16px 40px; }
+  .AIresults-header { margin-bottom: 24px; }
+  .AIresults-header__emoji { font-size: 40px; margin-bottom: 10px; }
+  .AIoverall-score-card { padding: 20px 24px; }
+  .AIoverall-score-card__number { font-size: clamp(48px, 8vw, 72px); }
+  .AIscore-rings-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .AIresults-cta { flex-direction: row; justify-content: center; }
+  .AIanalyzing-spinner { width: 56px; height: 56px; margin-bottom: 16px; }
+  .AIanalyzing-title { font-size: 20px; }
+}
+
+/* ── MOBILE (≤480px) ── */
 @media (max-width: 480px) {
+  .AIlanding__container { padding: calc(56px + 16px) 16px 28px; }
+  .AIlanding__hero { min-height: calc(45vh - 56px); }
   .AIlanding__cta { flex-direction: column; }
-  .AIlanding__cta .AIbtn { text-align: center; }
-  .AIvoice-cards-grid { grid-template-columns: 1fr 1fr; }
-  .AIscore-rings-grid { grid-template-columns: repeat(2, 1fr); }
-  .AIinterview-header { flex-direction: column; align-items: flex-start; }
-  .AIofficer-panel__identity { flex-direction: column; text-align: center; padding: 16px; }
+  .AIlanding__cta .AIbtn { text-align: center; width: 100%; }
+  .AIlanding__h1 { font-size: clamp(28px, 8vw, 44px); }
+
+  .AIsections { margin-top: 40px; }
+  .AIsection { margin-top: 28px; }
+  .AIsteps-grid { grid-template-columns: 1fr; gap: 12px; }
+  .AIstep-card { padding: 24px 20px; }
+  .AIstep-card__bg-num { font-size: 70px; }
+  .AIquestions-grid { grid-template-columns: 1fr; }
+  .AIquestion-preview-card { padding: 16px; gap: 12px; }
+
+  .AIsetup-wrapper { max-width: 100%; margin-top: 32px; }
+  .AIsetup-card { padding: 24px 20px; }
+  .AIsetup-card__header { margin-bottom: 24px; }
+  .AIsetup-card__icon-wrap { width: 52px; height: 52px; }
+  .AIsetup-info-bar { flex-direction: column; gap: 8px; padding: 14px 16px; }
+  .AIvoice-cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .AIvoice-card { padding: 18px 14px; }
+  .AIvoice-card__avatar { width: 48px; height: 48px; font-size: 22px; }
+
+  .AIinterview-wrapper { padding: 0; margin-top: 48px; }
+  .AIinterview-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .AIofficer-panel { padding: 20px 16px; }
+  .AIofficer-panel__identity { flex-direction: column; text-align: center; padding: 14px; gap: 8px; }
   .AIofficer-panel__info { text-align: center; }
+  .AIofficer-panel__question { font-size: 15px; }
+  .AIofficer-panel__question-wrap { margin-top: 16px; }
+  .AIresponse-panel { padding: 18px 16px; }
+  .AIresponse-panel__header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .AIresponse-panel__transcript { min-height: 60px; padding: 12px; }
+
+  .AIresults-wrapper { padding: 32px 16px 48px; }
+  .AIresults-header { margin-bottom: 28px; }
+  .AIresults-header__emoji { font-size: 44px; }
+  .AIoverall-score-card { padding: 24px 20px; }
+  .AIoverall-score-card__number { font-size: clamp(56px, 15vw, 80px); }
+  .AIscore-rings-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .AIresults-cta { flex-direction: column; align-items: stretch; }
+  .AIresults-cta .AIbtn { text-align: center; }
+  .AIanswer-item { padding: 16px; }
+  .AIanswer-item__inner { flex-direction: column; gap: 8px; }
+  .AIanswer-item__num { margin-bottom: 4px; }
+  .AIfooter { padding: 28px 16px; }
+}
+
+/* ── VERY SMALL MOBILE (≤360px) ── */
+@media (max-width: 360px) {
+  .AIlanding__container { padding: calc(52px + 12px) 12px 24px; }
+  .AIlanding__h1 { font-size: clamp(24px, 9vw, 36px); }
+  .AIbtn { padding: 12px 20px; font-size: 14px; }
+  .AIvoice-cards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .AIvoice-card { padding: 14px 10px; }
+  .AIvoice-card__avatar { width: 40px; height: 40px; font-size: 18px; margin-bottom: 8px; }
+  .AIvoice-card__name { font-size: 12px; }
+  .AIsetup-card { padding: 18px 14px; }
+  .AIscore-rings-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .AIofficer-panel { padding: 16px 12px; }
+  .AIresponse-panel { padding: 14px 12px; }
+  .AIinterview-header__flag { width: 32px; height: 32px; font-size: 14px; }
+}
+
+/* ── HIGH-DPI / RETINA ── */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .AIvoice-wave__bar { width: 3px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos],
+  .AIofficer-panel__avatar.AIspeaking,
+  .AIanalyzing-spinner,
+  .AIanalyzing-shimmer,
+  .AIresponse-panel__mic-btn.AIlistening {
+    animation: none !important;
+    transition: none !important;
+  }
+  .AIofficer-panel__avatar.AIspeaking {
+    box-shadow: 0 0 20px rgba(53, 88, 114, 0.3);
+  }
+}
+
+/* ── PRINT ── */
+@media print {
+  .AIorb, .AIvoice-wave, .AIanalyzing-spinner { display: none; }
+  .AIresults-wrapper { padding: 20px; }
+  .AIpage { background: white; }
+  .AIbtn { display: none; }
 }

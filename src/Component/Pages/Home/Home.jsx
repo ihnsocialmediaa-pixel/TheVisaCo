@@ -45,9 +45,7 @@ function Hero({ search, setSearch }) {
           <span className="home-hero__title-accent">On Time</span>
         </h1>
 
-        <p className="home-hero__sub" data-aos="fade-up" data-aos-delay="200">
-          Fast, expert visa processing for 180+ countries — approved on time, guaranteed.
-        </p>
+        
 
         <div className="home-search-wrap" data-aos="zoom-in-up" data-aos-delay="300">
           <div className="home-search">
@@ -77,26 +75,6 @@ function Hero({ search, setSearch }) {
   );
 }
 
-// ─── COUNTRY MARQUEE ──────────────────────────────────────────────────────────
-
-function CountryMarquee() {
-  return (
-    <section className="home-ve-marquee-section">
-      <div className="home-ve-marquee-track">
-        <div className="home-ve-marquee-inner">
-          {[...countries, ...countries].map((c, i) => {
-            const visaId = getVisaIdForDestination(c.name);
-            return (
-              <Link key={i} to={`/visa/${visaId}`} className="home-ve-marquee-item">
-                <span className="home-ve-marquee-name">{c.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
 // ─── DEST CARD ────────────────────────────────────────────────────────────────
 function DestCard({ dest, index }) {
   const visaId = getVisaIdForDestination(dest.name);
@@ -1924,7 +1902,7 @@ export default function Home() {
   return (
     <div className="home-app">
       <Hero search={search} setSearch={setSearch} />
-      <CountryMarquee />
+      
       <DestGrid search={search} />
       <HowItWorks />   
       <Popular />

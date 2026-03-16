@@ -87,9 +87,9 @@ img   { display: block; }
 ══════════════════════════════════════════════════════════════════════════════ */
 .home-hero {
   position: relative; overflow: hidden;
-  background: linear-gradient(160deg, #2a4d73 0%, #3b6ea3 45%, #4c8fd0 75%, #2f6aa0 100%);
+  background: white;
   padding: calc(var(--nav-height) + 5rem) 1.5rem 5rem;
-  text-align: center; max-height: 65vh;
+  text-align: center; max-height: 55vh;
   display: flex; align-items: center; justify-content: center;
 }
 .home-hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -158,7 +158,7 @@ img   { display: block; }
 .home-hero__title {
   font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 800; font-family: 'PT Serif', serif;
-  color: var(--white); letter-spacing: -.03em;
+  color: var(--navy-mid); letter-spacing: -.03em;
   margin-top: 1.2rem; margin-bottom: .8rem; line-height: 1.1;
 }
 .home-hero__title-accent {
@@ -169,11 +169,7 @@ img   { display: block; }
   background-clip: text;
   animation: home-gradShift 4s ease infinite;
 }
-.home-hero__sub {
-  font-family: var(--ff2); font-size: 1.05rem;
-  color: rgba(255,255,255,.72); max-width: 500px;
-  margin: 0 auto 2.2rem; line-height: 1.7; text-align: center;
-}
+
 
 /* ── SEARCH BAR ── */
 .home-search-wrap { max-width: 580px; margin: 0 auto; }
@@ -211,32 +207,10 @@ img   { display: block; }
 }
 .home-search__clear:hover { color: var(--text); }
 
-/* ── MARQUEE ── */
-.home-ve-marquee-section {
-  background: var(--navy-soft);
-  border-top: 1px solid rgba(185,215,234,.2);
-  border-bottom: 1px solid rgba(185,215,234,.2);
-  padding: .9rem 0; overflow: hidden;
-}
-.home-ve-marquee-track  { overflow: hidden; width: 100%; }
-.home-ve-marquee-inner  {
-  display: flex; width: max-content;
-  animation: home-marqueeScroll 27s linear infinite;
-}
-@keyframes home-marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-.home-ve-marquee-item {
-  display: inline-flex; align-items: center; gap: .6rem;
-  padding: 0 2rem; color: rgba(214,230,242,.75);
-  font-size: .88rem; font-weight: 500;
-  white-space: nowrap; border-right: 1px solid rgba(185,215,234,.15);
-}
-.home-ve-marquee-name { letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
-
-
 /* ══════════════════════════════════════════════════════════════════
    DESTINATION SECTION
 ══════════════════════════════════════════════════════════════════ */
-.home-dest-section { padding: 3.5rem 0 4rem; background: var(--bg); }
+.home-dest-section { padding: 3.5rem 0 4rem; background: white; }
 .home-dest-section__inner { max-width: 1440px; margin: 0 auto; padding: 0 2rem; }
 .home-dest-section__head {
   display: flex; align-items: flex-end; justify-content: space-between;
@@ -1592,14 +1566,18 @@ img   { display: block; }
   .home-how__nav-btn  { width: 46px; height: 46px; }
   .home-popular       { padding: 50px 1.5rem; }
   .home-cta-banner    { padding: 55px 1.5rem; }
+  .home-hero { max-height: 30vh!important;}
+  
 }
 
 @media (max-width: 768px) {
   .home-hero { padding: calc(var(--nav-height) + 3.5rem) 1rem 4rem; min-height: auto; }
   .home-dest-section__head { flex-direction: column; align-items: flex-start; }
   .home-search { border-radius: 8px; padding: .75rem 1rem; }
-  .home-search__btn { padding: .48rem 1rem; font-size: .8rem; }
+  .home-search__btn { padding: .48rem 1rem;     font-size: .8rem; }
+  
 }
+
 
 @media (max-width: 600px) {
   .home-dest-grid { grid-template-columns: repeat(2, 1fr); gap: .85rem; }
@@ -1617,11 +1595,12 @@ img   { display: block; }
   .home-how__head { margin-bottom: 2rem; }
   .home-popular { padding: 40px 1rem; }
   .home-cta-banner { padding: 45px 1rem; }
-  .home-hero__inner {
-  position: relative; z-index: 1;
-  width: 100%; max-width: 720px; margin: 0 auto;
-  padding-top: 1rem;
-}
+  .home-hero__inner { position: relative; z-index: 1; width: 100%; max-width: 720px; margin: 0 auto;
+  padding-top: 1rem; }
+  
+
+
+ 
 }
 
 @media (max-width: 480px) {
@@ -1670,12 +1649,7 @@ img   { display: block; }
     margin-top: .5rem;
     margin-bottom: .4rem;
   }
-   .home-hero__sub {
-    font-size: .88rem;
-    margin-bottom: 0;
-    text-align: centre;
-    margin-right:100px;
-  }
+  
   .home-hero__orb--1 { width: 280px; height: 280px; }
   .home-hero__orb--2 { width: 200px; height: 200px; }
  

@@ -390,7 +390,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ── MOBILE LANDSCAPE (≤767px, landscape) ── */
 @media (max-width: 767px) and (orientation: landscape) {
-  .nav__inner { padding: 0.45rem 1rem; margin: 2px auto; gap: 8rem; }
+  .nav__inner { padding: 0.45rem 1rem; margin: 2px auto; gap: 30rem; }
   .logo__main { font-size: 1.3rem; margin-top: 4px; }
   .logo__plane { margin-top: 8px; width: 22px; height: 22px; }
   .logo__sub { font-size: 0.38rem; letter-spacing: 0.1em; }

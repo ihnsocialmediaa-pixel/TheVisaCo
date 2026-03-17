@@ -14,6 +14,7 @@ a { text-decoration: none; color: inherit; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   background: var(--navy);
   transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  max-height: 70px;
 }
 .nav--hero    { background: transparent; box-shadow: none; }
 .nav--scrolled {
@@ -21,6 +22,7 @@ a { text-decoration: none; color: inherit; }
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 2px 24px rgba(0,0,0,.35);
+  max-height: 70px;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -47,13 +49,13 @@ a { text-decoration: none; color: inherit; }
 }
 .logo__plane {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-bottom: 3px;
   color: #f97316;
   filter: drop-shadow(0 0 6px rgba(249,115,22,.55));
 }
 .logo__words { display: flex; flex-direction: column; line-height: 1; }
 .logo__main {
-  font-size: 2rem; font-weight: 800; letter-spacing: -.01em;
+  font-size: 20px!important; font-weight: 800; letter-spacing: -.01em;
   margin-top: 2px; font-family: PT Serif, serif;
   background: linear-gradient(135deg, #f97316 0%, #fb923c 55%, #fdba74 100%);
   -webkit-background-clip: text;

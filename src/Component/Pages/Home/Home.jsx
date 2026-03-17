@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import { visaList } from "../Booking/visaData";
+import { visaList } from "../Booking/bookingdata";
 
 // ─── DATA IMPORTS ─────────────────────────────────────────────────────────────
 import { destinations, REGIONS, VISA_TYPES} from "./homeData/destinations";
@@ -17,11 +17,32 @@ import { GUEST_EMAIL, enquiryOptions, topics, timeSlots } from "./homeData/conta
 
 function getVisaIdForDestination(name) {
   const normalized = name.trim().toLowerCase();
+  
+  // Try exact match first
   const exact = visaList.find(v => v.country.toLowerCase() === normalized);
   if (exact) return exact.id;
-  if (normalized.includes("united arab emirates") || normalized === "uae") return "uae-30";
-  if (normalized.includes("united states") || normalized === "usa") return "usa";
-  return "uae-30";
+  
+  // Handle special cases where destination name differs from visaList country name
+  const nameMap = {
+    "united arab emirates": "uae",
+    "united states": "usa",
+    "new zealand": "new-zealand",
+    "hong kong": "hong-kong",
+  };
+  
+  for (const [key, id] of Object.entries(nameMap)) {
+    if (normalized.includes(key)) return id;
+  }
+  
+  // Fuzzy match — check if any visaList country contains the name or vice versa
+  const fuzzy = visaList.find(v =>
+    v.country.toLowerCase().includes(normalized) ||
+    normalized.includes(v.country.toLowerCase())
+  );
+  if (fuzzy) return fuzzy.id;
+  
+  // Last resort fallback
+  return "uae";
 }
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────

@@ -86,7 +86,7 @@ img   { display: block; }
    HERO
 ══════════════════════════════════════════════════════════════════════════════ */
 .home-hero {
-  position: relative; overflow: hidden;
+  position: relative; //overflow: hidden;
   background: white;
   padding: calc(var(--nav-height) + 5rem) 1.5rem 5rem;
   text-align: center; max-height: 55vh;
@@ -210,7 +210,7 @@ img   { display: block; }
 /* ══════════════════════════════════════════════════════════════════
    DESTINATION SECTION
 ══════════════════════════════════════════════════════════════════ */
-.home-dest-section { padding: 3.5rem 0 4rem; background: white; }
+.home-dest-section { padding:  1px 0 4rem; background: white; }
 .home-dest-section__inner { max-width: 1440px; margin: 0 auto; padding: 0 2rem; }
 .home-dest-section__head {
   display: flex; align-items: flex-end; justify-content: space-between;
@@ -713,7 +713,7 @@ img   { display: block; }
 .home-testi {
   position: relative;
   padding: 90px 1.5rem 100px;
-  background: linear-gradient(160deg, #F7FBFC 0%, #D6E6F2 40%, #B9D7EA 75%, #D6E6F2 100%);
+  background: white;
   overflow: hidden;
 }
 
@@ -743,13 +743,7 @@ img   { display: block; }
 @keyframes home-tOrb1 { from{transform:translate(0,0)} to{transform:translate(-24px,16px)} }
 @keyframes home-tOrb2 { from{transform:translate(0,0)} to{transform:translate(18px,-22px)} }
 
-.home-testi__grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(118,159,205,.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(118,159,205,.08) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
+
 
 .home-testi__deco {
   position: absolute;
@@ -1270,8 +1264,9 @@ img   { display: block; }
 ══════════════════════════════════════════════════════════════════ */
 
 .home-faq {
-  position: relative; padding: 100px 1.5rem 110px;
-  background: #ffffff; overflow: hidden;
+  //position: relative; 
+  padding: 1px 1.5rem 110px;
+  background: white; overflow: hidden;
 }
 .home-faq__bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .home-faq__blob { position: absolute; border-radius: 50%; filter: blur(80px); }
@@ -1401,7 +1396,8 @@ img   { display: block; }
    CONTACT US
 ══════════════════════════════════════════════════════════════════ */
 
-.home-contact { position: relative; padding: 100px 1.5rem 120px; background: var(--bg); overflow: hidden; }
+.home-contact { position: relative; padding: 1px 1.5rem 120px; 
+background: white; overflow: hidden; }
 .home-contact__bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .home-contact__orb { position: absolute; border-radius: 50%; filter: blur(110px); }
 .home-contact__orb--1 { width: 600px; height: 600px; opacity: .07; background: radial-gradient(circle, var(--sky) 0%, transparent 70%); top: -150px; right: -80px; animation: home-cOrb1 12s ease-in-out infinite alternate; }

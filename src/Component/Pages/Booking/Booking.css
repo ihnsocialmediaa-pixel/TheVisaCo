@@ -329,7 +329,7 @@
   align-self: start;
   max-height: calc(100vh - 90px);
   /*overflow-y:*/ 
-  auto; scrollbar-width: none;
+  scrollbar-width: none;
 }
 .bk-sidebar-wrap::-webkit-scrollbar { display: none; }
 

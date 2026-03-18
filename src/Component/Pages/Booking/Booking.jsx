@@ -464,9 +464,7 @@ export default function BookingPage({ visaId: propVisaId }) {
             ref={registerRef("Info")}
           >
             <div className="bk-reveal">
-              <div className="bk-auth-badge">
-                {data.authBadge}
-              </div>
+              
               <SectionHead label="Visa Info" title={`${data.country} Visa Details`} />
 
               {/* Visa info cards */}

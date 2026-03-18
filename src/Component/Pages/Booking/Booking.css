@@ -360,6 +360,8 @@
   border-radius: var(--rl);
   box-shadow: var(--sh-lg);
   overflow: hidden;
+  margin-top: 2.5rem;
+  
 }
 .bk-sb__divider {
   height: 1px; background: var(--border); margin: 1rem 0;
@@ -607,6 +609,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
+  
+  
 }
 @media (max-width: 520px) {
   .bk-essentials { grid-template-columns: 1fr; }
@@ -776,7 +780,7 @@
   user-select: none;
 }
 .bk-faq.open .bk-faq__chevron {
-  transform: rotate(45deg);
+  transform: rotate(32deg);
   background: var(--navy);
   border-color: var(--navy);
   color: #fff;
@@ -868,7 +872,7 @@
 .bk-fab {
   position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
   display: flex; align-items: center; gap: .55rem;
-  background: var(--navy);
+  background: var(--navy-mid)!important;
   color: #ffffff;
   border-radius: 50px;
   font-family: var(--ff2); font-size: .88rem; font-weight: 700;
@@ -877,7 +881,7 @@
   transition: all .25s ease;
   border: none;
 }
-.bk-fab:hover { background: var(--navy-mid); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(13,27,75,.4); }
+.bk-fab:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(13,27,75,.4); }
 .bk-fab__dot  { width: 7px; height: 7px; border-radius: 50%; background: #6ee7b7; animation: bk-pulse 1.8s ease-in-out infinite; }
 @media (max-width: 640px) {
   .bk-fab { padding: .8rem; border-radius: 50%; width: 50px; height: 50px; justify-content: center; }
@@ -890,7 +894,7 @@
 .bk-rewards-btn {
   position: fixed; bottom: 2rem; left: 2rem; z-index: 200;
   display: flex; align-items: center; gap: .5rem;
-  background: var(--navy-lt);
+  background: var(--navy)!important;
   color: #ffffff;
   border-radius: 50px;
   font-family: var(--ff2); font-size: .82rem; font-weight: 700;
@@ -899,7 +903,7 @@
   transition: all .25s ease;
   border: none;
 }
-.bk-rewards-btn:hover { background: var(--navy); transform: translateY(-2px); }
+.bk-rewards-btn:hover { transform: translateY(-2px); }
 .bk-rewards-btn__coins { font-size: 1rem; }
 @media (max-width: 640px) {
   .bk-rewards-btn { padding: .8rem; border-radius: 50%; width: 50px; height: 50px; justify-content: center; }

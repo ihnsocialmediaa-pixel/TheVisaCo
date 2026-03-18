@@ -7,6 +7,8 @@ import "./booking.css";
 import { useParams } from "react-router-dom";
 
 
+
+
 // ─── PROFESSIONAL PLANE ICON (SVG) ────────────────────────────────────────
 function PlaneIcon({ size = 16, color = "currentColor", className = "" }) {
   return (
@@ -32,7 +34,7 @@ function PlaneIcon({ size = 16, color = "currentColor", className = "" }) {
 function ApplyBtn({ onClick, children, className = "bk-hero__btn-start" }) {
   return (
     <button className={className} onClick={onClick}>
-      <PlaneIcon size={15} />
+      
       <span style={{ marginLeft: "6px" }}>{children}</span>
     </button>
   );
@@ -123,14 +125,13 @@ function RewardsModal({ open, onClose }) {
         {/* HEAD */}
         <div className="bk-modal__head">
           <button className="bk-modal__close" onClick={onClose}>✕</button>
-          <div className="bk-modal__title">🎁 TheVisa Rewards</div>
+          <div className="bk-modal__title">TheVisa Rewards</div>
           <div className="bk-modal__sub">Earn while you travel. The more you apply, the more you save.</div>
         </div>
 
         <div className="bk-modal__body">
           {/* WELCOME BONUS */}
           <div className="bk-modal__bonus">
-            <div className="bk-modal__bonus-icon">🎊</div>
             <div>
               <div className="bk-modal__bonus-title">Welcome Bonus</div>
               <div className="bk-modal__bonus-desc">{rewardsData.welcomeBonus.description}</div>
@@ -140,7 +141,7 @@ function RewardsModal({ open, onClose }) {
 
           {/* TRANSIT VISA NOTE */}
           <div style={{ background: "#f0fdf4", border: "1.5px solid #bbf7d0", borderRadius: "var(--r)", padding: ".8rem 1.1rem", display: "flex", gap: ".65rem", alignItems: "flex-start" }}>
-            <PlaneIcon size={18} color="#059669" />
+            
             <div>
               <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#065f46", marginBottom: ".2rem" }}>Transit Visa Benefit</div>
               <div style={{ fontFamily: "var(--ff2)", fontSize: ".8rem", color: "#047857" }}>{rewardsData.transitVisa.description}</div>
@@ -149,7 +150,7 @@ function RewardsModal({ open, onClose }) {
 
           {/* USER TIERS */}
           <div>
-            <div className="bk-modal__tiers-title">👤 User Tiers</div>
+            <div className="bk-modal__tiers-title">User Tiers</div>
             <div className="bk-modal__tiers">
               {rewardsData.userTiers.map((tier) => (
                 <div key={tier.id} className={`bk-modal__tier ${openTier === tier.id ? "open" : ""}`}>
@@ -158,7 +159,6 @@ function RewardsModal({ open, onClose }) {
                     style={{ background: openTier === tier.id ? `${tier.color}10` : "transparent" }}
                     onClick={() => setOpenTier(openTier === tier.id ? null : tier.id)}
                   >
-                    <span className="bk-modal__tier-icon">{tier.icon}</span>
                     <div>
                       <div className="bk-modal__tier-name" style={{ color: tier.color }}>{tier.name}</div>
                       <div className="bk-modal__tier-desc">{tier.description}</div>
@@ -172,7 +172,7 @@ function RewardsModal({ open, onClose }) {
                           <div key={i} className="bk-modal__tier-perk">{p}</div>
                         ))}
                         {tier.upgrade && (
-                          <div className="bk-modal__tier-upgrade">💡 {tier.upgrade}</div>
+                          <div className="bk-modal__tier-upgrade">{tier.upgrade}</div>
                         )}
                       </div>
                     </div>
@@ -184,11 +184,10 @@ function RewardsModal({ open, onClose }) {
 
           {/* REFERRAL */}
           <div>
-            <div className="bk-modal__tiers-title">🤝 Referral Commission</div>
+            <div className="bk-modal__tiers-title">Referral Commission</div>
             <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
               {Object.entries(rewardsData.referral).map(([tier, data]) => (
                 <div key={tier} style={{ display: "flex", alignItems: "center", gap: ".8rem", background: "var(--surface-2)", borderRadius: "10px", padding: ".7rem 1rem", border: "1px solid var(--border)" }}>
-                  <span style={{ fontSize: "1.1rem" }}>{rewardsData.userTiers.find(t => t.id === tier)?.icon}</span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: ".86rem", fontWeight: 700, color: "var(--ink)", textTransform: "capitalize" }}>{tier}</div>
                     <div style={{ fontFamily: "var(--ff2)", fontSize: ".78rem", color: "var(--ink-soft)" }}>{data.description}</div>
@@ -201,7 +200,7 @@ function RewardsModal({ open, onClose }) {
 
           {/* COUPONS */}
           <div>
-            <div className="bk-modal__tiers-title">🏷️ Coupon Codes</div>
+            <div className="bk-modal__tiers-title">Coupon Codes</div>
             <div className="bk-modal__coupons">
               {Object.entries(rewardsData.coupons).map(([tier, data]) => (
                 <div key={tier} className="bk-modal__coupon">
@@ -219,11 +218,10 @@ function RewardsModal({ open, onClose }) {
 
           {/* MILESTONES */}
           <div>
-            <div className="bk-modal__ms-title">🏆 Milestone Rewards</div>
+            <div className="bk-modal__ms-title">Milestone Rewards</div>
             <div className="bk-modal__milestones">
               {rewardsData.milestones.map((m) => (
                 <div key={m.target} className="bk-modal__milestone">
-                  <span className="bk-modal__ms-icon">{m.icon}</span>
                   <div style={{ flex: 1 }}>
                     <div className="bk-modal__ms-reward">{m.reward}</div>
                   </div>
@@ -239,7 +237,7 @@ function RewardsModal({ open, onClose }) {
             onClick={onClose}
             style={{ fontFamily: "var(--ff)", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
           >
-            <PlaneIcon size={16} color="white" />
+            
             <span>Start Earning Rewards — Apply Now</span>
           </button>
         </div>
@@ -258,7 +256,6 @@ function Sidebar({ data, onApply }) {
       {/* TOP BAR */}
       <div className="bk-sb__topbar">
         <div className="bk-sb__guarantee">
-          <span>🛡️</span>
           <span>{visaCard.guarantee}</span>
         </div>
         <span className="bk-sb__faster">{visaCard.badge}</span>
@@ -274,34 +271,19 @@ function Sidebar({ data, onApply }) {
 
         {/* CTA */}
         <button className="bk-sb__cta" onClick={onApply} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-          <PlaneIcon size={16} color="white" />
+          
           <span>Start Application</span>
-          <span>→</span>
+          
         </button>
 
-        <div className="bk-sb__divider" />
+        
 
-        {/* VISA INFO PILLS */}
-        <div className="bk-sb__info-grid">
-          {[
-            { icon: "📋", label: visaCard.type },
-            { icon: "📅", label: `Stay: ${visaCard.stay}` },
-            { icon: "✅", label: `Valid: ${visaCard.validity}` },
-            { icon: "🚪", label: `Entry: ${visaCard.entry}` },
-          ].map((p) => (
-            <div key={p.label} className="bk-sb__info-pill">
-              <span className="bk-sb__info-pill-icon">{p.icon}</span>
-              <span>{p.label}</span>
-            </div>
-          ))}
-        </div>
+        
 
-        <div className="bk-sb__divider" />
 
         {/* FEE BREAKDOWN */}
         <div className="bk-sb__fees">
           <div className="bk-sb__fee-row">
-            <span className="bk-sb__fee-icon">🏛️</span>
             <div style={{ flex: 1 }}>
               <div className="bk-sb__fee-name">Govt Fee</div>
               <div className="bk-sb__fee-note">Paid upfront</div>
@@ -314,7 +296,6 @@ function Sidebar({ data, onApply }) {
           </div>
 
           <div className="bk-sb__fee-row">
-            <span className="bk-sb__fee-icon">⭐</span>
             <div style={{ flex: 1 }}>
               <div className="bk-sb__fee-name">Service Fee</div>
               <div className="bk-sb__fee-note">Paid only after approval</div>
@@ -328,7 +309,6 @@ function Sidebar({ data, onApply }) {
           <div className="bk-sb__divider" />
 
           <div className="bk-sb__fee-row bk-sb__fee-row--total">
-            <span className="bk-sb__fee-icon">💰</span>
             <div style={{ flex: 1 }}>
               <div className="bk-sb__fee-name" style={{ fontWeight: 800 }}>Total</div>
             </div>
@@ -336,10 +316,9 @@ function Sidebar({ data, onApply }) {
           </div>
         </div>
 
-        
         {/* TRUST */}
         <div className="bk-sb__trust">
-          {["🔒 Secure", "✅ Verified", "⭐ Trusted"].map((t) => (
+          {["Secure", "Verified", "Trusted"].map((t) => (
             <div key={t} className="bk-sb__trust-item">
               <span>{t}</span>
             </div>
@@ -351,6 +330,7 @@ function Sidebar({ data, onApply }) {
 }
 
 // ─── MAIN PAGE ─────────────────────────────────────────────────────────────
+
 export default function BookingPage({ visaId: propVisaId }) {
   const { visaId: paramVisaId } = useParams();
   const visaId = paramVisaId || propVisaId || "uae";
@@ -388,6 +368,7 @@ export default function BookingPage({ visaId: propVisaId }) {
     document.querySelectorAll(".bk-reveal").forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [data]);
+  
 
   const scrollTo = (sec) => {
     sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -424,32 +405,28 @@ export default function BookingPage({ visaId: propVisaId }) {
           </div>
 
           <div className="bk-hero__eyebrow">
-            <PlaneIcon size={14} color="rgba(255,255,255,0.9)" />
+            
             <span style={{ marginLeft: "6px" }}>{visaCard_eyebrow(data)}</span>
           </div>
 
           <h1 className="bk-hero__title">
-            <span className="bk-hero__flag">{data.flag}</span>{" "}
             {data.country}
           </h1>
           <p className="bk-hero__tagline">{data.tagline}</p>
 
           <div className="bk-hero__cta-row">
             <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <PlaneIcon size={16} color="white" />
+              
               <span>Start Application</span>
             </button>
             <button className="bk-hero__btn-learn" onClick={() => scrollTo("Info")}>
-              📋 View Details
+              View Details
             </button>
           </div>
-
-         
         </div>
 
         {/* Floating trust badge */}
         <div className="bk-hero__badge">
-          <span className="bk-hero__badge-icon">🛡️</span>
           <div>
             <div className="bk-hero__badge-title">{data.visaCard.guarantee}</div>
             <div className="bk-hero__badge-sub">{data.authBadge}</div>
@@ -466,11 +443,11 @@ export default function BookingPage({ visaId: propVisaId }) {
               className={`bk-nav__btn ${activeSection === sec ? "active" : ""}`}
               onClick={() => scrollTo(sec)}
             >
-              {navIcon(sec)} {sec}
+              {sec}
             </button>
           ))}
           <button className="bk-nav__apply" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <PlaneIcon size={14} color="white" />
+            
             <span>Apply Now</span>
           </button>
         </div>
@@ -488,22 +465,20 @@ export default function BookingPage({ visaId: propVisaId }) {
           >
             <div className="bk-reveal">
               <div className="bk-auth-badge">
-                ✅ {data.authBadge}
+                {data.authBadge}
               </div>
               <SectionHead label="Visa Info" title={`${data.country} Visa Details`} />
 
               {/* Visa info cards */}
               <div className="bk-info-grid" style={{ marginBottom: "1.5rem" }}>
                 {[
-                  { icon: "📋", label: "Visa Type", val: data.visaCard.type },
-                  { icon: "📅", label: "Length of Stay", val: data.visaCard.stay },
-                  { icon: "✅", label: "Validity", val: data.visaCard.validity },
-                  { icon: "🚪", label: "Entry Type", val: data.visaCard.entry },
-                  { icon: "🛡️", label: "Guarantee", val: data.visaCard.guarantee },
+                  { label: "Visa Type",       val: data.visaCard.type },
                   
+                  { label: "Validity",        val: data.visaCard.validity },
+                 
+                  { label: "Guarantee",       val: data.visaCard.guarantee },
                 ].map((c) => (
                   <div key={c.label} className="bk-info-card">
-                    <span className="bk-info-card__icon">{c.icon}</span>
                     <div>
                       <div className="bk-info-card__label">{c.label}</div>
                       <div className="bk-info-card__val">{c.val}</div>
@@ -511,10 +486,202 @@ export default function BookingPage({ visaId: propVisaId }) {
                   </div>
                 ))}
               </div>
-
-              
             </div>
           </section>
+                {/* ── ESSENTIALS ─────────────────────────────────────────────── */}
+<section
+  className="bk-section"
+  data-section="Essentials"
+  ref={registerRef("Essentials")}
+>
+  <div className="bk-reveal">
+    <SectionHead label="Required Documents" title="What You'll Need" />
+    <div className="bk-essentials">
+
+      {/* ── Passport ── */}
+      <div className="bk-ess-card">
+        <div className="bk-ess-card__visual">
+          <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="bk-ess-svg">
+            <rect x="20" y="10" width="180" height="120" rx="10" fill="#1a2744" />
+            <rect x="20" y="10" width="180" height="30" rx="10" fill="#243260" />
+            <rect x="20" y="30" width="180" height="10" fill="#243260" />
+            <circle cx="110" cy="55" r="16" fill="none" stroke="#c9a84c" strokeWidth="1.2" />
+            <circle cx="110" cy="55" r="11" fill="none" stroke="#c9a84c" strokeWidth="0.7" />
+            <ellipse cx="110" cy="55" rx="6" ry="16" fill="none" stroke="#c9a84c" strokeWidth="0.7" />
+            <line x1="94" y1="55" x2="126" y2="55" stroke="#c9a84c" strokeWidth="0.7" />
+            <line x1="96" y1="48" x2="124" y2="48" stroke="#c9a84c" strokeWidth="0.6" />
+            <line x1="96" y1="62" x2="124" y2="62" stroke="#c9a84c" strokeWidth="0.6" />
+            <rect x="36" y="80" width="64" height="8" rx="2" fill="#c9a84c" opacity="0.15" />
+            <rect x="36" y="92" width="44" height="6" rx="2" fill="#c9a84c" opacity="0.1" />
+            <rect x="120" y="80" width="64" height="5" rx="1.5" fill="#8899bb" opacity="0.25" />
+            <rect x="120" y="89" width="50" height="5" rx="1.5" fill="#8899bb" opacity="0.2" />
+            <rect x="120" y="98" width="56" height="5" rx="1.5" fill="#8899bb" opacity="0.2" />
+            <text x="110" y="27" textAnchor="middle" fill="#c9a84c" fontSize="8" fontFamily="serif" letterSpacing="2" opacity="0.9">PASSPORT</text>
+            <rect x="28" y="112" width="164" height="3" rx="1" fill="#8899bb" opacity="0.18" />
+            <rect x="28" y="118" width="164" height="3" rx="1" fill="#8899bb" opacity="0.13" />
+          </svg>
+        </div>
+        <div className="bk-ess-card__body">
+         
+          <div className="bk-ess-card__title">Passport</div>
+          
+          
+        </div>
+      </div>
+
+      
+     {/* ── Return Ticket ── */}
+<div className="bk-ess-card">
+  <div className="bk-ess-card__visual">
+    <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="bk-ess-svg">
+
+      {/* ── Background body ── */}
+      <rect x="10" y="18" width="200" height="104" rx="10" fill="#0d1e4a"/>
+
+      {/* ── Gold header band ── */}
+      <rect x="10" y="18" width="200" height="26" rx="10" fill="#c9a84c"/>
+      <rect x="10" y="34" width="200" height="10" fill="#c9a84c"/>
+
+      {/* ── Airline wordmark ── */}
+      <text x="20" y="31" fill="#0d1e4a" fontSize="7.5" fontFamily="monospace" fontWeight="700" letterSpacing="1.5">AIR INDIA</text>
+
+      {/* ── Flight number top-right ── */}
+      <text x="200" y="31" textAnchor="end" fill="#0d1e4a" fontSize="6.5" fontFamily="monospace" fontWeight="700" opacity="0.75">AI — 117</text>
+
+      
+
+      {/* ── Left panel — departure ── */}
+      {/* City code DEL */}
+      <text x="20" y="64" fill="#c9a84c" fontSize="20" fontFamily="monospace" fontWeight="700" letterSpacing="-1">DEL</text>
+      <text x="20" y="73" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace" letterSpacing="0.5">NEW DELHI</text>
+
+      
+
+     {/* Single continuous line between cities */}
+      <line 
+        x1="42" 
+        y1="63" 
+        x2="110" 
+        y2="63" 
+        stroke="#c9a84c" 
+        strokeWidth="0.6" 
+        opacity="0.5"
+      />
+
+      {/* City code CDG */}
+      <text x="113" y="64" fill="#c9a84c" fontSize="20" fontFamily="monospace" fontWeight="700" letterSpacing="-1">CDG</text>
+      <text x="113" y="73" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace" letterSpacing="0.5">PARIS</text>
+
+      {/* Date / time strip */}
+      <rect x="17" y="78" width="132" height="14" rx="3" fill="#162455"/>
+      <text x="22" y="87" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace">DATE</text>
+      <text x="46" y="87" fill="white" fontSize="6" fontFamily="monospace" fontWeight="700">14 MAR 2025</text>
+      <text x="94" y="87" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace">DEP</text>
+      <text x="110" y="87" fill="white" fontSize="6" fontFamily="monospace" fontWeight="700">06:40</text>
+
+      {/* Class / passenger strip */}
+      <text x="22" y="100" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace">CLASS</text>
+      <text x="46" y="100" fill="white" fontSize="6" fontFamily="monospace" fontWeight="700">ECONOMY</text>
+      <text x="94" y="100" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace">PAX</text>
+      <text x="110" y="100" fill="white" fontSize="6" fontFamily="monospace" fontWeight="700">01</text>
+
+      {/* Barcode */}
+      {[0,2,4.5,6.5,9,11,14,15.5,18,20.5,23,25,27.5,30,32,34.5,37,39,41.5].map((x, i) => (
+        <rect key={i} x={17 + x} y="108" width={i % 4 === 0 ? 1.8 : i % 3 === 0 ? 1.3 : 0.9} height="10" rx="0.2" fill="white" opacity={i % 5 === 0 ? 0.7 : 0.4}/>
+      ))}
+
+      {/* ── Right stub panel ── */}
+      <text x="164" y="62" textAnchor="middle" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace" letterSpacing="0.5">SEAT</text>
+      <text x="164" y="76" textAnchor="middle" fill="white" fontSize="16" fontFamily="monospace" fontWeight="700">14A</text>
+      <text x="164" y="87" textAnchor="middle" fill="#8fa0c0" fontSize="5.5" fontFamily="monospace">GATE</text>
+      <text x="164" y="97" textAnchor="middle" fill="#c9a84c" fontSize="9" fontFamily="monospace" fontWeight="700">C12</text>
+      <text x="164" y="108" textAnchor="middle" fill="#8fa0c0" fontSize="5" fontFamily="monospace">BOARDING</text>
+      <text x="164" y="116" textAnchor="middle" fill="white" fontSize="6" fontFamily="monospace" fontWeight="700">05:50</text>
+
+    </svg>
+  </div>
+  <div className="bk-ess-card__body">
+   
+    <div className="bk-ess-card__title">Return Ticket</div>
+    
+  </div>
+</div>
+
+      
+
+      {/* ── Bank Statement ── */}
+      <div className="bk-ess-card">
+        <div className="bk-ess-card__visual">
+          <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="bk-ess-svg">
+           
+            {/* Main paper */}
+            <rect x="34" y="14" width="180" height="104" rx="4" fill="#fafaf7" stroke="#e0dbd0" strokeWidth="0.8" />
+            {/* Header band */}
+            <rect x="34" y="14" width="180" height="22" rx="4" fill="#1a2744" />
+            <rect x="34" y="26" width="144" height="10" fill="#1a2744" />
+            <text x="56" y="28" fill="#c9a84c" fontSize="7.5" fontFamily="monospace" fontWeight="700" letterSpacing="1">BANK STATEMENT</text>
+            
+            {/* Balance highlight */}
+            <rect x="100" y="40" width="72" height="20" rx="3" fill="#f0fdf4" stroke="#16a34a" strokeWidth="0.8" />
+            <text x="136" y="48" textAnchor="middle" fill="#15803d" fontSize="6" fontFamily="monospace">BALANCE</text>
+            <text x="127" y="57" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">₹</text>
+            <text x="138" y="58.5" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">***</text>
+            {/* Transaction rows */}
+            {[
+              { label: "Jun 01  Credit Salary", amt: "****", color: "#15803d" },
+              { label: "Jun 15  UPI Transfer",  amt: "-****", color: "#dc2626" },
+              { label: "Jul 01  Credit Salary",  amt: "+****", color: "#15803d" },
+              { label: "Jul 22  Shopping",       amt: "-****",  color: "#dc2626" },
+            ].map((row, i) => (
+              <g key={i}>
+                <rect x="42" y={69 + i * 13} width="132" height="11" rx="1.5" fill={i % 2 === 0 ? "#f5f5f0" : "transparent"} />
+                <text x="46" y={77 + i * 13} fill="#555" fontSize="6" fontFamily="monospace">{row.label}</text>
+                <text x="170" y={77 + i * 13} textAnchor="end" fill={row.color} fontSize="6.5" fontFamily="monospace" fontWeight="700">{row.amt}</text>
+              </g>
+            ))}
+            {/* Bottom rule */}
+            <line x1="42" y1="124" x2="170" y2="124" stroke="#e0dbd0" strokeWidth="0.8" />
+            
+          </svg>
+        </div>
+        <div className="bk-ess-card__body">
+          
+          <div className="bk-ess-card__title">Bank Statement</div>
+          
+          
+        </div>
+      </div>
+
+      {/* ── Travel Insurance ── */}
+      <div className="bk-ess-card">
+        <div className="bk-ess-card__visual">
+          <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="bk-ess-svg">
+            {/* Shield */}
+            <path d="M110 18 L152 34 L152 76 C152 100 134 118 110 126 C86 118 68 100 68 76 L68 34 Z" fill="#1a2744" />
+            <path d="M110 24 L146 38 L146 76 C146 97 130 113 110 120 C90 113 74 97 74 76 L74 38 Z" fill="#243260" />
+            {/* Inner shield accent */}
+            <path d="M110 30 L140 42 L140 76 C140 94 126 108 110 114 C94 108 80 94 80 76 L80 42 Z" fill="none" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5" />
+            {/* Check mark */}
+            <path d="M96 72 L106 82 L126 60" stroke="#c9a84c" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+            {/* Coverage badge */}
+            <rect x="138" y="18" width="62" height="26" rx="5" fill="#0f2557" stroke="#c9a84c" strokeWidth="0.8" />
+            <text x="169" y="28" textAnchor="middle" fill="#c9a84c" fontSize="6" fontFamily="monospace" letterSpacing="0.5">COVERAGE</text>
+            <text x="169" y="38" textAnchor="middle" fill="white" fontSize="10" fontFamily="monospace" fontWeight="700">****</text>
+            {/* Small globe lines below shield */}
+            <ellipse cx="110" cy="130" rx="30" ry="5" fill="#1a2744" opacity="0.15" />
+            
+          </svg>
+        </div>
+        <div className="bk-ess-card__body">
+          
+          <div className="bk-ess-card__title">Travel Insurance</div>
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
           {/* ── PROCESS ────────────────────────────────────────────────── */}
           <section
@@ -528,7 +695,7 @@ export default function BookingPage({ visaId: propVisaId }) {
                 {data.process.map((step, i) => (
                   <div key={step.step} className="bk-step">
                     <div className="bk-step__col">
-                      <div className="bk-step__dot">{step.icon}</div>
+                      <div className="bk-step__dot">{step.step}</div>
                       {i < data.process.length - 1 && <div className="bk-step__line" />}
                     </div>
                     <div className="bk-step__body">
@@ -542,17 +709,13 @@ export default function BookingPage({ visaId: propVisaId }) {
             </div>
           </section>
 
-          
+          {/* ── WHY US / REVIEWS ───────────────────────────────────────── */}
           <section
             className="bk-section"
             data-section="Why Us"
             ref={registerRef("Why Us")}
           >
             <div className="bk-reveal">
-              
-              
-
-              {/* Reviews inline */}
               <div style={{ marginTop: "2rem" }}>
                 <div className="bk-reviews-meta">
                   <div>
@@ -594,44 +757,7 @@ export default function BookingPage({ visaId: propVisaId }) {
             </div>
           </section>
 
-          {/* ── ESSENTIALS ─────────────────────────────────────────────── */}
-          <section
-            className="bk-section"
-            data-section="Essentials"
-            ref={registerRef("Essentials")}
-          >
-            <div className="bk-reveal">
-              <SectionHead label="Required Documents" title="What You'll Need" />
-              <div className="bk-essentials">
-                {data.essentials.map((e) => (
-                  <div key={e.title} className="bk-ess-card">
-                    <img src={e.img} alt={e.title} className="bk-ess-card__img" loading="lazy" />
-                    <div className="bk-ess-card__body">
-                      <div className="bk-ess-card__icon">{e.icon}</div>
-                      <div className="bk-ess-card__title">{e.title}</div>
-                      <div className="bk-ess-card__desc">{e.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Apply CTA inline */}
-              <div style={{ marginTop: "1.5rem", background: "linear-gradient(90deg,#fffbeb,#fef3c7)", border: "1.5px solid #fde68a", borderRadius: "var(--r)", padding: "1.2rem 1.4rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-                <div>
-                  <div style={{ fontWeight: 700, color: "var(--accent-dk)", marginBottom: ".25rem" }}>
-                    Ready with your documents?
-                  </div>
-                  <div style={{ fontFamily: "var(--ff2)", fontSize: ".83rem", color: "var(--ink-soft)" }}>
-                    Apply now and get your visa in {data.visaCard.guarantee.replace("Guaranteed in ", "").replace("Application in ", "")}
-                  </div>
-                </div>
-                <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                  <PlaneIcon size={15} color="white" />
-                  <span>Start Application</span>
-                </button>
-              </div>
-            </div>
-          </section>
+    
 
           {/* ── FAQ ────────────────────────────────────────────────────── */}
           <section
@@ -649,7 +775,6 @@ export default function BookingPage({ visaId: propVisaId }) {
 
               {/* Bottom CTA */}
               <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
-                <div style={{ fontSize: "2rem", marginBottom: ".5rem" }}>🎯</div>
                 <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>
                   Ready to Visit {data.country}?
                 </div>
@@ -657,7 +782,7 @@ export default function BookingPage({ visaId: propVisaId }) {
                   Join 50,000+ Indians who trust TheVisa for their travel documents.
                 </div>
                 <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-                  <PlaneIcon size={15} color="white" />
+                  
                   <span>Apply for {data.country} Visa</span>
                 </button>
               </div>
@@ -674,13 +799,12 @@ export default function BookingPage({ visaId: propVisaId }) {
       {/* ── FLOATING APPLY BUTTON ─────────────────────────────────────── */}
       <button className="bk-fab" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
         <span className="bk-fab__dot" />
-        <PlaneIcon size={15} color="white" />
+       
         <span>Apply Now</span>
       </button>
 
       {/* ── REWARDS BUTTON ────────────────────────────────────────────── */}
       <button className="bk-rewards-btn" onClick={() => setRewardsOpen(true)}>
-        <span className="bk-rewards-btn__coins">🪙</span>
         <span>Rewards</span>
       </button>
 
@@ -691,11 +815,6 @@ export default function BookingPage({ visaId: propVisaId }) {
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────
-function navIcon(sec) {
-  const map = { Info: "ℹ️", Process: "⚙️", "Why Us": "⭐", Essentials: "📄", FAQ: "❓" };
-  return map[sec] || "";
-}
-
 function visaCard_eyebrow(data) {
   const vc = data.visaCard;
   if (vc.govFee === 0) return `${vc.type} · FREE Govt Fee`;

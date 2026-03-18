@@ -4,22 +4,22 @@
    ============================================================ */
 
 /* ─── Google Fonts ─────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* ─── Design Tokens ─────────────────────────────────── */
 :root {
-  --Refund-bg:             #f4f2ee;
+  --Refund-bg:             #ffffff;
   --Refund-surface:        #ffffff;
-  --Refund-surface-alt:    #faf9f7;
-  --Refund-border:         #e5dfd6;
-  --Refund-border-strong:  #cfc8bc;
-  --Refund-text-1:         #18160f;
-  --Refund-text-2:         #4f4a41;
-  --Refund-text-3:         #928c82;
-  --Refund-ink:            #0f172a;
-  --Refund-accent:         #1a56db;
-  --Refund-accent-soft:    #eef3ff;
-  --Refund-accent-border:  #bfcffa;
+  --Refund-surface-alt:    #f8f8f8;
+  --Refund-border:         #e2e2e2;
+  --Refund-border-strong:  #c8c8c8;
+  --Refund-text-1:         #000000;
+  --Refund-text-2:         #111111;
+  --Refund-text-3:         #555555;
+  --Refund-ink:            #0a1f5c;
+  --Refund-accent:         #0a1f5c;
+  --Refund-accent-soft:    #eef1f9;
+  --Refund-accent-border:  #b3bde0;
   --Refund-full-text:      #076549;
   --Refund-full-bg:        #e8f8f2;
   --Refund-full-border:    #a5e0c8;
@@ -29,16 +29,16 @@
   --Refund-part-text:      #92400e;
   --Refund-part-bg:        #fffbeb;
   --Refund-part-border:    #fcd34d;
-  --Refund-font-display:   'Playfair Display', Georgia, serif;
-  --Refund-font-body:      'Plus Jakarta Sans', system-ui, sans-serif;
+  --Refund-font-display:   'PT Serif', Georgia, serif;
+  --Refund-font-body:      'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
   --Refund-r-sm:           6px;
   --Refund-r-md:           12px;
   --Refund-r-lg:           18px;
   --Refund-r-xl:           26px;
-  --Refund-shadow-xs:      0 1px 2px rgba(15,23,42,0.05);
-  --Refund-shadow-sm:      0 2px 8px rgba(15,23,42,0.07);
-  --Refund-shadow-md:      0 6px 24px rgba(15,23,42,0.10);
-  --Refund-shadow-lg:      0 12px 40px rgba(15,23,42,0.14);
+  --Refund-shadow-xs:      0 1px 2px rgba(10,31,92,0.05);
+  --Refund-shadow-sm:      0 2px 8px rgba(10,31,92,0.07);
+  --Refund-shadow-md:      0 6px 24px rgba(10,31,92,0.10);
+  --Refund-shadow-lg:      0 12px 40px rgba(10,31,92,0.14);
   --Refund-ease:           cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -94,7 +94,7 @@
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.03em;
-  color: var(--Refund-text-1);
+  color: var(--Refund-ink);
   max-width: 760px;
   margin: 30px auto;
 }
@@ -171,7 +171,6 @@
   box-shadow: var(--Refund-shadow-sm);
   background: var(--Refund-surface);
   animation: RefundFadeUp 0.3s var(--Refund-ease) both;
-  /* Allow horizontal scroll on narrow screens */
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -179,10 +178,10 @@
 .RefundTable {
   width: 100%;
   border-collapse: collapse;
-  /* Prevent table from collapsing too much */
   min-width: 480px;
 }
-.RefundTable__head { background: #f0ece5; }
+
+.RefundTable__head { background: #f0f2f8; }
 
 .RefundTable__th {
   padding: 14px 22px;
@@ -190,7 +189,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--Refund-text-3);
+  color: var(--Refund-ink);
   text-align: left;
   border-bottom: 1.5px solid var(--Refund-border);
   white-space: nowrap;
@@ -205,7 +204,7 @@
 }
 
 .RefundTable__tr:last-child .RefundTable__td { border-bottom: none; }
-.RefundTable__tr:hover .RefundTable__td { background: #faf8f5; }
+.RefundTable__tr:hover .RefundTable__td { background: #f5f7fc; }
 
 .RefundTable__stage-name {
   font-weight: 600;
@@ -263,7 +262,7 @@
 .RefundBadge--partial { background: var(--Refund-part-bg);  color: var(--Refund-part-text);  border-color: var(--Refund-part-border); }
 
 /* ─── Reviews Section ────────────────────────────────── */
-.RefundReviews { padding: 64px 0 88px; }
+.RefundReviews { padding: 1px 0 88px; }
 
 .RefundReviews__divider {
   height: 1.5px;
@@ -285,14 +284,14 @@
   font-family: var(--Refund-font-display);
   font-size: clamp(1.65rem, 3.2vw, 2.3rem);
   font-weight: 700;
-  color: var(--Refund-text-1);
+  color: var(--Refund-ink);
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
 
 .RefundReviews__subheading {
   font-size: 0.88rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--Refund-text-3);
   margin-top: 5px;
 }
@@ -342,7 +341,7 @@
 
 .RefundReviews__search:focus {
   border-color: var(--Refund-accent);
-  box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+  box-shadow: 0 0 0 3px rgba(10,31,92,0.1);
 }
 
 /* ─── DESKTOP: scrollable 3-col grid ─────── */
@@ -370,7 +369,7 @@
   position: relative;
   margin-top: -52px;
   height: 52px;
-  background: linear-gradient(to bottom, transparent, var(--Refund-bg));
+  background: linear-gradient(to bottom, transparent, #ffffff);
   pointer-events: none;
   z-index: 2;
 }
@@ -511,7 +510,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1a56db 0%, #5e35b1 100%);
+  background: linear-gradient(135deg, #0a1f5c 0%, #1a3a8f 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -520,7 +519,7 @@
   color: #fff;
   flex-shrink: 0;
   letter-spacing: 0.03em;
-  box-shadow: 0 2px 8px rgba(26,86,219,0.22);
+  box-shadow: 0 2px 8px rgba(10,31,92,0.22);
 }
 
 .RefundReviewCard__meta { flex: 1; min-width: 0; }
@@ -567,7 +566,7 @@
 
 .RefundReviewCard__text {
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--Refund-text-2);
   line-height: 1.72;
   flex: 1;
@@ -595,7 +594,7 @@
   font-family: var(--Refund-font-display);
   font-size: 1.45rem;
   font-weight: 700;
-  color: var(--Refund-text-1);
+  color: var(--Refund-ink);
   margin-bottom: 5px;
   letter-spacing: -0.02em;
 }
@@ -604,7 +603,7 @@
   font-size: 0.88rem;
   color: var(--Refund-text-3);
   margin-bottom: 28px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .RefundWriteReview__form {
@@ -642,7 +641,7 @@
 .RefundWriteReview__select:focus,
 .RefundWriteReview__textarea:focus {
   border-color: var(--Refund-accent);
-  box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+  box-shadow: 0 0 0 3px rgba(10,31,92,0.1);
   background: #fff;
 }
 
@@ -651,7 +650,7 @@
 .RefundWriteReview__select {
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23928c82' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 38px;
@@ -702,7 +701,7 @@
 }
 
 .RefundWriteReview__submit:hover {
-  background: var(--Refund-accent);
+  background: #1a3a8f;
   transform: translateY(-1px);
   box-shadow: var(--Refund-shadow-md);
 }

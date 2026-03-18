@@ -1376,13 +1376,43 @@ const DATA = {
     ],
   
     essentials: [
-      { icon: "🛂", title: "Passport",         desc: "Valid for at least 3 months beyond your intended return",           img: "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=400&q=80" },
-      { icon: "🖼️", title: "Passport Photo",   desc: "Recent photo on white background, 35mm x 45mm",                    img: "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=400&q=80" },
-      { icon: "✈️", title: "Return Ticket",    desc: "Confirmed return flight booking",                                   img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80" },
-      { icon: "🏨", title: "Hotel Booking",    desc: "Confirmed accommodation for entire stay",                           img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" },
-      { icon: "💳", title: "Bank Statement",   desc: "Last 6 months — minimum ₹2,00,000 recommended",                    img: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&q=80" },
-      { icon: "📋", title: "Travel Insurance", desc: "Minimum €30,000 coverage — mandatory for all Schengen visas",      img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80" },
-    ],
+  {
+    icon: "🛂",
+    title: "Passport",
+    desc: "Valid for at least 3 months beyond your intended return",
+    img: "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=400&q=80"
+  },
+  {
+    icon: "🖼️",
+    title: "Passport Photo",
+    desc: "Recent photo on white background, 35mm × 45mm",
+    img: "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=400&q=80"
+  },
+  {
+    icon: "✈️",
+    title: "Return Ticket",
+    desc: "Confirmed return flight booking",
+    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80"
+  },
+  {
+    icon: "🏨",
+    title: "Hotel Booking",
+    desc: "Confirmed accommodation for entire stay",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80"
+  },
+  {
+    icon: "💳",
+    title: "Bank Statement",
+    desc: "Last 6 months — minimum ₹2,00,000 recommended",
+    img: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&q=80"
+  },
+  {
+    icon: "📋",
+    title: "Travel Insurance",
+    desc: "Minimum €30,000 coverage — mandatory for all Schengen visas",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80"
+  },
+],
     destinations: [
       { name: "Barcelona",   img: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600&q=80" },
       { name: "Madrid",      img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },

@@ -177,7 +177,7 @@
 /* Primary button — solid navy */
 .bk-hero__btn-start {
   display: inline-flex; align-items: center; gap: .5rem;
-  background: var(--navy-mid)!important;
+  
   color: rgba(255,255,255,.9);
   border: 1.5px solid rgba(255,255,255,.45)!important;
   border-radius: 8px;
@@ -328,7 +328,8 @@
   position: sticky; top: 70px;
   align-self: start;
   max-height: calc(100vh - 90px);
-  /*overflow-y: auto; scrollbar-width: none;*/
+  /*overflow-y:*/ 
+  auto; scrollbar-width: none;
 }
 .bk-sidebar-wrap::-webkit-scrollbar { display: none; }
 
@@ -563,8 +564,7 @@
   font-family: var(--ff2); font-size: .84rem; font-weight: 700;
   color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.5); z-index: 1;
 }
-
-* /*════════════════════════════════════════════════════════════════════════
+/*════════════════════════════════════════════════════════════════════════
    PROCESS SECTION — Runway style
 ════════════════════════════════════════════════════════════════════════ */
 

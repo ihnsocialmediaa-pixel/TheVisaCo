@@ -1,7 +1,11 @@
-/* FOOTER */
+/* ============================================================
+   FOOTER STYLESHEET
+   Matches Navbar design language exactly
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
-  /* Your exact theme palette */
   --navy:        #002236;
   --navy-mid:    #003a5c;
   --navy-light:  #004d7a;
@@ -10,51 +14,217 @@
   --amber-mid:   #b45309;
   --amber-light: #d97706;
   --amber-pale:  #fef3c7;
-  --white:       #ffffff!;
+  --white:       #ffffff;
   --off-white:   #f8fafc;
 
-  /* Derived UI tokens */
   --bg:          #f0f4f8;
   --text:        #0a1929;
-  --text-muted:  #ffffff!important;
-  --border:      #d4dde6;
+  --text-muted:  rgba(255, 255, 255, 0.55);
+  --border:      rgba(255, 255, 255, 0.1);
 
   --ff:  'Plus Jakarta Sans', sans-serif;
   --ff2: 'DM Sans', sans-serif;
 
   --shadow-card: 0 2px 12px rgba(0,34,54,0.10);
   --shadow-hover: 0 12px 40px rgba(0,34,54,0.18);
-  --radius-card: 14px;   /* exact Atlys card radius */
+  --radius-card: 14px;
   --t: 0.25s ease;
-} 
+}
 
-.ve-footer{background:#001525;border-top:1px solid var(--border);padding:70px 0 0}
-.ve-footer__about{font-size:.9rem;color:var(--text-light);line-height:1.7;max-width:300px;margin-bottom:1.5rem}
-.ve-footer__socials{display:flex;gap:.6rem}
+/* ══════════════════════════════════════════════════════
+   FOOTER BASE
+══════════════════════════════════════════════════════ */
+.ve-footer {
+  background: #001525;
+  border-top: 1px solid var(--border);
+  padding: 70px 0 0;
+  font-family: var(--ff2);
+}
+
+/* ══════════════════════════════════════════════════════
+   LOGO — mirrors Navbar exactly
+══════════════════════════════════════════════════════ */
+.ve-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+
+.ve-footer__logo-plane {
+  flex-shrink: 0;
+  margin-bottom: 3px;
+  color: #f97316;
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.55));
+  display: flex;
+  align-items: center;
+}
+
+.ve-footer__logo-words {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.ve-footer__logo-main {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+  font-family: 'PT Serif', serif;
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 55%, #fdba74 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.3));
+}
+
+.ve-footer__logo-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgb(0, 196, 20);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  margin-left: 8px;
+  font-family: var(--ff2);
+}
+
+/* ══════════════════════════════════════════════════════
+   ABOUT TEXT
+══════════════════════════════════════════════════════ */
+.ve-footer__about {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+}
+
+/* ══════════════════════════════════════════════════════
+   SOCIAL ICONS
+══════════════════════════════════════════════════════ */
+.ve-footer__socials {
+  display: flex;
+  gap: 0.6rem;
+}
+
 .ve-social {
   width: 36px;
   height: 36px;
-  background: rgba(255,255,255,.07);
+  background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--border);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.55);   /* was --text-light */
+  color: var(--text-muted);
   text-decoration: none;
-  transition: var(--transition);
+  transition: background var(--t), border-color var(--t),
+              color var(--t), transform var(--t);
   flex-shrink: 0;
 }
+
 .ve-social:hover {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: var(--white);
+  background: var(--amber-light);
+  border-color: var(--amber-light);
+  color: #fff;
   transform: translateY(-3px);
 }
-.ve-footer__heading{font-family:var(--ff-display);font-size:1rem;font-weight:600;color:var(--white);margin-bottom:1.2rem}
-.ve-footer__list{list-style:none;padding:0;margin:0}
-.ve-footer__list li{margin-bottom:.6rem;font-size:.88rem}
-.ve-footer__list a{color:var(--text-muted);text-decoration:none;transition:color var(--transition)}
-.ve-footer__list a:hover{color:var(--amber-light)}
-.ve-footer__list--contact li{color:var(--text-muted);display:flex;align-items:flex-start;gap:.5rem}
-.ve-footer__bottom{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.82rem;color:var(--text-muted)}
+
+/* ══════════════════════════════════════════════════════
+   COLUMN HEADINGS
+══════════════════════════════════════════════════════ */
+.ve-footer__heading {
+  font-family: var(--ff);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.01em;
+}
+
+/* ══════════════════════════════════════════════════════
+   LINK LISTS
+══════════════════════════════════════════════════════ */
+.ve-footer__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ve-footer__list li {
+  margin-bottom: 0.6rem;
+  font-size: 0.88rem;
+}
+
+.ve-footer__list a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--t), padding-left var(--t);
+  display: inline-block;
+}
+
+.ve-footer__list a:hover {
+  color: #fb923c;
+  padding-left: 4px;
+}
+
+/* ── Contact list ── */
+.ve-footer__list--contact li {
+  color: var(--text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════
+   BOTTOM BAR
+══════════════════════════════════════════════════════ */
+.ve-footer__bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .ve-footer {
+    padding: 50px 0 0;
+  }
+
+  .ve-footer__about {
+    max-width: 100%;
+  }
+
+  .ve-footer__bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ve-footer {
+    padding: 40px 0 0;
+  }
+
+  .ve-footer__logo-main {
+    font-size: 18px;
+  }
+
+  .ve-footer__logo-sub {
+    font-size: 0.58rem;
+  }
+}

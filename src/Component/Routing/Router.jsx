@@ -4,7 +4,7 @@ import Booking from "../Pages/Booking/Booking";
 import Navbar from "../Main/Navbar/Navbar";
 import Footer from "../Main/Footer/Footer";
 import ApplicationForm from "../Pages/ApplicationForm/ApplicationForm";
-import LandingPage from "../Pages/LandingPage/LandingPage";
+
 import USMockInterview from "../Pages/Products/Interview/USMockInterview";
 import Requirements from "../Pages/Products/visaRequirement/Requirements";
 import RefundPolicy from "../Pages/Products/Refund/RefundPolicy";

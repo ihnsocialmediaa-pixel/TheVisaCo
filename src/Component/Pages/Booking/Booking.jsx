@@ -1,7 +1,7 @@
 // booking.jsx  —  TheVisa · Country Visa Detail Page
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getVisaData, rewardsData } from "./bookingdata";
-import "./booking.css";
+import "./Booking.css";
 import { useParams } from "react-router-dom";
 
 // ─── STEP ICONS ───────────────────────────────────────────────────────────
@@ -408,7 +408,7 @@ export default function BookingPage({ visaId: propVisaId }) {
 
   // ── FAQ filter state ──────────────────────────────────────────────────
   const [faqSearch,      setFaqSearch]      = useState("");
-  const [faqFilter,      setFaqFilter]      = useState("All");
+
 
   const sectionRefs = useRef({});
 
@@ -424,15 +424,10 @@ export default function BookingPage({ visaId: propVisaId }) {
   });
 
   // ── Derived: FAQ topics + filtered FAQs ──────────────────────────────
-  const faqTopics  = ["All", ...Array.from(new Set(data.faqs.map((f) => f.topic ?? "General")))];
-  const filteredFaqs = data.faqs.filter((f) => {
-    const matchTopic  = faqFilter === "All" || (f.topic ?? "General") === faqFilter;
-    const q           = faqSearch.toLowerCase();
-    const matchSearch = !q ||
-      f.q.toLowerCase().includes(q) ||
-      f.a.toLowerCase().includes(q);
-    return matchTopic && matchSearch;
-  });
+const filteredFaqs = data.faqs.filter((f) => {
+  const q = faqSearch.toLowerCase();
+  return !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
+});
 
   const registerRef = useCallback((id) => (el) => { if (el) sectionRefs.current[id] = el; }, []);
 
@@ -709,13 +704,6 @@ export default function BookingPage({ visaId: propVisaId }) {
               <SectionHead label={`${data.country} FAQ`} title="Frequently Asked Questions" />
               <div className="bk-faq-toolbar">
                 <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
-                <div className="bk-rev-filters">
-                  {faqTopics.map((topic) => (
-                    <button key={topic} className={`bk-rev-filter${faqFilter === topic ? " active" : ""}`} onClick={() => setFaqFilter(faqFilter === topic ? "All" : topic)}>
-                      {topic}
-                    </button>
-                  ))}
-                </div>
               </div>
               <div className="bk-faqs">
                 {filteredFaqs.length > 0 ? filteredFaqs.map((f) => (

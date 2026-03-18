@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Home.css";
+import "./LandingPage.css";
 import USA from "../../../assets/usa.png"
 import UK from "../../../assets/uk.png"
 import Canada from "../../../assets/canada.jpg"

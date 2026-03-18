@@ -58,7 +58,7 @@
 }
 
 /* ── RESET ───────────────────────────────────────────────────────────── */
-.bk { font-family: var(--ff3); background: white; color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.bk { font-family: var(--ff3); background: var(--bg); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 .bk *, .bk *::before, .bk *::after { box-sizing: border-box; margin: 0; padding: 0; }
 .bk a { text-decoration: none; color: inherit; }
 .bk img { display: block; max-width: 100%; }
@@ -328,7 +328,7 @@
   position: sticky; top: 70px;
   align-self: start;
   max-height: calc(100vh - 90px);
-  //overflow-y: auto; scrollbar-width: none;
+  /*overflow-y: auto; scrollbar-width: none;*/
 }
 .bk-sidebar-wrap::-webkit-scrollbar { display: none; }
 
@@ -564,7 +564,7 @@
   color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.5); z-index: 1;
 }
 
-* ════════════════════════════════════════════════════════════════════════
+* /*════════════════════════════════════════════════════════════════════════
    PROCESS SECTION — Runway style
 ════════════════════════════════════════════════════════════════════════ */
 
@@ -1030,10 +1030,8 @@
    FAQ SECTION
 ════════════════════════════════════════════════════════════════════════ */
  
+/* CHANGE TO: */
 .bk-faq-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: .6rem;
   margin-bottom: 1.2rem;
 }
  

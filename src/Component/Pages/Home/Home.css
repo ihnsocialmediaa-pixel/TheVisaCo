@@ -210,7 +210,9 @@ img   { display: block; }
 /* ══════════════════════════════════════════════════════════════════
    DESTINATION SECTION
 ══════════════════════════════════════════════════════════════════ */
-.home-dest-section { padding:  1px 0 4rem; background: white; position: relative;  }
+.home-dest-section { padding:  1px 0 4rem; background: white; 
+  /*position: relative;*/
+}
 .home-dest-section__inner { max-width: 1440px; margin: 0 auto; padding: 0 2rem; }
 .home-dest-section__head {
   display: flex; align-items: flex-end; justify-content: space-between;

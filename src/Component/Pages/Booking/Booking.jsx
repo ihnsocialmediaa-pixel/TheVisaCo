@@ -222,50 +222,174 @@ function DestGrid({ items }) {
   );
 }
 
+// ─── TIER DATA ────────────────────────────────────────────────────────────
+const TIER_CONFIG = [
+  {
+    id: "client",
+    name: "Client",
+    desc: "Your first step into the programme",
+    badge: "Tier 1",
+    stripeColor: "#4a7cbf",
+    badgeColor: "#4a7cbf",
+    badgeBg: "#eef3fb",
+    badgeBorder: "#c8d8f0",
+    perks: [
+      "Redeemable points on every visa application fee",
+      "Access to member codes",
+      "Welcome bonus OF Rs 100",
+    ],
+    hasBecome: true,
+  },
+  {
+    id: "member",
+    name: "Member",
+    desc: "Unlocked from your 2nd application onwards",
+    badge: "Tier 2",
+    stripeColor: "#0d1b4b",
+    badgeColor: "#0d1b4b",
+    badgeBg: "#e8edf8",
+    badgeBorder: "#c5cfe8",
+    perks: [
+      "Redeemable points on every visa application fee",
+      "Access to member codes",
+      "Welcome bonus OF Rs 100",
+      "Dedicated agent code — every application using your code helps you earn commission",
+      "Milestone rewards — achieve volume targets to unlock extra benefits",
+    ],
+    hasBecome: false,
+  },
+  {
+    id: "agent",
+    name: "Agent",
+    desc: "For high-volume applicants & travel professionals",
+    badge: "Tier 3",
+    stripeColor: "#1e3a8a",
+    badgeColor: "#1e3a8a",
+    badgeBg: "#eef1fb",
+    badgeBorder: "#c5d0f0",
+    perks: [
+      "Redeemable points on every visa application fee",
+      "Access to member codes",
+      "Welcome bonus OF Rs 100",
+      "Dedicated agent code — every application using your code helps you earn commission",
+      "Milestone rewards — achieve volume targets to unlock extra benefits",
+      "Dedicated account support and priority service",
+    ],
+    hasBecome: false,
+  },
+];
+
 // ─── REWARDS MODAL ────────────────────────────────────────────────────────
-function RewardsModal({ open, onClose }) {
+function RewardsModal({ open, onClose, onApply }) {
   const [openTier, setOpenTier] = useState(null);
-  useEffect(() => { document.body.style.overflow = open ? "hidden" : ""; return () => { document.body.style.overflow = ""; }; }, [open]);
+  const [becomeOpen, setBecomeOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   const handleOverlay = (e) => { if (e.target === e.currentTarget) onClose(); };
+
+  const toggleTier = (id) => setOpenTier((prev) => (prev === id ? null : id));
+
+  const handleApply = () => { onClose(); onApply(); };
+
   return (
     <div className={`bk-modal-overlay ${open ? "open" : ""}`} onClick={handleOverlay}>
       <div className="bk-modal">
+
+        {/* ── HEAD ── */}
         <div className="bk-modal__head">
           <button className="bk-modal__close" onClick={onClose}>✕</button>
-          <div className="bk-modal__title">TheVisa Rewards</div>
-          <div className="bk-modal__sub">Earn while you travel. The more you apply, the more you save.</div>
+          
+          <div className="bk-modal__title">Earn as you travel</div>
+          <div className="bk-modal__sub">Every application brings you closer to exclusive benefits. All rewards apply on visa application fees charged.</div>
         </div>
+
+        {/* ── BODY ── */}
         <div className="bk-modal__body">
-          <div className="bk-modal__bonus">
-            <div>
-              <div className="bk-modal__bonus-title">Welcome Bonus</div>
-              <div className="bk-modal__bonus-desc">{rewardsData.welcomeBonus.description}</div>
-            </div>
-            <div className="bk-modal__bonus-amount">₹{rewardsData.welcomeBonus.amount}</div>
-          </div>
-          <div style={{ background: "#f0fdf4", border: "1.5px solid #bbf7d0", borderRadius: "var(--r)", padding: ".8rem 1.1rem", display: "flex", gap: ".65rem", alignItems: "flex-start" }}>
-            <div>
-              <div style={{ fontSize: ".88rem", fontWeight: 700, color: "#065f46", marginBottom: ".2rem" }}>Transit Visa Benefit</div>
-              <div style={{ fontFamily: "var(--ff2)", fontSize: ".8rem", color: "#047857" }}>{rewardsData.transitVisa.description}</div>
-            </div>
-          </div>
+
+          {/* Welcome Bonus */}
           <div>
-            <div className="bk-modal__tiers-title">User Tiers</div>
+            <div className="bk-modal__section-label">Welcome Bonus</div>
+            <div className="bk-modal__bonus">
+              <div>
+                <div className="bk-modal__bonus-title">Joining reward</div>
+                <div className="bk-modal__bonus-desc">Join us and unlock your welcome reward instantly</div>
+              </div>
+              <div className="bk-modal__bonus-amount">
+                <span className="bk-currency">₹</span>
+                100
+              </div>
+            </div>
+          </div>
+
+          {/* Codes */}
+          <div>
+            <div className="bk-modal__section-label">Referral &amp; Discount Codes</div>
+            <div className="bk-modal__codes">
+              <div className="bk-modal__code-row">
+                <div className="bk-modal__code-pill">MEMBERCODE</div>
+                <div>
+                  <div className="bk-modal__code-title">Member code</div>
+                  <div className="bk-modal__code-desc">Use the member code — you'll receive a discount on the visa fee.</div>
+                </div>
+              </div>
+              <div className="bk-modal__code-row">
+                <div className="bk-modal__code-pill">AGENTCODE</div>
+                <div>
+                  <div className="bk-modal__code-title">Agent code</div>
+                  <div className="bk-modal__code-desc">Agents receive a dedicated code that can be applied to applications, helping users get an extra discount.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Three-Tier System */}
+          <div>
+            <div className="bk-modal__tiers-title">Three-Tier Membership</div>
             <div className="bk-modal__tiers">
-              {rewardsData.userTiers.map((tier) => (
+              {TIER_CONFIG.map((tier) => (
                 <div key={tier.id} className={`bk-modal__tier ${openTier === tier.id ? "open" : ""}`}>
-                  <div className="bk-modal__tier-head" style={{ background: openTier === tier.id ? `${tier.color}10` : "transparent" }} onClick={() => setOpenTier(openTier === tier.id ? null : tier.id)}>
-                    <div>
-                      <div className="bk-modal__tier-name" style={{ color: tier.color }}>{tier.name}</div>
-                      <div className="bk-modal__tier-desc">{tier.description}</div>
+                  <div className="bk-modal__tier-head" onClick={() => toggleTier(tier.id)}>
+                    <div className="bk-modal__tier-stripe" style={{ background: tier.stripeColor }} />
+                    <div className="bk-modal__tier-info">
+                      <div className="bk-modal__tier-name">{tier.name}</div>
+                      <div className="bk-modal__tier-desc">{tier.desc}</div>
                     </div>
-                    <span className="bk-modal__tier-arrow">▶</span>
+                    
+                    <span className="bk-modal__tier-arrow">&#9658;</span>
                   </div>
                   <div className="bk-modal__tier-body">
                     <div className="bk-modal__tier-body-inner">
                       <div className="bk-modal__tier-perks">
-                        {tier.perks.map((p, i) => (<div key={i} className="bk-modal__tier-perk">{p}</div>))}
-                        {tier.upgrade && <div className="bk-modal__tier-upgrade">{tier.upgrade}</div>}
+                        {tier.perks.map((perk, i) => (
+                          <div key={i} className="bk-modal__tier-perk">
+                            <div className="bk-modal__tier-perk-dot" style={{ background: tier.stripeColor }} />
+                            <div className="bk-modal__tier-perk-text">{perk}</div>
+                          </div>
+                        ))}
+                        {tier.hasBecome && (
+                          <>
+                            <button
+                              className="bk-modal__become-btn"
+                              onClick={(e) => { e.stopPropagation(); setBecomeOpen((v) => !v); }}
+                            >
+                              {becomeOpen ? "Hide Details" : "*Become a Member"}
+                            </button>
+                            <div className={`bk-modal__become-panel ${becomeOpen ? "open" : ""}`}>
+                              <div className="bk-modal__become-panel-inner">
+                                <div className="bk-modal__become-content">
+                                  <div className="bk-modal__become-title">Membership is closer than you think</div>
+                                  <div className="bk-modal__become-desc">
+                                    Become a member on your 2nd application — even a transit visa counts. Applying for family or friends also qualifies. One more application is all it takes.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -273,48 +397,28 @@ function RewardsModal({ open, onClose }) {
               ))}
             </div>
           </div>
+
+          {/* Milestone Benefits */}
           <div>
-            <div className="bk-modal__tiers-title">Referral Commission</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
-              {Object.entries(rewardsData.referral).map(([tier, d]) => (
-                <div key={tier} style={{ display: "flex", alignItems: "center", gap: ".8rem", background: "var(--surface-2)", borderRadius: "10px", padding: ".7rem 1rem", border: "1px solid var(--border)" }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: ".86rem", fontWeight: 700, color: "var(--ink)", textTransform: "capitalize" }}>{tier}</div>
-                    <div style={{ fontFamily: "var(--ff2)", fontSize: ".78rem", color: "var(--ink-soft)" }}>{d.description}</div>
-                  </div>
-                  <div style={{ fontWeight: 800, color: "var(--green)", fontSize: "1rem", whiteSpace: "nowrap" }}>₹{d.amount}</div>
-                </div>
-              ))}
+            <div className="bk-modal__ms-title">Milestone Benefits</div>
+            <div className="bk-modal__milestone-card">
+              <div className="bk-modal__milestone-heading">Achieve milestones</div>
+              <div className="bk-modal__milestone-desc">
+                The more you apply — for yourself, family, or clients — the more milestone rewards you unlock.
+              </div>
             </div>
           </div>
-          <div>
-            <div className="bk-modal__tiers-title">Coupon Codes</div>
-            <div className="bk-modal__coupons">
-              {Object.entries(rewardsData.coupons).map(([tier, d]) => (
-                <div key={tier} className="bk-modal__coupon">
-                  <div><span className="bk-modal__coupon-badge">{d.example}</span></div>
-                  <div>
-                    <div className="bk-modal__coupon-title" style={{ textTransform: "capitalize" }}>{tier} — {d.discount}</div>
-                    <div className="bk-modal__coupon-desc">{d.description}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="bk-modal__ms-title">Milestone Rewards</div>
-            <div className="bk-modal__milestones">
-              {rewardsData.milestones.map((m) => (
-                <div key={m.target} className="bk-modal__milestone">
-                  <div style={{ flex: 1 }}><div className="bk-modal__ms-reward">{m.reward}</div></div>
-                  <div className="bk-modal__ms-target">{m.target} visas</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <button className="bk-sb__cta" onClick={onClose} style={{ fontFamily: "var(--ff)", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-            <span>Start Earning Rewards — Apply Now</span>
+
+          {/* CTA */}
+          <button className="bk-modal__cta" onClick={handleApply}>
+            <span>Start Application</span>
           </button>
+
+          {/* T&C */}
+          <div className="bk-modal__tc">
+            T&amp;C apply. All rewards and discounts are applicable only on the visa application fees charged by TheVisaCo.
+          </div>
+
         </div>
       </div>
     </div>
@@ -348,7 +452,9 @@ function Sidebar({ data, onApply }) {
             </div>
             <div className="bk-sb__fee-right">
               <span className="bk-sb__fee-amount">
-                {visaCard.govFee === 0 ? <span className="bk-sb__fee-amount--green">FREE</span> : `₹${visaCard.govFee.toLocaleString("en-IN")}`}
+                {visaCard.govFee === 0
+                  ? <span className="bk-sb__fee-amount--green">FREE</span>
+                  : `₹${visaCard.govFee.toLocaleString("en-IN")}`}
               </span>
             </div>
           </div>
@@ -391,43 +497,86 @@ function SearchBar({ value, onChange, placeholder }) {
   );
 }
 
+// ─── FLOATING ACTION TOGGLE ───────────────────────────────────────────────
+function FloatingToggle({ onApply, onRewards }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("touchstart", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
+  }, []);
+
+  const handleApply   = () => { setOpen(false); onApply(); };
+  const handleRewards = () => { setOpen(false); onRewards(); };
+
+  return (
+    <div className={`bk-fab-toggle${open ? " open" : ""}`} ref={ref}>
+      <div className="bk-fab-actions">
+        <button className="bk-fab-action bk-fab-action--rewards" onClick={handleRewards} tabIndex={open ? 0 : -1} aria-hidden={!open}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#C9A000" strokeWidth="2"/>
+              <circle cx="12" cy="12" r="6" fill="#FFEC8B" stroke="#C9A000" strokeWidth="1.5"/>
+              <ellipse cx="9" cy="9" rx="3" ry="2" fill="white" opacity="0.3"/>
+            </svg>
+          <span>Rewards</span>
+        </button>
+        <button className="bk-fab-action bk-fab-action--apply" onClick={handleApply} tabIndex={open ? 0 : -1} aria-hidden={!open}>
+          <span className="bk-fab-action__dot" />
+          <span>Apply Now</span>
+        </button>
+      </div>
+      <button className="bk-fab-main" onClick={() => setOpen((v) => !v)} aria-label={open ? "Close menu" : "Open actions"} aria-expanded={open}>
+        <span className="bk-fab-main__icon" aria-hidden="true">
+          {open ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#C9A000" strokeWidth="2"/>
+              <circle cx="12" cy="12" r="6" fill="#FFEC8B" stroke="#C9A000" strokeWidth="1.5"/>
+              <ellipse cx="9" cy="9" rx="3" ry="2" fill="white" opacity="0.3"/>
+            </svg>
+          )}
+        </span>
+        <span className="bk-fab-main__label">{open ? "Close" : "Rewards"}</span>
+      </button>
+    </div>
+  );
+}
+
 // ─── MAIN PAGE ─────────────────────────────────────────────────────────────
 export default function BookingPage({ visaId: propVisaId }) {
   const { visaId: paramVisaId } = useParams();
   const visaId = paramVisaId || propVisaId || "uae";
   const data = getVisaData(visaId);
 
-  // ── UI state ──────────────────────────────────────────────────────────
-  const [heroLoaded,     setHeroLoaded]     = useState(false);
-  const [activeSection,  setActiveSection]  = useState("Info");
-  const [rewardsOpen,    setRewardsOpen]    = useState(false);
-
-  // ── Review filter state ───────────────────────────────────────────────
-  const [reviewSearch,   setReviewSearch]   = useState("");
-  const [reviewFilter,   setReviewFilter]   = useState(0);
-
-  // ── FAQ filter state ──────────────────────────────────────────────────
-  const [faqSearch,      setFaqSearch]      = useState("");
-
+  const [heroLoaded,    setHeroLoaded]    = useState(false);
+  const [activeSection, setActiveSection] = useState("Info");
+  const [rewardsOpen,   setRewardsOpen]   = useState(false);
+  const [reviewSearch,  setReviewSearch]  = useState("");
+  const [reviewFilter,  setReviewFilter]  = useState(0);
+  const [faqSearch,     setFaqSearch]     = useState("");
 
   const sectionRefs = useRef({});
 
-  // ── Derived: filtered reviews ─────────────────────────────────────────
   const filteredReviews = data.reviews.filter((r) => {
     const matchStar   = reviewFilter === 0 || r.rating === reviewFilter;
     const q           = reviewSearch.toLowerCase();
-    const matchSearch = !q ||
-      r.name.toLowerCase().includes(q) ||
-      r.title.toLowerCase().includes(q) ||
-      r.body.toLowerCase().includes(q);
+    const matchSearch = !q || r.name.toLowerCase().includes(q) || r.title.toLowerCase().includes(q) || r.body.toLowerCase().includes(q);
     return matchStar && matchSearch;
   });
 
-  // ── Derived: FAQ topics + filtered FAQs ──────────────────────────────
-const filteredFaqs = data.faqs.filter((f) => {
-  const q = faqSearch.toLowerCase();
-  return !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
-});
+  const filteredFaqs = data.faqs.filter((f) => {
+    const q = faqSearch.toLowerCase();
+    return !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
+  });
 
   const registerRef = useCallback((id) => (el) => { if (el) sectionRefs.current[id] = el; }, []);
 
@@ -449,7 +598,7 @@ const filteredFaqs = data.faqs.filter((f) => {
     return () => obs.disconnect();
   }, [data]);
 
-  const scrollTo = (sec) => sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollTo   = (sec) => sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
   const handleApply = () => alert(`Starting application for ${data.country} visa!\n(Integrate your application form/route here)`);
 
   return (
@@ -531,7 +680,6 @@ const filteredFaqs = data.faqs.filter((f) => {
             <div className="bk-reveal">
               <SectionHead label="Required Documents" title="What You'll Need" />
               <div className="bk-essentials">
-
                 {/* Passport */}
                 <div className="bk-ess-card">
                   <div className="bk-ess-card__visual">
@@ -557,7 +705,6 @@ const filteredFaqs = data.faqs.filter((f) => {
                   </div>
                   <div className="bk-ess-card__body"><div className="bk-ess-card__title">Passport</div></div>
                 </div>
-
                 {/* Return Ticket */}
                 <div className="bk-ess-card">
                   <div className="bk-ess-card__visual">
@@ -594,7 +741,6 @@ const filteredFaqs = data.faqs.filter((f) => {
                   </div>
                   <div className="bk-ess-card__body"><div className="bk-ess-card__title">Return Ticket</div></div>
                 </div>
-
                 {/* Bank Statement */}
                 <div className="bk-ess-card">
                   <div className="bk-ess-card__visual">
@@ -624,7 +770,6 @@ const filteredFaqs = data.faqs.filter((f) => {
                   </div>
                   <div className="bk-ess-card__body"><div className="bk-ess-card__title">Bank Statement</div></div>
                 </div>
-
                 {/* Travel Insurance */}
                 <div className="bk-ess-card">
                   <div className="bk-ess-card__visual">
@@ -641,7 +786,6 @@ const filteredFaqs = data.faqs.filter((f) => {
                   </div>
                   <div className="bk-ess-card__body"><div className="bk-ess-card__title">Travel Insurance</div></div>
                 </div>
-
               </div>
             </div>
           </section>
@@ -731,16 +875,12 @@ const filteredFaqs = data.faqs.filter((f) => {
         </aside>
       </div>
 
-      <button className="bk-fab" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-        <span className="bk-fab__dot" />
-        <span>Apply Now</span>
-      </button>
+      {/* ── FLOATING ACTION TOGGLE ────────────────────────────────────── */}
+      <FloatingToggle onApply={handleApply} onRewards={() => setRewardsOpen(true)} />
 
-      <button className="bk-rewards-btn" onClick={() => setRewardsOpen(true)}>
-        <span>Rewards</span>
-      </button>
+      {/* ── REWARDS MODAL ────────────────────────────────────────────── */}
+      <RewardsModal open={rewardsOpen} onClose={() => setRewardsOpen(false)} onApply={handleApply} />
 
-      <RewardsModal open={rewardsOpen} onClose={() => setRewardsOpen(false)} />
     </div>
   );
 }

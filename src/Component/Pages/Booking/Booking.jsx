@@ -745,14 +745,14 @@ export default function BookingPage({ visaId: propVisaId }) {
                 <div className="bk-ess-card">
                   <div className="bk-ess-card__visual">
                     <svg viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="bk-ess-svg">
-                      <rect x="34" y="14" width="180" height="104" rx="4" fill="#fafaf7" stroke="#e0dbd0" strokeWidth="0.8" />
-                      <rect x="34" y="14" width="180" height="22" rx="4" fill="#1a2744" />
-                      <rect x="34" y="26" width="144" height="10" fill="#1a2744" />
-                      <text x="56" y="28" fill="#c9a84c" fontSize="7.5" fontFamily="monospace" fontWeight="700" letterSpacing="1">BANK STATEMENT</text>
-                      <rect x="100" y="40" width="72" height="20" rx="3" fill="#f0fdf4" stroke="#16a34a" strokeWidth="0.8" />
-                      <text x="136" y="48" textAnchor="middle" fill="#15803d" fontSize="6" fontFamily="monospace">BALANCE</text>
-                      <text x="127" y="57" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">₹</text>
-                      <text x="138" y="58.5" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">***</text>
+                      <rect x="20" y="30" width="180" height="104" rx="4" fill="#fafaf7" stroke="#e0dbd0" strokeWidth="0.8" />
+                      <rect x="20" y="20" width="180" height="22" rx="4" fill="#1a2744" />
+                      <rect x="20" y="40" width="144" height="10" fill="#1a2744" />
+                      <text x="40" y="38" fill="#c9a84c" fontSize="7.5" fontFamily="monospace" fontWeight="700" letterSpacing="1">BANK STATEMENT</text>
+                      <rect x="127" y="40" width="72" height="20" rx="3" fill="#f0fdf4" stroke="#16a34a" strokeWidth="0.8" />
+                      <text x="146" y="48" textAnchor="middle" fill="#15803d" fontSize="6" fontFamily="monospace">BALANCE</text>
+                      <text x="137" y="57" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">₹</text>
+                      <text x="148" y="58.5" textAnchor="middle" fill="#15803d" fontSize="9" fontFamily="monospace" fontWeight="700">***</text>
                       {[
                         { label: "Jun 01  Credit Salary", amt: "****",  color: "#15803d" },
                         { label: "Jun 15  UPI Transfer",  amt: "-****", color: "#dc2626" },
@@ -761,8 +761,8 @@ export default function BookingPage({ visaId: propVisaId }) {
                       ].map((row, i) => (
                         <g key={i}>
                           <rect x="42" y={69 + i * 13} width="132" height="11" rx="1.5" fill={i % 2 === 0 ? "#f5f5f0" : "transparent"} />
-                          <text x="46" y={77 + i * 13} fill="#555" fontSize="6" fontFamily="monospace">{row.label}</text>
-                          <text x="170" y={77 + i * 13} textAnchor="end" fill={row.color} fontSize="6.5" fontFamily="monospace" fontWeight="700">{row.amt}</text>
+                          <text x="46" y={75 + i * 13} fill="#555" fontSize="6" fontFamily="monospace">{row.label}</text>
+                          <text x="170" y={75 + i * 13} textAnchor="end" fill={row.color} fontSize="6.5" fontFamily="monospace" fontWeight="700">{row.amt}</text>
                         </g>
                       ))}
                       <line x1="42" y1="124" x2="170" y2="124" stroke="#e0dbd0" strokeWidth="0.8" />

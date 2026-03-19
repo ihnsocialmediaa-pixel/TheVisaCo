@@ -898,7 +898,7 @@
 }
 .bk-modal__close:hover { background: rgba(255,255,255,.28); }
 .bk-modal__brand  { font-family: var(--ff2); font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #ffffff; margin-bottom: .6rem; }
-.bk-modal__title  { font-family: var(--ff); font-size: clamp(1.3rem,3.5vw,1.9rem); font-weight: 700; color: #ffffff; line-height: 1.1; margin-bottom: .4rem; }
+.bk-modal__title  { font-family: var(--ff); font-size: clamp(1.3rem,3.5vw,1.9rem); font-weight: 700; color: #ffffff; line-height: 1.1; margin-bottom: .4rem; margin-top: 15px; }
 .bk-modal__sub    { font-family: var(--ff3); font-size: clamp(.74rem,1.4vw,.84rem); color: rgba(255,255,255,.8); line-height: 1.6; }
 
 .bk-modal__body { padding: clamp(.9rem,2vw,1.5rem); display: flex; flex-direction: column; gap: clamp(.8rem,1.8vw,1.4rem); }
@@ -1092,7 +1092,8 @@
   .bk-dest-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
   .bk-dest-card--wide { grid-column: span 2; }
   .bk-hero__badge { top: 2.2rem; right: 1.85rem; }
-  .bk-sb__cta { width: 55%; }
+  .bk-sb__cta { width: 25%; }
+  .bk-modal__cta { width: 35%; }
   .bk-essentials { grid-template-columns: repeat(3,1fr); }
 }
 
@@ -1185,6 +1186,9 @@
 
   .bk-fab-toggle { bottom: .75rem; right: .75rem; }
   .rw-lbl__title { font-size: .56rem; max-width: 65px; }
+  .bk-sb__cta { width: 50%; }
+  .bk-modal__cta { width: 50%; }
+ 
 }
 
 /* ── XXS: < 320px ────────────────────────────────────────────────── */

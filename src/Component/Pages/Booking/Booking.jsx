@@ -4,6 +4,8 @@ import { getVisaData, rewardsData } from "./bookingdata";
 import "./Booking.css";
 import { useParams } from "react-router-dom";
 
+
+
 // ─── STEP ICONS ───────────────────────────────────────────────────────────
 const STEP_ICONS = [
   <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -552,6 +554,7 @@ function FloatingToggle({ onApply, onRewards }) {
 }
 
 // ─── MAIN PAGE ─────────────────────────────────────────────────────────────
+
 export default function BookingPage({ visaId: propVisaId }) {
   const { visaId: paramVisaId } = useParams();
   const visaId = paramVisaId || propVisaId || "uae";
@@ -789,91 +792,94 @@ export default function BookingPage({ visaId: propVisaId }) {
               </div>
             </div>
           </section>
-
-          {/* ── PROCESS ──────────────────────────────────────────────── */}
-          <section className="bk-section" data-section="Process" ref={registerRef("Process")}>
-            <div className="bk-reveal">
-              <SectionHead label="How It Works" title="Simple 4-Step Process" />
-              <RunwayProcess steps={data.process} />
-            </div>
-          </section>
-
-          {/* ── REVIEWS ──────────────────────────────────────────────── */}
-          <section className="bk-section" data-section="Why Us" ref={registerRef("Why Us")}>
-            <div className="bk-reveal">
-              <SectionHead label="Customer Reviews" title="What Our Customers Say" />
-              <div className="bk-reviews-toolbar">
-                <div className="bk-reviews-score">
-                  <div className="bk-reviews-score__num">{data.reviewScore}</div>
-                  <div>
-                    <div className="bk-reviews-score__stars">★★★★★</div>
-                    <div className="bk-reviews-score__count">{data.reviewCount} verified reviews</div>
-                  </div>
-                </div>
-                <div className="bk-reviews-controls">
-                  <SearchBar value={reviewSearch} onChange={setReviewSearch} placeholder="Search reviews…" />
-                  <div className="bk-rev-filters">
-                    {[0, 5, 4, 3].map((star) => (
-                      <button key={star} className={`bk-rev-filter${reviewFilter === star ? " active" : ""}`} onClick={() => setReviewFilter(reviewFilter === star ? 0 : star)}>
-                        {star === 0 ? "All" : `${star}★`}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="bk-reviews-grid">
-                {filteredReviews.length > 0 ? filteredReviews.map((r) => (
-                  <div key={r.name} className="bk-review">
-                    <div className="bk-review__top">
-                      <div className="bk-review__avatar" style={{ background: avatarColor(r.name) }}>{r.name.charAt(0)}</div>
-                      <div>
-                        <div className="bk-review__name">{r.name}</div>
-                        <div className="bk-review__date">{r.date}</div>
-                      </div>
-                      <div className="bk-review__stars"><Stars n={r.rating} /></div>
-                    </div>
-                    <div className="bk-review__title">"{r.title}"</div>
-                    <div className="bk-review__body">{r.body}</div>
-                  </div>
-                )) : (
-                  <div className="bk-reviews-empty">No reviews match your search.</div>
-                )}
-              </div>
-            </div>
-          </section>
-
-          {/* ── FAQ ──────────────────────────────────────────────────── */}
-          <section className="bk-section" data-section="FAQ" ref={registerRef("FAQ")}>
-            <div className="bk-reveal">
-              <SectionHead label={`${data.country} FAQ`} title="Frequently Asked Questions" />
-              <div className="bk-faq-toolbar">
-                <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
-              </div>
-              <div className="bk-faqs">
-                {filteredFaqs.length > 0 ? filteredFaqs.map((f) => (
-                  <FaqItem key={f.q} q={f.q} a={f.a} />
-                )) : (
-                  <div className="bk-reviews-empty" style={{ padding: "1.5rem 0" }}>No questions match your search.</div>
-                )}
-              </div>
-              <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
-                <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
-                <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>
-                  Join 50,000+ Indians who trust TheVisa for their travel documents.
-                </div>
-                <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-                  <span>Apply for {data.country} Visa</span>
-                </button>
-              </div>
-            </div>
-          </section>
+        
+          
 
         </main>
 
         <aside className="bk-sidebar-wrap">
           <Sidebar data={data} onApply={handleApply} />
         </aside>
-      </div>
+      </div> 
+      <div className="bk-layout_2">           
+            {/* ── PROCESS ──────────────────────────────────────────────── */}
+            <section className="bk-section" data-section="Process" ref={registerRef("Process")}>
+              <div className="bk-reveal">
+                <SectionHead label="How It Works" title="Simple 4-Step Process" />
+                <RunwayProcess steps={data.process} />
+              </div>
+            </section>
+
+            {/* ── REVIEWS ──────────────────────────────────────────────── */}
+            <section className="bk-section" data-section="Why Us" ref={registerRef("Why Us")}>
+              <div className="bk-reveal">
+                <SectionHead label="Customer Reviews" title="What Our Customers Say" />
+                <div className="bk-reviews-toolbar">
+                  <div className="bk-reviews-score">
+                    <div className="bk-reviews-score__num">{data.reviewScore}</div>
+                    <div>
+                      <div className="bk-reviews-score__stars">★★★★★</div>
+                      <div className="bk-reviews-score__count">{data.reviewCount} verified reviews</div>
+                    </div>
+                  </div>
+                  <div className="bk-reviews-controls">
+                    <SearchBar value={reviewSearch} onChange={setReviewSearch} placeholder="Search reviews…" />
+                    <div className="bk-rev-filters">
+                      {[0, 5, 4, 3].map((star) => (
+                        <button key={star} className={`bk-rev-filter${reviewFilter === star ? " active" : ""}`} onClick={() => setReviewFilter(reviewFilter === star ? 0 : star)}>
+                          {star === 0 ? "All" : `${star}★`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="bk-reviews-grid">
+                  {filteredReviews.length > 0 ? filteredReviews.map((r) => (
+                    <div key={r.name} className="bk-review">
+                      <div className="bk-review__top">
+                        <div className="bk-review__avatar" style={{ background: avatarColor(r.name) }}>{r.name.charAt(0)}</div>
+                        <div>
+                          <div className="bk-review__name">{r.name}</div>
+                          <div className="bk-review__date">{r.date}</div>
+                        </div>
+                        <div className="bk-review__stars"><Stars n={r.rating} /></div>
+                      </div>
+                      <div className="bk-review__title">"{r.title}"</div>
+                      <div className="bk-review__body">{r.body}</div>
+                    </div>
+                  )) : (
+                    <div className="bk-reviews-empty">No reviews match your search.</div>
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* ── FAQ ──────────────────────────────────────────────────── */}
+            <section className="bk-section" data-section="FAQ" ref={registerRef("FAQ")}>
+              <div className="bk-reveal">
+                <SectionHead label={`${data.country} FAQ`} title="Frequently Asked Questions" />
+                <div className="bk-faq-toolbar">
+                  <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
+                </div>
+                <div className="bk-faqs">
+                  {filteredFaqs.length > 0 ? filteredFaqs.map((f) => (
+                    <FaqItem key={f.q} q={f.q} a={f.a} />
+                  )) : (
+                    <div className="bk-reviews-empty" style={{ padding: "1.5rem 0" }}>No questions match your search.</div>
+                  )}
+                </div>
+                <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
+                  <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
+                  <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>
+                    Join 50,000+ Indians who trust TheVisa for their travel documents.
+                  </div>
+                  <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+                    <span>Apply for {data.country} Visa</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
 
       {/* ── FLOATING ACTION TOGGLE ────────────────────────────────────── */}
       <FloatingToggle onApply={handleApply} onRewards={() => setRewardsOpen(true)} />

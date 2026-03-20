@@ -6,23 +6,21 @@ import Footer from "../Main/Footer/Footer";
 import ApplicationForm from "../Pages/ApplicationForm/ApplicationForm";
 import Login from "../Pages/Users/Login";
 import Profile from "../Pages/Users/Profile";
-
 import USMockInterview from "../Pages/Products/Interview/USMockInterview";
 import Requirements from "../Pages/Products/visaRequirement/Requirements";
 import RefundPolicy from "../Pages/Products/Refund/RefundPolicy";
-
 import { getSession } from "../Pages/Users/Auth";
 import ScrollToTop from "../ScrollToTop";
-// 🔐 Protected Route Component
+
 function ProtectedRoute({ children }) {
   const user = getSession();
   return user ? children : <Navigate to="/login" />;
-
 }
 
 function Router() {
   return (
     <>
+      <ScrollToTop />   {/* ✅ Add it here */}
       <Navbar />
 
       <Routes>
@@ -32,11 +30,7 @@ function Router() {
         <Route path="/interview" element={<USMockInterview />} />
         <Route path="/requirements" element={<Requirements />} />
         <Route path="/refund" element={<RefundPolicy />} />
-
-        {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
-
-        {/* Protected Profile */}
         <Route
           path="/profile"
           element={

@@ -1117,7 +1117,7 @@
   .bk-sb__price-main { font-size: 3rem; }
   .bk-dest-grid { grid-template-rows: 220px 160px; }
   .bk-reviews-grid { grid-template-columns: repeat(3,1fr); }
-  .bk-essentials { grid-template-columns: repeat(5,1fr); }
+   .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
   .bk-info-grid { gap: 1rem; }
 }
 
@@ -1134,6 +1134,7 @@
   .bk-hero__content { max-width: 760px; }
   .bk-sb__body { padding: 1.8rem; }
   .bk-reviews-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
+  .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── XL: 1200px–1439px ───────────────────────────────────────────── */
@@ -1148,6 +1149,7 @@
   .bk-dest-grid { grid-template-rows: 140px 100px; }
   .bk-reviews-grid { grid-template-columns: 1fr; }
   .bk-sb__cta { width: 65%; }
+  .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── MD: 640px–899px — single column ────────────────────────────── */
@@ -1163,7 +1165,7 @@
   .bk-hero__badge { top: 2.2rem; right: 1.85rem; }
   .bk-sb__cta { width: 25%; }
   .bk-modal__cta { width: 35%; }
-  .bk-essentials { grid-template-columns: repeat(3,1fr); }
+    .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── SM: 480px–639px ──────────────────────────────────────────────── */
@@ -1307,6 +1309,7 @@
   .bk-fab-toggle { bottom: .65rem; right: .65rem; }
   .bk-fab-main   { height: 42px; min-height: 42px; }
   .bk-fab-action { height: 40px; min-height: 40px; }
+  .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── Small phones landscape (< 480px width, landscape) ──────────── */
@@ -1317,6 +1320,7 @@
   .bk-hero__btn-learn { width: auto; }
   .bk-layout { padding-top: .75rem; }
   .bk-sidebar-wrap { position: static; }
+  .bk-essentials { gap: .45rem; grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── Tablets sideways (640–1024px) ───────────────────────────────── */
@@ -1326,7 +1330,7 @@
   .bk-hero { min-height: clamp(280px,45vw,380px); }
   .bk-hero__cta-row { flex-direction: row; }
   .bk-reviews-grid { grid-template-columns: repeat(2,1fr); }
-  .bk-essentials { grid-template-columns: repeat(3,1fr); }
+  .bk-essentials { grid-template-columns: repeat(2,1fr); }
 }
 
 /* ── Large tablets / small laptops sideways (1024–1200px) ────────── */

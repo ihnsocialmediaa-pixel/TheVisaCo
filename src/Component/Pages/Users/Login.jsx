@@ -1,9 +1,10 @@
 // ─────────────────────────────────────────────
 //  Login.jsx  —  Login / Signup Page (UI Only)
-//  All logic is in auth.js
+//  All logic is in Auth.js
+//  All class names prefixed with "login-"
 // ─────────────────────────────────────────────
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import {
   loginUser,
@@ -18,8 +19,7 @@ const USER_TYPES = [
   {
     key: "individual",
     label: "Individual",
-    icon: "🧍",
-    className: "card-individual",
+    categoryLabel: "Personal",
     subtitle: "Apply for visas personally — solo or small group travel.",
     features: [
       "Apply for one or multiple visas easily",
@@ -32,8 +32,7 @@ const USER_TYPES = [
   {
     key: "member",
     label: "Member",
-    icon: "👥",
-    className: "card-member",
+    categoryLabel: "Premium",
     subtitle: "For group or repeated visa applications at a premium tier.",
     features: [
       "Apply for multiple visas at once",
@@ -46,8 +45,7 @@ const USER_TYPES = [
   {
     key: "agent",
     label: "Agent",
-    icon: "🏢",
-    className: "card-agent",
+    categoryLabel: "Business",
     subtitle: "Registered agencies handling bulk visa applications.",
     features: [
       "Bulk visa application handling",
@@ -59,41 +57,11 @@ const USER_TYPES = [
   },
 ];
 
-// ── Floating Particles ────────────────────────
-function Particles() {
-  const dots = Array.from({ length: 18 }, (_, i) => ({
-    id: i,
-    size:   Math.random() * 4 + 2,
-    left:   Math.random() * 100,
-    delay:  Math.random() * 12,
-    duration: Math.random() * 14 + 10,
-    color: ["var(--teal)", "var(--violet)", "var(--gold)"][i % 3],
-  }));
-  return (
-    <div className="particles">
-      {dots.map((d) => (
-        <div
-          key={d.id}
-          className="particle"
-          style={{
-            width: d.size,
-            height: d.size,
-            left: `${d.left}%`,
-            background: d.color,
-            animationDuration: `${d.duration}s`,
-            animationDelay: `${d.delay}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 // ── Feature Item ──────────────────────────────
 function FeatureItem({ text }) {
   return (
-    <div className="feature-item">
-      <span className="feature-dot" />
+    <div className="login-feature-item">
+      <span className="login-feature-dot" />
       <span>{text}</span>
     </div>
   );
@@ -101,14 +69,14 @@ function FeatureItem({ text }) {
 
 // ── Auth Modal ────────────────────────────────
 function AuthModal({ type, role, onClose, onSuccess }) {
-  const [mode, setMode]         = useState(type); // "login" | "signup" | "otp"
-  const [name, setName]         = useState("");
-  const [email, setEmail]       = useState("");
-  const [password, setPassword] = useState("");
-  const [otp, setOtp]           = useState(["", "", "", "", "", ""]);
-  const [error, setError]       = useState("");
-  const [success, setSuccess]   = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [mode, setMode]               = useState(type); // "login" | "signup" | "otp"
+  const [name, setName]               = useState("");
+  const [email, setEmail]             = useState("");
+  const [password, setPassword]       = useState("");
+  const [otp, setOtp]                 = useState(["", "", "", "", "", ""]);
+  const [error, setError]             = useState("");
+  const [success, setSuccess]         = useState("");
+  const [loading, setLoading]         = useState(false);
   const [signupEmail, setSignupEmail] = useState("");
 
   const roleLabel = USER_TYPES.find((u) => u.key === role)?.label || role;
@@ -119,13 +87,13 @@ function AuthModal({ type, role, onClose, onSuccess }) {
     next[index] = value.slice(-1);
     setOtp(next);
     if (value && index < 5) {
-      document.getElementById(`otp-${index + 1}`)?.focus();
+      document.getElementById(`login-otp-${index + 1}`)?.focus();
     }
   }
 
   function handleOtpKeyDown(index, e) {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      document.getElementById(`otp-${index - 1}`)?.focus();
+      document.getElementById(`login-otp-${index - 1}`)?.focus();
     }
   }
 
@@ -170,37 +138,39 @@ function AuthModal({ type, role, onClose, onSuccess }) {
   }
 
   return (
-    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal-box">
-        <div className="modal-top">
+    <div
+      className="login-modal-overlay"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="login-modal-box">
+        <div className="login-modal-top">
           <h3>
-            {mode === "login"   && "Welcome Back"}
-            {mode === "signup"  && "Create Account"}
-            {mode === "otp"     && "Verify Email"}
+            {mode === "login"  && "Welcome Back"}
+            {mode === "signup" && "Create Account"}
+            {mode === "otp"    && "Verify Email"}
           </h3>
-          <button className="modal-close" onClick={onClose}>×</button>
+          <button className="login-modal-close" onClick={onClose}>
+            &#215;
+          </button>
         </div>
 
-        <div className="role-badge">
-          {USER_TYPES.find((u) => u.key === role)?.icon} {roleLabel} Account
-        </div>
+        <div className="login-role-badge">{roleLabel} Account</div>
 
-        {error   && <div className="form-error">{error}</div>}
-        {success && <div className="form-success">{success}</div>}
+        {error   && <div className="login-form-error">{error}</div>}
+        {success && <div className="login-form-success">{success}</div>}
 
         {/* ── OTP MODE ── */}
         {mode === "otp" && (
           <form onSubmit={handleVerifyOtp}>
-            <p style={{ color: "var(--text-muted)", fontSize: 14, marginBottom: 8 }}>
+            <p style={{ color: "#666666", fontSize: 14, marginBottom: 8, fontFamily: "inherit" }}>
               Enter the 6-digit code sent to your email.
             </p>
-            <div className="otp-inputs">
+            <div className="login-otp-inputs">
               {otp.map((digit, i) => (
                 <input
                   key={i}
-                  id={`otp-${i}`}
-                  className="form-group otp-input"
-                  style={{ width: 52, textAlign: "center" }}
+                  id={`login-otp-${i}`}
+                  className="login-form-group login-otp-input"
                   type="text"
                   inputMode="numeric"
                   maxLength={1}
@@ -210,8 +180,8 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                 />
               ))}
             </div>
-            <button className="btn btn-primary" type="submit" disabled={loading}>
-              {loading ? <span className="spinner" /> : "Verify OTP"}
+            <button className="login-btn login-btn-primary" type="submit" disabled={loading}>
+              {loading ? <span className="login-spinner" /> : "Verify OTP"}
             </button>
           </form>
         )}
@@ -219,13 +189,13 @@ function AuthModal({ type, role, onClose, onSuccess }) {
         {/* ── LOGIN MODE ── */}
         {mode === "login" && (
           <>
-            <button className="btn-google" type="button" onClick={handleGoogleSignIn}>
-              <span className="google-icon" />
+            <button className="login-btn-google" type="button" onClick={handleGoogleSignIn}>
+              <span className="login-google-icon" />
               Continue with Google
             </button>
-            <div className="divider">or</div>
+            <div className="login-divider">or</div>
             <form onSubmit={handleLogin}>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label>Email Address</label>
                 <input
                   type="email"
@@ -235,7 +205,7 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label>Password</label>
                 <input
                   type="password"
@@ -245,11 +215,11 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                   required
                 />
               </div>
-              <button className="btn btn-primary" type="submit" disabled={loading}>
-                {loading ? <span className="spinner" /> : "Sign In →"}
+              <button className="login-btn login-btn-primary" type="submit" disabled={loading}>
+                {loading ? <span className="login-spinner" /> : "Sign In →"}
               </button>
             </form>
-            <div className="toggle-auth">
+            <div className="login-toggle-auth">
               Don't have an account?
               <button onClick={() => { setMode("signup"); setError(""); }}>Sign Up</button>
             </div>
@@ -259,13 +229,13 @@ function AuthModal({ type, role, onClose, onSuccess }) {
         {/* ── SIGNUP MODE ── */}
         {mode === "signup" && (
           <>
-            <button className="btn-google" type="button" onClick={handleGoogleSignIn}>
-              <span className="google-icon" />
+            <button className="login-btn-google" type="button" onClick={handleGoogleSignIn}>
+              <span className="login-google-icon" />
               Sign up with Google
             </button>
-            <div className="divider">or</div>
+            <div className="login-divider">or</div>
             <form onSubmit={handleSignup}>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label>Full Name</label>
                 <input
                   type="text"
@@ -275,7 +245,7 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label>Email Address</label>
                 <input
                   type="email"
@@ -285,7 +255,7 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label>Password</label>
                 <input
                   type="password"
@@ -296,11 +266,11 @@ function AuthModal({ type, role, onClose, onSuccess }) {
                   minLength={8}
                 />
               </div>
-              <button className="btn btn-primary" type="submit" disabled={loading}>
-                {loading ? <span className="spinner" /> : "Create Account →"}
+              <button className="login-btn login-btn-primary" type="submit" disabled={loading}>
+                {loading ? <span className="login-spinner" /> : "Create Account →"}
               </button>
             </form>
-            <div className="toggle-auth">
+            <div className="login-toggle-auth">
               Already have an account?
               <button onClick={() => { setMode("login"); setError(""); }}>Sign In</button>
             </div>
@@ -325,37 +295,37 @@ function UserTypeCard({ data, onAction }) {
   }
 
   return (
-    <div className={`user-type-card ${data.className}`}>
-      <div className="card-header">
-        <div className="card-icon">{data.icon}</div>
-        <div className="card-title-wrap">
-          <h2>{data.label}</h2>
-          <p className="card-subtitle">{data.subtitle}</p>
-        </div>
+    <div className="login-user-type-card">
+      <div className="login-card-header">
+        <div className="login-card-label">{data.categoryLabel}</div>
+        <h2>{data.label}</h2>
+        <p className="login-card-subtitle">{data.subtitle}</p>
       </div>
 
-      <div className="feature-list">
+      <div className="login-card-divider" />
+
+      <div className="login-feature-list">
         {data.features.map((f, i) => (
           <FeatureItem key={i} text={f} />
         ))}
       </div>
 
-      <div className="card-actions">
+      <div className="login-card-actions">
         <button
-          className="btn btn-primary"
+          className="login-btn login-btn-primary"
           onClick={() => onAction("login", data.key)}
         >
           Login as {data.label}
         </button>
         <button
-          className="btn btn-outline"
+          className="login-btn login-btn-outline"
           onClick={() => onAction("signup", data.key)}
         >
           Sign Up as {data.label}
         </button>
         {isMember && (
-          <button className="btn btn-membership" onClick={handleMembership}>
-            ✦ Buy Membership
+          <button className="login-btn login-btn-membership" onClick={handleMembership}>
+            Buy Membership
           </button>
         )}
       </div>
@@ -369,7 +339,6 @@ export default function Login({ onLoginSuccess }) {
 
   function handleAction(type, role) {
     if (type === "membership") {
-      // Already logged in — trigger payment flow
       alert("Redirecting to payment... (integrate payment gateway here)");
       return;
     }
@@ -383,32 +352,28 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <div className="login-page">
-      <Particles />
-
       {/* Header */}
       <header className="login-header">
-        <div className="logo-wrap">
-          <div className="logo-icon">🌐</div>
-          <div className="logo-text">Visa<span>Gate</span></div>
+        <div className="login-logo-wrap">
+          <div className="login-logo-text">Visa<span>Gate</span></div>
         </div>
-        <span className="header-tagline">Your global visa processing partner</span>
+        <span className="login-header-tagline">Your global visa processing partner</span>
       </header>
 
       {/* Hero */}
       <section className="login-hero">
-        <div className="hero-badge">Trusted by 50,000+ travelers</div>
+        
         <h1>
           Your Visa Journey<br />
-          Starts <span className="accent">Here</span>
+          Starts <span className="login-accent">Here</span>
         </h1>
         <p>
-          Choose your account type below to get started with fast, transparent,
-          and hassle-free visa applications worldwide.
+          Choose your account type below to get started 
         </p>
       </section>
 
       {/* User Type Cards */}
-      <section className="user-types-grid">
+      <section className="login-user-types-grid">
         {USER_TYPES.map((ut) => (
           <UserTypeCard key={ut.key} data={ut} onAction={handleAction} />
         ))}

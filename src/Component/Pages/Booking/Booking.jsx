@@ -183,10 +183,10 @@ function SectionHead({ label, title }) {
 }
 
 // ─── FAQ ITEM ─────────────────────────────────────────────────────────────
-function FaqItem({ q, a }) {
+function FaqItem({ q, a, isLast }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`bk-faq ${open ? "open" : ""}`}>
+    <div className={`bk-faq ${open ? "open" : ""} ${isLast ? "bk-faq--last" : ""}`}>
       <button className="bk-faq__q" onClick={() => setOpen(!open)}>
         <span className="bk-faq__q-text">{q}</span>
         <span className="bk-faq__chevron">{open ? "−" : "+"}</span>
@@ -499,6 +499,31 @@ function SearchBar({ value, onChange, placeholder }) {
   );
 }
 
+// ─── VIEW MORE BUTTON ─────────────────────────────────────────────────────
+function ViewMoreBtn({ expanded, onToggle, moreCount }) {
+  return (
+    <div className="bk-view-more">
+      <button className="bk-view-more__btn" onClick={onToggle}>
+        {expanded ? (
+          <>
+            <span>Show Less</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </>
+        ) : (
+          <>
+            <span>View More{moreCount > 0 ? ` (${moreCount} more)` : ""}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </>
+        )}
+      </button>
+    </div>
+  );
+}
+
 // ─── FLOATING ACTION TOGGLE ───────────────────────────────────────────────
 function FloatingToggle({ onApply, onRewards }) {
   const [open, setOpen] = useState(false);
@@ -555,17 +580,22 @@ function FloatingToggle({ onApply, onRewards }) {
 
 // ─── MAIN PAGE ─────────────────────────────────────────────────────────────
 
+const REVIEWS_INITIAL = 4;
+const FAQS_INITIAL    = 4;
+
 export default function BookingPage({ visaId: propVisaId }) {
   const { visaId: paramVisaId } = useParams();
   const visaId = paramVisaId || propVisaId || "uae";
   const data = getVisaData(visaId);
 
-  const [heroLoaded,    setHeroLoaded]    = useState(false);
-  const [activeSection, setActiveSection] = useState("Info");
-  const [rewardsOpen,   setRewardsOpen]   = useState(false);
-  const [reviewSearch,  setReviewSearch]  = useState("");
-  const [reviewFilter,  setReviewFilter]  = useState(0);
-  const [faqSearch,     setFaqSearch]     = useState("");
+  const [heroLoaded,      setHeroLoaded]      = useState(false);
+  const [activeSection,   setActiveSection]   = useState("Info");
+  const [rewardsOpen,     setRewardsOpen]     = useState(false);
+  const [reviewSearch,    setReviewSearch]    = useState("");
+  const [reviewFilter,    setReviewFilter]    = useState(0);
+  const [faqSearch,       setFaqSearch]       = useState("");
+  const [reviewsExpanded, setReviewsExpanded] = useState(false);
+  const [faqsExpanded,    setFaqsExpanded]    = useState(false);
 
   const sectionRefs = useRef({});
 
@@ -580,6 +610,14 @@ export default function BookingPage({ visaId: propVisaId }) {
     const q = faqSearch.toLowerCase();
     return !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
   });
+
+  // Sliced lists — when search/filter is active show all results; otherwise respect initial limit
+  const isReviewFiltered  = reviewSearch || reviewFilter !== 0;
+  const isFaqFiltered     = !!faqSearch;
+  const visibleReviews    = isReviewFiltered ? filteredReviews : (reviewsExpanded ? filteredReviews : filteredReviews.slice(0, REVIEWS_INITIAL));
+  const visibleFaqs       = isFaqFiltered   ? filteredFaqs   : (faqsExpanded    ? filteredFaqs    : filteredFaqs.slice(0, FAQS_INITIAL));
+  const showReviewToggle  = !isReviewFiltered && filteredReviews.length > REVIEWS_INITIAL;
+  const showFaqToggle     = !isFaqFiltered   && filteredFaqs.length   > FAQS_INITIAL;
 
   const registerRef = useCallback((id) => (el) => { if (el) sectionRefs.current[id] = el; }, []);
 
@@ -834,7 +872,7 @@ export default function BookingPage({ visaId: propVisaId }) {
                   </div>
                 </div>
                 <div className="bk-reviews-grid">
-                  {filteredReviews.length > 0 ? filteredReviews.map((r) => (
+                  {visibleReviews.length > 0 ? visibleReviews.map((r) => (
                     <div key={r.name} className="bk-review">
                       <div className="bk-review__top">
                         <div className="bk-review__avatar" style={{ background: avatarColor(r.name) }}>{r.name.charAt(0)}</div>
@@ -851,6 +889,13 @@ export default function BookingPage({ visaId: propVisaId }) {
                     <div className="bk-reviews-empty">No reviews match your search.</div>
                   )}
                 </div>
+                {showReviewToggle && (
+                  <ViewMoreBtn
+                    expanded={reviewsExpanded}
+                    onToggle={() => setReviewsExpanded((v) => !v)}
+                    moreCount={filteredReviews.length - REVIEWS_INITIAL}
+                  />
+                )}
               </div>
             </section>
 
@@ -862,12 +907,24 @@ export default function BookingPage({ visaId: propVisaId }) {
                   <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
                 </div>
                 <div className="bk-faqs">
-                  {filteredFaqs.length > 0 ? filteredFaqs.map((f) => (
-                    <FaqItem key={f.q} q={f.q} a={f.a} />
+                  {visibleFaqs.length > 0 ? visibleFaqs.map((f, idx) => (
+                    <FaqItem
+                      key={f.q}
+                      q={f.q}
+                      a={f.a}
+                      isLast={idx === visibleFaqs.length - 1 && !showFaqToggle}
+                    />
                   )) : (
                     <div className="bk-reviews-empty" style={{ padding: "1.5rem 0" }}>No questions match your search.</div>
                   )}
                 </div>
+                {showFaqToggle && (
+                  <ViewMoreBtn
+                    expanded={faqsExpanded}
+                    onToggle={() => setFaqsExpanded((v) => !v)}
+                    moreCount={filteredFaqs.length - FAQS_INITIAL}
+                  />
+                )}
                 <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
                   <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
                   <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>

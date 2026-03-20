@@ -530,6 +530,8 @@ function Testimonials() {
   };
 
   const allReviews = [...userReviews, ...reviews];
+  const [visibleReviews, setVisibleReviews] = React.useState(3);
+  const shownReviews = allReviews.slice(0, visibleReviews);
 
   return (
     <section className="home-testi">
@@ -566,7 +568,7 @@ function Testimonials() {
         </div>
 
         <div className="home-testi__grid-reviews">
-          {allReviews.map((r, i) => (
+         {shownReviews.map((r, i) => (
             <div
               key={i}
               className={`home-testi__card${r.isNew ? " home-testi__card--new" : ""}`}
@@ -607,6 +609,21 @@ function Testimonials() {
             </div>
           ))}
         </div>
+        {allReviews.length > 3 && (
+          <div className="home-view-more-wrap">
+            <button
+              className="home-view-more-btn"
+              onClick={() => setVisibleReviews(v => v < allReviews.length ? Math.min(v + 3, allReviews.length) : 3)}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points={visibleReviews >= allReviews.length ? "18 15 12 9 6 15" : "6 9 12 15 18 9"} />
+              </svg>
+              {visibleReviews >= allReviews.length
+                ? "Show Less"
+                : `View More Reviews (${allReviews.length - visibleReviews} remaining)`}
+            </button>
+          </div>
+        )}
 
         {/* FEEDBACK FORM */}
         <div className="home-feedback" data-aos="fade-up" data-aos-delay="100">
@@ -1157,6 +1174,8 @@ function FAQ() {
   const [activeTag, setTag]   = React.useState("All");
   const [focused, setFocused] = React.useState(false);
   const inputRef              = React.useRef(null);
+  const [visibleFaqs, setVisibleFaqs] = React.useState(4);
+  React.useEffect(() => { setVisibleFaqs(4); }, [query, activeTag]);
 
   const allTags = ["All", ...Array.from(new Set(faqs.map(f => f.tag)))];
 
@@ -1308,21 +1327,22 @@ function FAQ() {
               <button className="home-faq__empty-btn" onClick={clearSearch}>Clear search</button>
             </div>
           ) : (
-            filtered.map((item, i) => {
-              const globalIdx = faqs.indexOf(item);
-              const isOpen    = open === globalIdx;
-              return (
-                <div
-                  key={globalIdx}
-                  className={`home-faq__item${isOpen ? " home-faq__item--open" : ""}`}
-                  style={{ animationDelay: `${i * 45}ms` }}
-                >
-                  <button
-                    className="home-faq__q"
-                    onClick={() => toggle(globalIdx)}
-                    aria-expanded={isOpen}
+            <>
+              {filtered.slice(0, visibleFaqs).map((item, i) => {
+                const globalIdx = faqs.indexOf(item);
+                const isOpen    = open === globalIdx;
+                return (
+                  <div
+                    key={globalIdx}
+                    className={`home-faq__item${isOpen ? " home-faq__item--open" : ""}`}
+                    style={{ animationDelay: `${i * 45}ms` }}
                   >
-                    <span className="home-faq__q-num">
+                    <button
+                      className="home-faq__q"
+                      onClick={() => toggle(globalIdx)}
+                      aria-expanded={isOpen}
+                    >
+                      <span className="home-faq__q-num">
                       {String(globalIdx + 1).padStart(2, "0")}
                     </span>
 
@@ -1343,25 +1363,43 @@ function FAQ() {
                     </span>
                   </button>
 
-                  <div
-                    className="home-faq__a-wrap"
-                    style={{
-                      maxHeight: isOpen ? "320px" : "0",
-                      opacity:   isOpen ? 1 : 0,
-                      transition: "max-height .44s cubic-bezier(.4,0,.2,1), opacity .3s ease",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <div className="home-faq__a-inner">
-                      <div className="home-faq__a-bar" />
-                      <p className="home-faq__a">{highlight(item.a)}</p>
+                    <div
+                      className="home-faq__a-wrap"
+                      style={{
+                        maxHeight: isOpen ? "320px" : "0",
+                        opacity:   isOpen ? 1 : 0,
+                        transition: "max-height .44s cubic-bezier(.4,0,.2,1), opacity .3s ease",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div className="home-faq__a-inner">
+                        <div className="home-faq__a-bar" />
+                        <p className="home-faq__a">{highlight(item.a)}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })
+                );
+              })}
+
+              {/* ── View More button — only shown when more FAQs exist ── */}
+              {filtered.length > 4 && (
+                <div className="home-view-more-wrap--faq">
+                <button
+                  className="home-view-more-btn"
+                  onClick={() => setVisibleFaqs(v => v < filtered.length ? Math.min(v + 3, filtered.length) : 3)}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points={visibleFaqs >= filtered.length ? "18 15 12 9 6 15" : "6 9 12 15 18 9"} />
+                  </svg>
+                  {visibleFaqs >= filtered.length
+                    ? "Show Less"
+                    : `View More FAQs (${filtered.length - visibleFaqs} remaining)`}
+                </button>
+              </div>
+              )}
+            </>
           )}
-        </div>
+        </div>      
 
         <div className="home-faq__footer" data-aos="fade-up">
           <div className="home-faq__footer-card">

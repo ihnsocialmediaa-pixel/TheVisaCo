@@ -175,6 +175,7 @@ const DATA = {
       { name: "Rohit Verma",   rating: 5, date: "Jan 2026", title: "100% recommended",            body: "Received my visa within the guaranteed timeframe. All fees shown upfront — zero hidden charges." },
       { name: "Priya Nair",    rating: 5, date: "Mar 2026", title: "Professional & transparent", body: "Loved how transparent the pricing was. Got my visa exactly when promised." },
       { name: "Karan Mehta",   rating: 4, date: "Feb 2026", title: "Great experience overall",   body: "Seamless application process. Support team responded instantly on WhatsApp." },
+      { name: "Karan Mehta",   rating: 4, date: "Feb 2026", title: "Great experience overall",   body: "Seamless application process. Support team responded instantly on WhatsApp." },
     ],
     reviewScore: "4.9",
     reviewCount: "12,400+",

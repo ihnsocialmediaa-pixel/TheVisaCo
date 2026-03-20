@@ -1,11 +1,15 @@
 // RefundPolicy.jsx
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import "./Refund.css";
 import {
   PRODUCT_TABS,
   POLICY_STAGES_BY_TAB,
   TESTIMONIALS,
 } from "./Policy.js";
+
+/* ─── Constants ───────────────────────────────────────── */
+const INITIAL_VISIBLE = 3;   // cards shown before "View More"
+const LOAD_MORE_STEP  = 6;   // additional cards loaded per click
 
 /* ─── Helpers ─────────────────────────────────────────── */
 function StarRating({ count = 5, total = 5 }) {
@@ -27,7 +31,6 @@ function Hero() {
   return (
     <section className="RefundHero">
       <div className="RefundContainer">
-        
         <h1 className="RefundHero__title">
           Refund Clarity You <em>Can Count On</em>
         </h1>
@@ -105,9 +108,9 @@ function PolicySection() {
 }
 
 /* ─── Review Card ─────────────────────────────────────── */
-function ReviewCard({ review }) {
+function ReviewCard({ review, revealed = false }) {
   return (
-    <div className="RefundReviewCard">
+    <div className={`RefundReviewCard${revealed ? " RefundReviewCard--revealed" : ""}`}>
       <div className="RefundReviewCard__header">
         <div className="RefundAvatar">{review.initials}</div>
         <div className="RefundReviewCard__meta">
@@ -124,6 +127,110 @@ function ReviewCard({ review }) {
       <p className="RefundReviewCard__text">{review.review}</p>
       <div className="RefundReviewCard__quote-mark">"</div>
     </div>
+  );
+}
+
+/* ─── View More Button ────────────────────────────────── */
+function ViewMoreButton({ visible, total, onViewMore, onShowLess }) {
+  const remaining = total - visible;
+  const isExpanded = visible >= total;
+
+  if (total <= INITIAL_VISIBLE) return null;
+
+  return (
+    <div className="RefundReviews__viewmore-wrap">
+      {isExpanded ? (
+        <button
+          className="RefundReviews__viewmore-btn RefundReviews__viewmore-btn--expanded"
+          onClick={onShowLess}
+          aria-label="Show fewer reviews"
+        >
+          Show Less
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+        </button>
+      ) : (
+        <button
+          className="RefundReviews__viewmore-btn"
+          onClick={onViewMore}
+          aria-label={`View ${Math.min(remaining, LOAD_MORE_STEP)} more reviews`}
+        >
+          View More Reviews
+          <span className="RefundReviews__viewmore-count">
+            +{Math.min(remaining, LOAD_MORE_STEP)}
+          </span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
+/* ─── Desktop Grid with View More ────────────────────── */
+function DesktopGrid({ reviews }) {
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  // Track which indices were just revealed for animation
+  const [revealedFrom, setRevealedFrom] = useState(null);
+  // Ref for scroll-back target when collapsing
+  const gridRef = useRef(null);
+
+  // Reset to initial when reviews list changes (e.g. search)
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+    setRevealedFrom(null);
+  }, [reviews]);
+
+  function handleViewMore() {
+    const prev = visibleCount;
+    const next = Math.min(visibleCount + LOAD_MORE_STEP, reviews.length);
+    setRevealedFrom(prev);
+    setVisibleCount(next);
+  }
+
+  function handleShowLess() {
+    setVisibleCount(INITIAL_VISIBLE);
+    setRevealedFrom(null);
+    // Scroll back to grid top
+    if (gridRef.current) {
+      gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  if (reviews.length === 0) {
+    return (
+      <div className="RefundReviews__grid">
+        <div className="RefundReviews__empty">
+          <div className="RefundReviews__empty-icon">🔍</div>
+          No reviews match your search. Try a different keyword.
+        </div>
+      </div>
+    );
+  }
+
+  const visible = reviews.slice(0, visibleCount);
+
+  return (
+    <>
+      <div className="RefundReviews__grid" ref={gridRef}>
+        {visible.map((r, i) => (
+          <ReviewCard
+            key={r.id}
+            review={r}
+            revealed={revealedFrom !== null && i >= revealedFrom}
+          />
+        ))}
+      </div>
+
+      <ViewMoreButton
+        visible={visibleCount}
+        total={reviews.length}
+        onViewMore={handleViewMore}
+        onShowLess={handleShowLess}
+      />
+    </>
   );
 }
 
@@ -414,7 +521,7 @@ function ReviewsSection() {
           <div>
             <h2 className="RefundReviews__heading">Our refund promise, proven in real stories</h2>
             <p className="RefundReviews__subheading">
-              {reviews.length} verified customer experiences
+              {reviews.length} verified customer experience{reviews.length !== 1 ? "s" : ""}
             </p>
           </div>
 
@@ -435,20 +542,10 @@ function ReviewsSection() {
           </div>
         </div>
 
-        {/* Desktop: scrollable 3-col grid */}
+        {/* Desktop: static grid + View More button (>1024px) */}
         <div className="RefundReviews__viewport">
-          <div className="RefundReviews__grid">
-            {filtered.length > 0 ? (
-              filtered.map((r) => <ReviewCard key={r.id} review={r} />)
-            ) : (
-              <div className="RefundReviews__empty">
-                <div className="RefundReviews__empty-icon">🔍</div>
-                No reviews match <strong>"{query}"</strong>. Try a different keyword.
-              </div>
-            )}
-          </div>
+          <DesktopGrid reviews={filtered} />
         </div>
-        <div className="RefundReviews__fade" />
 
         {/* Tablet + Mobile: carousel */}
         <ReviewCarousel reviews={filtered} />

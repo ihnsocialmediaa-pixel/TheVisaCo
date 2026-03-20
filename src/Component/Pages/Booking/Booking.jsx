@@ -4,6 +4,144 @@ import { getVisaData, rewardsData } from "./bookingdata";
 import "./Booking.css";
 import { useParams } from "react-router-dom";
 
+// ─── LOGIN GATE IMPORT ────────────────────────────────────────────────────
+// Login lives at src/Components/Pages/Users/Login.jsx
+import Login from "../Users/Login";
+import { getSession } from "../Users/Auth";
+
+
+// ─── LOGIN GATE MODAL ────────────────────────────────────────────────────
+// Wraps <Login /> in a full-screen overlay.
+// After successful login → calls onSuccess(user) and closes itself.
+function LoginGate({ open, onClose, onSuccess }) {
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  if (!open) return null;
+
+  function handleLoginSuccess(user) {
+    onSuccess(user);
+    onClose();
+  }
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        background: "rgba(0,0,0,0.72)",
+        backdropFilter: "blur(14px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+        animation: "lgFadeIn .2s ease",
+      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <style>{`
+        @keyframes lgFadeIn { from { opacity:0 } to { opacity:1 } }
+        @keyframes lgSlideUp { from { transform:translateY(28px);opacity:0 } to { transform:translateY(0);opacity:1 } }
+        .lg-inner { animation: lgSlideUp .32s cubic-bezier(.34,1.56,.64,1); }
+      `}</style>
+
+      <div
+        className="lg-inner"
+        style={{
+          width: "100%",
+          maxWidth: 520,
+          maxHeight: "92vh",
+          overflowY: "auto",
+          scrollbarWidth: "none",
+          borderRadius: 24,
+          boxShadow: "0 40px 100px rgba(0,0,0,.65)",
+          position: "relative",
+        }}
+      >
+        {/* ── Close Button ── */}
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: 16, right: 16,
+            zIndex: 10,
+            width: 36, height: 36,
+            borderRadius: "50%",
+            background: "rgba(255,255,255,.08)",
+            border: "1px solid rgba(255,255,255,.14)",
+            color: "#aab",
+            fontSize: 18,
+            cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            lineHeight: 1,
+          }}
+        >✕</button>
+
+        {/*
+          Login renders its full page but inside the modal we clip it.
+          We hide its outer header/hero via a style tag injected here.
+        */}
+        <style>{`
+          .lg-inner .login-page { min-height: unset !important; }
+          .lg-inner .login-header { display: none !important; }
+          .lg-inner .login-hero   { padding: 32px 24px 20px !important; }
+          .lg-inner .user-types-grid {
+            grid-template-columns: 1fr !important;
+            padding: 0 20px 32px !important;
+            gap: 16px !important;
+          }
+          .lg-inner .particles { display: none !important; }
+          .lg-inner .login-page::before,
+          .lg-inner .login-page::after { display: none !important; }
+        `}</style>
+
+        <Login onLoginSuccess={handleLoginSuccess} />
+      </div>
+    </div>
+  );
+}
+
+
+// ─── useLoginGate HOOK ────────────────────────────────────────────────────
+// Provides a single source of truth for the gate state and the
+// "guarded action" pattern: if not logged in → open gate; after
+// login → run the original action.
+function useLoginGate() {
+  const [gateOpen,    setGateOpen]    = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [loggedInUser, setLoggedInUser]   = useState(() => getSession());
+
+  // Open the gate and store what to do after login
+  const requireLogin = useCallback((action) => {
+    const session = getSession();
+    if (session) {
+      // Already logged in → run immediately
+      action(session);
+    } else {
+      setPendingAction(() => action);
+      setGateOpen(true);
+    }
+  }, []);
+
+  const handleLoginSuccess = useCallback((user) => {
+    setLoggedInUser(user);
+    setGateOpen(false);
+    if (pendingAction) {
+      pendingAction(user);
+      setPendingAction(null);
+    }
+  }, [pendingAction]);
+
+  const closeGate = useCallback(() => {
+    setGateOpen(false);
+    setPendingAction(null);
+  }, []);
+
+  return { gateOpen, loggedInUser, requireLogin, handleLoginSuccess, closeGate };
+}
 
 
 // ─── STEP ICONS ───────────────────────────────────────────────────────────
@@ -292,9 +430,9 @@ function RewardsModal({ open, onClose, onApply }) {
   }, [open]);
 
   const handleOverlay = (e) => { if (e.target === e.currentTarget) onClose(); };
-
   const toggleTier = (id) => setOpenTier((prev) => (prev === id ? null : id));
 
+  // ── "Start Application" inside Rewards Modal now goes through login gate
   const handleApply = () => { onClose(); onApply(); };
 
   return (
@@ -304,7 +442,6 @@ function RewardsModal({ open, onClose, onApply }) {
         {/* ── HEAD ── */}
         <div className="bk-modal__head">
           <button className="bk-modal__close" onClick={onClose}>✕</button>
-          
           <div className="bk-modal__title">Earn as you travel</div>
           <div className="bk-modal__sub">Every application brings you closer to exclusive benefits. All rewards apply on visa application fees charged.</div>
         </div>
@@ -360,7 +497,6 @@ function RewardsModal({ open, onClose, onApply }) {
                       <div className="bk-modal__tier-name">{tier.name}</div>
                       <div className="bk-modal__tier-desc">{tier.desc}</div>
                     </div>
-                    
                     <span className="bk-modal__tier-arrow">&#9658;</span>
                   </div>
                   <div className="bk-modal__tier-body">
@@ -411,7 +547,7 @@ function RewardsModal({ open, onClose, onApply }) {
             </div>
           </div>
 
-          {/* CTA */}
+          {/* ── CTA — goes through login gate ── */}
           <button className="bk-modal__cta" onClick={handleApply}>
             <span>Start Application</span>
           </button>
@@ -443,7 +579,12 @@ function Sidebar({ data, onApply }) {
           <div className="bk-sb__price-sub">Total per person</div>
           <div className="bk-sb__price-note">Govt fee + service fee included</div>
         </div>
-        <button className="bk-sb__cta" onClick={onApply} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+        {/* ── Sidebar CTA — login gated ── */}
+        <button
+          className="bk-sb__cta"
+          onClick={onApply}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+        >
           <span>Start Application</span>
         </button>
         <div className="bk-sb__fees">
@@ -547,12 +688,13 @@ function FloatingToggle({ onApply, onRewards }) {
       <div className="bk-fab-actions">
         <button className="bk-fab-action bk-fab-action--rewards" onClick={handleRewards} tabIndex={open ? 0 : -1} aria-hidden={!open}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#C9A000" strokeWidth="2"/>
-              <circle cx="12" cy="12" r="6" fill="#FFEC8B" stroke="#C9A000" strokeWidth="1.5"/>
-              <ellipse cx="9" cy="9" rx="3" ry="2" fill="white" opacity="0.3"/>
-            </svg>
+            <circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#C9A000" strokeWidth="2"/>
+            <circle cx="12" cy="12" r="6" fill="#FFEC8B" stroke="#C9A000" strokeWidth="1.5"/>
+            <ellipse cx="9" cy="9" rx="3" ry="2" fill="white" opacity="0.3"/>
+          </svg>
           <span>Rewards</span>
         </button>
+        {/* ── FAB Apply Now — login gated ── */}
         <button className="bk-fab-action bk-fab-action--apply" onClick={handleApply} tabIndex={open ? 0 : -1} aria-hidden={!open}>
           <span className="bk-fab-action__dot" />
           <span>Apply Now</span>
@@ -597,6 +739,9 @@ export default function BookingPage({ visaId: propVisaId }) {
   const [reviewsExpanded, setReviewsExpanded] = useState(false);
   const [faqsExpanded,    setFaqsExpanded]    = useState(false);
 
+  // ── Login Gate ──────────────────────────────────────────────────────────
+  const { gateOpen, loggedInUser, requireLogin, handleLoginSuccess, closeGate } = useLoginGate();
+
   const sectionRefs = useRef({});
 
   const filteredReviews = data.reviews.filter((r) => {
@@ -611,7 +756,6 @@ export default function BookingPage({ visaId: propVisaId }) {
     return !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
   });
 
-  // Sliced lists — when search/filter is active show all results; otherwise respect initial limit
   const isReviewFiltered  = reviewSearch || reviewFilter !== 0;
   const isFaqFiltered     = !!faqSearch;
   const visibleReviews    = isReviewFiltered ? filteredReviews : (reviewsExpanded ? filteredReviews : filteredReviews.slice(0, REVIEWS_INITIAL));
@@ -639,11 +783,31 @@ export default function BookingPage({ visaId: propVisaId }) {
     return () => obs.disconnect();
   }, [data]);
 
-  const scrollTo   = (sec) => sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
-  const handleApply = () => alert(`Starting application for ${data.country} visa!\n(Integrate your application form/route here)`);
+  const scrollTo = (sec) => sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // ── SINGLE guarded apply handler used by ALL apply/start buttons ────────
+  const handleApply = useCallback(() => {
+    requireLogin((user) => {
+      // User is confirmed logged in — proceed with application
+      alert(`Starting application for ${data.country} visa!\nLogged in as: ${user.name} (${user.userId})\n\n(Integrate your application form/route here)`);
+    });
+  }, [requireLogin, data.country]);
+
+  // ── Rewards modal open — no login needed to browse, gate only on Apply ──
+  const handleRewardsApply = useCallback(() => {
+    setRewardsOpen(false);
+    handleApply();
+  }, [handleApply]);
 
   return (
     <div className="bk">
+
+      {/* ── LOGIN GATE MODAL ── shown whenever a non-logged-in user clicks any apply button */}
+      <LoginGate
+        open={gateOpen}
+        onClose={closeGate}
+        onSuccess={handleLoginSuccess}
+      />
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="bk-hero">
@@ -665,7 +829,12 @@ export default function BookingPage({ visaId: propVisaId }) {
           <h1 className="bk-hero__title">{data.country}</h1>
           <p className="bk-hero__tagline">{data.tagline}</p>
           <div className="bk-hero__cta-row">
-            <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+            {/* ── Hero "Start Application" — login gated ── */}
+            <button
+              className="bk-hero__btn-start"
+              onClick={handleApply}
+              style={{ display: "flex", alignItems: "center", gap: "7px" }}
+            >
               <span>Start Application</span>
             </button>
             <button className="bk-hero__btn-learn" onClick={() => scrollTo("Info")}>View Details</button>
@@ -685,7 +854,12 @@ export default function BookingPage({ visaId: propVisaId }) {
           {data.navLinks.map((sec) => (
             <button key={sec} className={`bk-nav__btn ${activeSection === sec ? "active" : ""}`} onClick={() => scrollTo(sec)}>{sec}</button>
           ))}
-          <button className="bk-nav__apply" onClick={handleApply} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          {/* ── Nav "Apply Now" — login gated ── */}
+          <button
+            className="bk-nav__apply"
+            onClick={handleApply}
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
             <span>Apply Now</span>
           </button>
         </div>
@@ -830,119 +1004,129 @@ export default function BookingPage({ visaId: propVisaId }) {
               </div>
             </div>
           </section>
-        
-          
 
         </main>
 
         <aside className="bk-sidebar-wrap">
+          {/* ── Sidebar passes the gated handler ── */}
           <Sidebar data={data} onApply={handleApply} />
         </aside>
-      </div> 
-      <div className="bk-layout_2">           
-            {/* ── PROCESS ──────────────────────────────────────────────── */}
-            <section className="bk-section" data-section="Process" ref={registerRef("Process")}>
-              <div className="bk-reveal">
-                <SectionHead label="How It Works" title="Simple 4-Step Process" />
-                <RunwayProcess steps={data.process} />
-              </div>
-            </section>
+      </div>
 
-            {/* ── REVIEWS ──────────────────────────────────────────────── */}
-            <section className="bk-section" data-section="Why Us" ref={registerRef("Why Us")}>
-              <div className="bk-reveal">
-                <SectionHead label="Customer Reviews" title="What Our Customers Say" />
-                <div className="bk-reviews-toolbar">
-                  <div className="bk-reviews-score">
-                    <div className="bk-reviews-score__num">{data.reviewScore}</div>
-                    <div>
-                      <div className="bk-reviews-score__stars">★★★★★</div>
-                      <div className="bk-reviews-score__count">{data.reviewCount} verified reviews</div>
-                    </div>
-                  </div>
-                  <div className="bk-reviews-controls">
-                    <SearchBar value={reviewSearch} onChange={setReviewSearch} placeholder="Search reviews…" />
-                    <div className="bk-rev-filters">
-                      {[0, 5, 4, 3].map((star) => (
-                        <button key={star} className={`bk-rev-filter${reviewFilter === star ? " active" : ""}`} onClick={() => setReviewFilter(reviewFilter === star ? 0 : star)}>
-                          {star === 0 ? "All" : `${star}★`}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="bk-reviews-grid">
-                  {visibleReviews.length > 0 ? visibleReviews.map((r) => (
-                    <div key={r.name} className="bk-review">
-                      <div className="bk-review__top">
-                        <div className="bk-review__avatar" style={{ background: avatarColor(r.name) }}>{r.name.charAt(0)}</div>
-                        <div>
-                          <div className="bk-review__name">{r.name}</div>
-                          <div className="bk-review__date">{r.date}</div>
-                        </div>
-                        <div className="bk-review__stars"><Stars n={r.rating} /></div>
-                      </div>
-                      <div className="bk-review__title">"{r.title}"</div>
-                      <div className="bk-review__body">{r.body}</div>
-                    </div>
-                  )) : (
-                    <div className="bk-reviews-empty">No reviews match your search.</div>
-                  )}
-                </div>
-                {showReviewToggle && (
-                  <ViewMoreBtn
-                    expanded={reviewsExpanded}
-                    onToggle={() => setReviewsExpanded((v) => !v)}
-                    moreCount={filteredReviews.length - REVIEWS_INITIAL}
-                  />
-                )}
-              </div>
-            </section>
-
-            {/* ── FAQ ──────────────────────────────────────────────────── */}
-            <section className="bk-section" data-section="FAQ" ref={registerRef("FAQ")}>
-              <div className="bk-reveal">
-                <SectionHead label={`${data.country} FAQ`} title="Frequently Asked Questions" />
-                <div className="bk-faq-toolbar">
-                  <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
-                </div>
-                <div className="bk-faqs">
-                  {visibleFaqs.length > 0 ? visibleFaqs.map((f, idx) => (
-                    <FaqItem
-                      key={f.q}
-                      q={f.q}
-                      a={f.a}
-                      isLast={idx === visibleFaqs.length - 1 && !showFaqToggle}
-                    />
-                  )) : (
-                    <div className="bk-reviews-empty" style={{ padding: "1.5rem 0" }}>No questions match your search.</div>
-                  )}
-                </div>
-                {showFaqToggle && (
-                  <ViewMoreBtn
-                    expanded={faqsExpanded}
-                    onToggle={() => setFaqsExpanded((v) => !v)}
-                    moreCount={filteredFaqs.length - FAQS_INITIAL}
-                  />
-                )}
-                <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
-                  <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
-                  <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>
-                    Join 50,000+ Indians who trust TheVisa for their travel documents.
-                  </div>
-                  <button className="bk-hero__btn-start" onClick={handleApply} style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-                    <span>Apply for {data.country} Visa</span>
-                  </button>
-                </div>
-              </div>
-            </section>
+      <div className="bk-layout_2">
+        {/* ── PROCESS ──────────────────────────────────────────────── */}
+        <section className="bk-section" data-section="Process" ref={registerRef("Process")}>
+          <div className="bk-reveal">
+            <SectionHead label="How It Works" title="Simple 4-Step Process" />
+            <RunwayProcess steps={data.process} />
           </div>
+        </section>
 
-      {/* ── FLOATING ACTION TOGGLE ────────────────────────────────────── */}
+        {/* ── REVIEWS ──────────────────────────────────────────────── */}
+        <section className="bk-section" data-section="Why Us" ref={registerRef("Why Us")}>
+          <div className="bk-reveal">
+            <SectionHead label="Customer Reviews" title="What Our Customers Say" />
+            <div className="bk-reviews-toolbar">
+              <div className="bk-reviews-score">
+                <div className="bk-reviews-score__num">{data.reviewScore}</div>
+                <div>
+                  <div className="bk-reviews-score__stars">★★★★★</div>
+                  <div className="bk-reviews-score__count">{data.reviewCount} verified reviews</div>
+                </div>
+              </div>
+              <div className="bk-reviews-controls">
+                <SearchBar value={reviewSearch} onChange={setReviewSearch} placeholder="Search reviews…" />
+                <div className="bk-rev-filters">
+                  {[0, 5, 4, 3].map((star) => (
+                    <button key={star} className={`bk-rev-filter${reviewFilter === star ? " active" : ""}`} onClick={() => setReviewFilter(reviewFilter === star ? 0 : star)}>
+                      {star === 0 ? "All" : `${star}★`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="bk-reviews-grid">
+              {visibleReviews.length > 0 ? visibleReviews.map((r) => (
+                <div key={r.name} className="bk-review">
+                  <div className="bk-review__top">
+                    <div className="bk-review__avatar" style={{ background: avatarColor(r.name) }}>{r.name.charAt(0)}</div>
+                    <div>
+                      <div className="bk-review__name">{r.name}</div>
+                      <div className="bk-review__date">{r.date}</div>
+                    </div>
+                    <div className="bk-review__stars"><Stars n={r.rating} /></div>
+                  </div>
+                  <div className="bk-review__title">"{r.title}"</div>
+                  <div className="bk-review__body">{r.body}</div>
+                </div>
+              )) : (
+                <div className="bk-reviews-empty">No reviews match your search.</div>
+              )}
+            </div>
+            {showReviewToggle && (
+              <ViewMoreBtn
+                expanded={reviewsExpanded}
+                onToggle={() => setReviewsExpanded((v) => !v)}
+                moreCount={filteredReviews.length - REVIEWS_INITIAL}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* ── FAQ ──────────────────────────────────────────────────── */}
+        <section className="bk-section" data-section="FAQ" ref={registerRef("FAQ")}>
+          <div className="bk-reveal">
+            <SectionHead label={`${data.country} FAQ`} title="Frequently Asked Questions" />
+            <div className="bk-faq-toolbar">
+              <SearchBar value={faqSearch} onChange={setFaqSearch} placeholder="Search questions…" />
+            </div>
+            <div className="bk-faqs">
+              {visibleFaqs.length > 0 ? visibleFaqs.map((f, idx) => (
+                <FaqItem
+                  key={f.q}
+                  q={f.q}
+                  a={f.a}
+                  isLast={idx === visibleFaqs.length - 1 && !showFaqToggle}
+                />
+              )) : (
+                <div className="bk-reviews-empty" style={{ padding: "1.5rem 0" }}>No questions match your search.</div>
+              )}
+            </div>
+            {showFaqToggle && (
+              <ViewMoreBtn
+                expanded={faqsExpanded}
+                onToggle={() => setFaqsExpanded((v) => !v)}
+                moreCount={filteredFaqs.length - FAQS_INITIAL}
+              />
+            )}
+
+            {/* ── Bottom CTA — login gated ── */}
+            <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
+              <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
+              <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>
+                Join 50,000+ Indians who trust TheVisa for their travel documents.
+              </div>
+              <button
+                className="bk-hero__btn-start"
+                onClick={handleApply}
+                style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}
+              >
+                <span>Apply for {data.country} Visa</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* ── FLOATING ACTION TOGGLE ── */}
       <FloatingToggle onApply={handleApply} onRewards={() => setRewardsOpen(true)} />
 
-      {/* ── REWARDS MODAL ────────────────────────────────────────────── */}
-      <RewardsModal open={rewardsOpen} onClose={() => setRewardsOpen(false)} onApply={handleApply} />
+      {/* ── REWARDS MODAL ── */}
+      <RewardsModal
+        open={rewardsOpen}
+        onClose={() => setRewardsOpen(false)}
+        onApply={handleRewardsApply}
+      />
 
     </div>
   );

@@ -364,7 +364,7 @@ export default function Login({ onLoginSuccess }) {
       <section className="login-hero">
         
         <h1>
-          Your Visa Journey<br />
+          Your Visa Journey
           Starts <span className="login-accent">Here</span>
         </h1>
         <p>

@@ -127,8 +127,8 @@
   letter-spacing: -0.5px;
   margin-bottom: 14px;
   color: var(--login-text-primary);
+  white-space: nowrap; /* 👈 keeps it in one line */
 }
-
 .login-hero h1 .login-accent {
   color: var(--login-navy);
   font-style: italic;
@@ -163,7 +163,7 @@
   padding: 26px 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
   transition: var(--login-transition);
   position: relative;
 }
@@ -563,16 +563,64 @@
 @keyframes loginSpin { to { transform: rotate(360deg); } }
 
 /* ── Responsive ───────────────────────────── */
+
+/* ── Very large screens (1600px+) ─────────── */
+@media (min-width: 1600px) {
+  .login-user-types-grid {
+    max-width: 1600px;
+    gap: 28px;
+  }
+  .login-hero h1 {
+    font-size: 56px;
+  }
+  .login-hero p {
+    font-size: 18px;
+    max-width: 600px;
+  }
+  .login-user-type-card {
+    padding: 32px 34px 30px;
+  }
+  .login-card-title-wrap h2 {
+    font-size: 26px;
+  }
+}
+
+/* ── Large screens (1280px–1599px) ─────────── */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .login-user-types-grid {
+    max-width: 1280px;
+    gap: 24px;
+  }
+}
+
+/* ── Medium-large (1025px–1279px) ─────────── */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .login-user-types-grid {
+    width: 98%;
+    gap: 18px;
+  }
+  .login-header {
+    padding: 16px 32px;
+  }
+  .login-user-type-card {
+    padding: 22px 22px 20px;
+  }
+  .login-card-title-wrap h2 {
+    font-size: 20px;
+  }
+}
+
+/* ── Tablet landscape / small desktop (769px–1024px) ── */
 @media (max-width: 1024px) {
   .login-user-types-grid {
     grid-template-columns: 1fr;
     width: 94%;
     padding: 0 0 48px;
   }
-  .lg-inner{
-    max-width: 700px!important;
+  .lg-inner {
+    max-width: 700px !important;
     margin: 0 auto;
-}
+  }
   .login-header {
     padding: 16px 24px;
   }
@@ -584,5 +632,201 @@
   }
   .login-modal-box {
     padding: 32px 28px;
+  }
+}
+
+/* ── Tablet portrait (600px–768px) ─────────── */
+@media (max-width: 768px) {
+  .login-header {
+    padding: 14px 18px;
+  }
+  .login-logo-text {
+    font-size: 20px;
+  }
+  .login-hero {
+    padding: 32px 16px 22px;
+  }
+  .login-hero h1 {
+    white-space: normal;
+    font-size: clamp(22px, 6vw, 38px);
+  }
+  .login-hero p {
+    font-size: 14px;
+  }
+  .login-user-types-grid {
+    grid-template-columns: 1fr;
+    width: 92%;
+    gap: 16px;
+    padding: 0 0 40px;
+  }
+  .lg-inner {
+    max-width: 100% !important;
+  }
+  .login-user-type-card {
+    padding: 20px 20px 18px;
+  }
+  .login-modal-box {
+    padding: 28px 22px;
+    max-width: 100%;
+  }
+  .login-modal-top h3 {
+    font-size: 20px;
+  }
+  .login-otp-inputs {
+    gap: 8px;
+  }
+  .login-otp-input {
+    width: 44px !important;
+    height: 50px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* ── Large mobile (480px–599px) ────────────── */
+@media (max-width: 599px) {
+  .login-header {
+    padding: 12px 14px;
+  }
+  .login-logo-text {
+    font-size: 18px;
+  }
+  .login-hero {
+    padding: 26px 14px 18px;
+  }
+  .login-hero h1 {
+    white-space: normal;
+    font-size: clamp(20px, 7vw, 32px);
+  }
+  .login-hero-badge {
+    font-size: 10px;
+    padding: 4px 14px;
+  }
+  .login-user-types-grid {
+    width: 94%;
+    gap: 14px;
+    padding: 0 0 32px;
+  }
+  .login-user-type-card {
+    padding: 18px 18px 16px;
+    gap: 12px;
+  }
+  .login-card-title-wrap h2 {
+    font-size: 19px;
+  }
+  .login-modal-box {
+    padding: 24px 18px;
+    border-radius: var(--login-radius-lg);
+  }
+  .login-modal-top h3 {
+    font-size: 18px;
+  }
+  .login-btn {
+    font-size: 13px;
+    padding: 11px 16px;
+  }
+  .login-otp-input {
+    width: 40px !important;
+    height: 46px !important;
+    font-size: 17px !important;
+  }
+}
+
+/* ── Small mobile (360px–479px) ────────────── */
+@media (max-width: 479px) {
+  .login-header {
+    padding: 11px 12px;
+  }
+  .login-logo-text {
+    font-size: 16px;
+  }
+  .login-hero {
+    padding: 22px 12px 16px;
+  }
+  .login-hero h1 {
+    font-size: clamp(18px, 7.5vw, 28px);
+  }
+  .login-hero p {
+    font-size: 13px;
+  }
+  .login-user-types-grid {
+    width: 96%;
+    gap: 12px;
+    padding: 0 0 28px;
+  }
+  .login-user-type-card {
+    padding: 16px 16px 14px;
+    border-radius: var(--login-radius-lg);
+  }
+  .login-card-label {
+    font-size: 9.5px;
+  }
+  .login-card-title-wrap h2 {
+    font-size: 17px;
+  }
+  .login-card-subtitle {
+    font-size: 12px;
+  }
+  .login-feature-item {
+    font-size: 12px;
+  }
+  .login-btn {
+    font-size: 12.5px;
+    padding: 10px 14px;
+  }
+  .login-modal-overlay {
+    padding: 12px;
+  }
+  .login-modal-box {
+    padding: 20px 14px;
+  }
+  .login-modal-top h3 {
+    font-size: 17px;
+  }
+  .login-otp-inputs {
+    gap: 6px;
+  }
+  .login-otp-input {
+    width: 36px !important;
+    height: 42px !important;
+    font-size: 16px !important;
+  }
+  .login-form-group input {
+    font-size: 13px;
+    padding: 10px 13px;
+  }
+}
+
+/* ── Very small mobile (below 360px) ───────── */
+@media (max-width: 359px) {
+  .login-logo-text {
+    font-size: 14px;
+  }
+  .login-hero h1 {
+    font-size: 17px;
+  }
+  .login-hero p {
+    font-size: 12px;
+  }
+  .login-user-types-grid {
+    width: 98%;
+    gap: 10px;
+  }
+  .login-user-type-card {
+    padding: 14px 13px 12px;
+  }
+  .login-card-title-wrap h2 {
+    font-size: 15px;
+  }
+  .login-btn {
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+  .login-modal-box {
+    padding: 16px 12px;
+  }
+  .login-otp-input {
+    width: 32px !important;
+    height: 38px !important;
+    font-size: 14px !important;
   }
 }

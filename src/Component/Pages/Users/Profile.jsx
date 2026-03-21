@@ -296,7 +296,7 @@ export default function Profile({ onLogout }) {
   // Wrap logout so it also redirects to /login
   function handleLogoutAndRedirect() {
     if (onLogout) onLogout();
-    navigate("/login");
+    navigate("/");
   }
 
   const {

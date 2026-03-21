@@ -78,6 +78,8 @@ function Hero({ search, setSearch }) {
             </svg>
             <span className="home-search__divider"/>
             <input
+              id="hero-search"
+              name="hero-search"
               className="home-search__input"
               type="text"
               placeholder="Select destination country…"
@@ -676,8 +678,10 @@ function Testimonials() {
 
                 <div className="home-feedback__row">
                   <div className="home-feedback__field">
-                    <label className="home-feedback__label">Your Name</label>
+                    <label className="home-feedback__label" htmlFor="feedback-name">Your Name</label>
                     <input
+                      id="feedback-name"
+                      name="feedback-name"
                       className={`home-feedback__input${errors.name ? " home-feedback__input--err" : ""}`}
                       placeholder="e.g. Priya S."
                       value={form.name}
@@ -686,8 +690,10 @@ function Testimonials() {
                     {errors.name && <span className="home-feedback__err">{errors.name}</span>}
                   </div>
                   <div className="home-feedback__field">
-                    <label className="home-feedback__label">Your Route</label>
+                    <label className="home-feedback__label" htmlFor="feedback-country">Your Route</label>
                     <input
+                      id="feedback-country"
+                      name="feedback-country"
                       className={`home-feedback__input${errors.country ? " home-feedback__input--err" : ""}`}
                       placeholder="e.g. Delhi → Paris"
                       value={form.country}
@@ -733,8 +739,10 @@ function Testimonials() {
                 </div>
 
                 <div className="home-feedback__field">
-                  <label className="home-feedback__label">Your Review</label>
+                  <label className="home-feedback__label" htmlFor="feedback-text">Your Review</label>
                   <textarea
+                    id="feedback-text"
+                    name="feedback-text"
                     className={`home-feedback__textarea${errors.text ? " home-feedback__input--err" : ""}`}
                     placeholder="Tell us about your visa experience — the process, speed, support…"
                     rows={4}
@@ -1251,6 +1259,8 @@ function FAQ() {
 
             <input
               ref={inputRef}
+              id="faq-search"
+              name="faq-search"
               className="home-faq__search-input"
               type="text"
               placeholder="Search questions — e.g. documents, refund, express…"
@@ -1425,6 +1435,63 @@ function FAQ() {
 }
 // ─── CONTACT US SECTION ───────────────────────────────────────────────────────
 
+// ─── HELPER: get tomorrow's date string (YYYY-MM-DD) ─────────────────────────
+function getTomorrow() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().split("T")[0];
+}
+
+// ─── HELPER: check if a date string is a weekend ─────────────────────────────
+function isWeekend(dateStr) {
+  if (!dateStr) return false;
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+  return d.getDay() === 0 || d.getDay() === 6; // 0 = Sunday, 6 = Saturday
+}
+
+// ─── HELPER: get next valid weekday from a date string ───────────────────────
+function nextWeekday(dateStr) {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+  while (d.getDay() === 0 || d.getDay() === 6) {
+    d.setDate(d.getDate() + 1);
+  }
+  return d.toISOString().split("T")[0];
+}
+
+// ─── WEEKDAY DATE INPUT ───────────────────────────────────────────────────────
+function WeekdayDateInput({ value, onChange, className, min, id, name }) {
+  const handleChange = (e) => {
+    const val = e.target.value;
+    if (isWeekend(val)) {
+      onChange(nextWeekday(val));
+    } else {
+      onChange(val);
+    }
+  };
+
+  return (
+    <div style={{ position: "relative" }}>
+      <input
+        type="date"
+        id={id}
+        name={name}
+        className={className}
+        min={min || getTomorrow()}
+        value={value}
+        onChange={handleChange}
+      />
+      {value && isWeekend(value) && (
+        <span style={{ fontSize: "0.7rem", color: "#f59e0b", marginTop: "2px", display: "block" }}>
+          Weekends unavailable — moved to next weekday.
+        </span>
+      )}
+    </div>
+  );
+}
+
 function ContactUs() {
   const [tab, setTab] = React.useState("message");
 
@@ -1464,7 +1531,7 @@ function ContactUs() {
   const [meetScheduled, setMeetScheduled] = React.useState(false);
   const [meetLink, setMeetLink]       = React.useState("");
 
-  const today = new Date().toISOString().split("T")[0];
+  const tomorrow = getTomorrow();
 
   const validateMeet = () => {
     const e = {};
@@ -1570,9 +1637,15 @@ function ContactUs() {
                 </div>
 
                 <div className="home-contact__field">
-                  <label className="home-contact__label">Enquiry Type *</label>
+                  <label className="home-contact__label" htmlFor="contact-enquiry">Enquiry Type *</label>
                   <div className="home-contact__select-wrap">
-                    <select className={`home-contact__select${errors.enquiry?" home-contact__input--err":""}`} value={form.enquiry} onChange={e=>{setForm(p=>({...p,enquiry:e.target.value}));setErrors(p=>({...p,enquiry:""}));}}>
+                    <select
+                      id="contact-enquiry"
+                      name="contact-enquiry"
+                      className={`home-contact__select${errors.enquiry?" home-contact__input--err":""}`}
+                      value={form.enquiry}
+                      onChange={e=>{setForm(p=>({...p,enquiry:e.target.value}));setErrors(p=>({...p,enquiry:""}));}}
+                    >
                       {enquiryOptions.map(o=><option key={o.value} value={o.value} disabled={o.value===""} hidden={o.value===""&&form.enquiry!==""?false:undefined}>{o.label}</option>)}
                     </select>
                     <span className="home-contact__select-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
@@ -1582,32 +1655,69 @@ function ContactUs() {
 
                 <div className="home-contact__row">
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Full Name *</label>
-                    <input className={`home-contact__input${errors.name?" home-contact__input--err":""}`} placeholder="e.g. Priya Sharma" value={form.name} onChange={e=>{setForm(p=>({...p,name:e.target.value}));setErrors(p=>({...p,name:""}));}} />
+                    <label className="home-contact__label" htmlFor="contact-name">Full Name *</label>
+                    <input
+                      id="contact-name"
+                      name="contact-name"
+                      className={`home-contact__input${errors.name?" home-contact__input--err":""}`}
+                      placeholder="e.g. Priya Sharma"
+                      value={form.name}
+                      onChange={e=>{setForm(p=>({...p,name:e.target.value}));setErrors(p=>({...p,name:""}));}}
+                    />
                     {errors.name && <span className="home-contact__err">{errors.name}</span>}
                   </div>
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Email Address *</label>
-                    <input type="email" className={`home-contact__input${errors.email?" home-contact__input--err":""}`} placeholder="you@example.com" value={form.email} onChange={e=>{setForm(p=>({...p,email:e.target.value}));setErrors(p=>({...p,email:""}));}} />
+                    <label className="home-contact__label" htmlFor="contact-email">Email Address *</label>
+                    <input
+                      id="contact-email"
+                      name="contact-email"
+                      type="email"
+                      className={`home-contact__input${errors.email?" home-contact__input--err":""}`}
+                      placeholder="you@example.com"
+                      value={form.email}
+                      onChange={e=>{setForm(p=>({...p,email:e.target.value}));setErrors(p=>({...p,email:""}));}}
+                    />
                     {errors.email && <span className="home-contact__err">{errors.email}</span>}
                   </div>
                 </div>
 
                 <div className="home-contact__row">
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Phone Number *</label>
-                    <input className={`home-contact__input${errors.phone?" home-contact__input--err":""}`} placeholder="+91 98765 43210" value={form.phone} onChange={e=>{setForm(p=>({...p,phone:e.target.value}));setErrors(p=>({...p,phone:""}));}} />
+                    <label className="home-contact__label" htmlFor="contact-phone">Phone Number *</label>
+                    <input
+                      id="contact-phone"
+                      name="contact-phone"
+                      className={`home-contact__input${errors.phone?" home-contact__input--err":""}`}
+                      placeholder="+91 98765 43210"
+                      value={form.phone}
+                      onChange={e=>{setForm(p=>({...p,phone:e.target.value}));setErrors(p=>({...p,phone:""}));}}
+                    />
                     {errors.phone && <span className="home-contact__err">{errors.phone}</span>}
                   </div>
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Destination Country</label>
-                    <input className="home-contact__input" placeholder="e.g. Japan, UAE, UK…" value={form.destination} onChange={e=>setForm(p=>({...p,destination:e.target.value}))} />
+                    <label className="home-contact__label" htmlFor="contact-destination">Destination Country</label>
+                    <input
+                      id="contact-destination"
+                      name="contact-destination"
+                      className="home-contact__input"
+                      placeholder="e.g. Japan, UAE, UK…"
+                      value={form.destination}
+                      onChange={e=>setForm(p=>({...p,destination:e.target.value}))}
+                    />
                   </div>
                 </div>
 
                 <div className="home-contact__field">
-                  <label className="home-contact__label">Your Message *</label>
-                  <textarea className={`home-contact__textarea${errors.message?" home-contact__input--err":""}`} placeholder="Describe your visa requirements, travel dates, or concerns…" rows={4} value={form.message} onChange={e=>{setForm(p=>({...p,message:e.target.value}));setErrors(p=>({...p,message:""}));}} />
+                  <label className="home-contact__label" htmlFor="contact-message">Your Message *</label>
+                  <textarea
+                    id="contact-message"
+                    name="contact-message"
+                    className={`home-contact__textarea${errors.message?" home-contact__input--err":""}`}
+                    placeholder="Describe your visa requirements, travel dates, or concerns…"
+                    rows={4}
+                    value={form.message}
+                    onChange={e=>{setForm(p=>({...p,message:e.target.value}));setErrors(p=>({...p,message:""}));}}
+                  />
                   {errors.message && <span className="home-contact__err">{errors.message}</span>}
                 </div>
 
@@ -1651,27 +1761,55 @@ function ContactUs() {
 
                 <div className="home-contact__row">
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Full Name *</label>
-                    <input className={`home-contact__input${meetErrors.name?" home-contact__input--err":""}`} placeholder="e.g. Arjun Kapoor" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
+                    <label className="home-contact__label" htmlFor="meet-name">Full Name *</label>
+                    <input
+                      id="meet-name"
+                      name="meet-name"
+                      className={`home-contact__input${meetErrors.name?" home-contact__input--err":""}`}
+                      placeholder="e.g. Arjun Kapoor"
+                      value={meet.name}
+                      onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}}
+                    />
                     {meetErrors.name && <span className="home-contact__err">{meetErrors.name}</span>}
                   </div>
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Email Address *</label>
-                    <input type="email" className={`home-contact__input${meetErrors.email?" home-contact__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
+                    <label className="home-contact__label" htmlFor="meet-email">Email Address *</label>
+                    <input
+                      id="meet-email"
+                      name="meet-email"
+                      type="email"
+                      className={`home-contact__input${meetErrors.email?" home-contact__input--err":""}`}
+                      placeholder="you@example.com"
+                      value={meet.email}
+                      onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}}
+                    />
                     {meetErrors.email && <span className="home-contact__err">{meetErrors.email}</span>}
                   </div>
                 </div>
 
                 <div className="home-contact__field">
-                  <label className="home-contact__label">Phone Number *</label>
-                  <input className={`home-contact__input${meetErrors.phone?" home-contact__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
+                  <label className="home-contact__label" htmlFor="meet-phone">Phone Number *</label>
+                  <input
+                    id="meet-phone"
+                    name="meet-phone"
+                    className={`home-contact__input${meetErrors.phone?" home-contact__input--err":""}`}
+                    placeholder="+91 98765 43210"
+                    value={meet.phone}
+                    onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}}
+                  />
                   {meetErrors.phone && <span className="home-contact__err">{meetErrors.phone}</span>}
                 </div>
 
                 <div className="home-contact__field">
-                  <label className="home-contact__label">Meeting Topic *</label>
+                  <label className="home-contact__label" htmlFor="meet-topic">Meeting Topic *</label>
                   <div className="home-contact__select-wrap">
-                    <select className={`home-contact__select${meetErrors.topic?" home-contact__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
+                    <select
+                      id="meet-topic"
+                      name="meet-topic"
+                      className={`home-contact__select${meetErrors.topic?" home-contact__input--err":""}`}
+                      value={meet.topic}
+                      onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}
+                    >
                       <option value="">Select a topic…</option>
                       {topics.map(t=><option key={t} value={t}>{t}</option>)}
                     </select>
@@ -1682,14 +1820,27 @@ function ContactUs() {
 
                 <div className="home-contact__row">
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Preferred Date *</label>
-                    <input type="date" className={`home-contact__input${meetErrors.date?" home-contact__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
+                    <label className="home-contact__label" htmlFor="meet-date">Preferred Date *</label>
+                    <WeekdayDateInput
+                      id="meet-date"
+                      name="meet-date"
+                      className={`home-contact__input${meetErrors.date?" home-contact__input--err":""}`}
+                      min={tomorrow}
+                      value={meet.date}
+                      onChange={val=>{setMeet(p=>({...p,date:val}));setMeetErrors(p=>({...p,date:""}));}}
+                    />
                     {meetErrors.date && <span className="home-contact__err">{meetErrors.date}</span>}
                   </div>
                   <div className="home-contact__field">
-                    <label className="home-contact__label">Time Slot *</label>
+                    <label className="home-contact__label" htmlFor="meet-time">Time Slot *</label>
                     <div className="home-contact__select-wrap">
-                      <select className={`home-contact__select${meetErrors.time?" home-contact__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
+                      <select
+                        id="meet-time"
+                        name="meet-time"
+                        className={`home-contact__select${meetErrors.time?" home-contact__input--err":""}`}
+                        value={meet.time}
+                        onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}
+                      >
                         <option value="">Choose a slot…</option>
                         {timeSlots.map(t=><option key={t} value={t}>{t}</option>)}
                       </select>
@@ -1713,8 +1864,16 @@ function ContactUs() {
                 )}
 
                 <div className="home-contact__field">
-                  <label className="home-contact__label">Additional Notes <span style={{color:"#94a3b8",fontWeight:400,fontSize:".7rem",textTransform:"none"}}>(optional)</span></label>
-                  <textarea className="home-contact__textarea" placeholder="Any specific questions before the call…" rows={3} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
+                  <label className="home-contact__label" htmlFor="meet-notes">Additional Notes <span style={{color:"#94a3b8",fontWeight:400,fontSize:".7rem",textTransform:"none"}}>(optional)</span></label>
+                  <textarea
+                    id="meet-notes"
+                    name="meet-notes"
+                    className="home-contact__textarea"
+                    placeholder="Any specific questions before the call…"
+                    rows={3}
+                    value={meet.notes}
+                    onChange={e=>setMeet(p=>({...p,notes:e.target.value}))}
+                  />
                 </div>
 
                 <div className="home-contact__guest-notice">
@@ -1746,7 +1905,7 @@ function ScheduleMeetingFloat() {
   });
   const [meetErrors, setMeetErrors] = React.useState({});
 
-  const today = new Date().toISOString().split("T")[0];
+  const tomorrow = getTomorrow();
 
   const validateMeet = () => {
     const e = {};
@@ -1855,27 +2014,55 @@ function ScheduleMeetingFloat() {
             <div className="home-smf__form">
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Full Name *</label>
-                <input className={`home-smf__input${meetErrors.name?" home-smf__input--err":""}`} placeholder="e.g. Priya Sharma" value={meet.name} onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}} />
+                <label className="home-smf__label" htmlFor="smf-name">Full Name *</label>
+                <input
+                  id="smf-name"
+                  name="smf-name"
+                  className={`home-smf__input${meetErrors.name?" home-smf__input--err":""}`}
+                  placeholder="e.g. Priya Sharma"
+                  value={meet.name}
+                  onChange={e=>{setMeet(p=>({...p,name:e.target.value}));setMeetErrors(p=>({...p,name:""}));}}
+                />
                 {meetErrors.name && <span className="home-smf__err">{meetErrors.name}</span>}
               </div>
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Email Address *</label>
-                <input type="email" className={`home-smf__input${meetErrors.email?" home-smf__input--err":""}`} placeholder="you@example.com" value={meet.email} onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}} />
+                <label className="home-smf__label" htmlFor="smf-email">Email Address *</label>
+                <input
+                  id="smf-email"
+                  name="smf-email"
+                  type="email"
+                  className={`home-smf__input${meetErrors.email?" home-smf__input--err":""}`}
+                  placeholder="you@example.com"
+                  value={meet.email}
+                  onChange={e=>{setMeet(p=>({...p,email:e.target.value}));setMeetErrors(p=>({...p,email:""}));}}
+                />
                 {meetErrors.email && <span className="home-smf__err">{meetErrors.email}</span>}
               </div>
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Phone Number *</label>
-                <input className={`home-smf__input${meetErrors.phone?" home-smf__input--err":""}`} placeholder="+91 98765 43210" value={meet.phone} onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}} />
+                <label className="home-smf__label" htmlFor="smf-phone">Phone Number *</label>
+                <input
+                  id="smf-phone"
+                  name="smf-phone"
+                  className={`home-smf__input${meetErrors.phone?" home-smf__input--err":""}`}
+                  placeholder="+91 98765 43210"
+                  value={meet.phone}
+                  onChange={e=>{setMeet(p=>({...p,phone:e.target.value}));setMeetErrors(p=>({...p,phone:""}));}}
+                />
                 {meetErrors.phone && <span className="home-smf__err">{meetErrors.phone}</span>}
               </div>
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Meeting Topic *</label>
+                <label className="home-smf__label" htmlFor="smf-topic">Meeting Topic *</label>
                 <div className="home-smf__select-wrap">
-                  <select className={`home-smf__input home-smf__select${meetErrors.topic?" home-smf__input--err":""}`} value={meet.topic} onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}>
+                  <select
+                    id="smf-topic"
+                    name="smf-topic"
+                    className={`home-smf__input home-smf__select${meetErrors.topic?" home-smf__input--err":""}`}
+                    value={meet.topic}
+                    onChange={e=>{setMeet(p=>({...p,topic:e.target.value}));setMeetErrors(p=>({...p,topic:""}));}}
+                  >
                     <option value="">Select a topic…</option>
                     {topics.map(t=><option key={t} value={t}>{t}</option>)}
                   </select>
@@ -1887,15 +2074,28 @@ function ScheduleMeetingFloat() {
               </div>
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Preferred Date *</label>
-                <input type="date" className={`home-smf__input${meetErrors.date?" home-smf__input--err":""}`} min={today} value={meet.date} onChange={e=>{setMeet(p=>({...p,date:e.target.value}));setMeetErrors(p=>({...p,date:""}));}} />
+                <label className="home-smf__label" htmlFor="smf-date">Preferred Date *</label>
+                <WeekdayDateInput
+                  id="smf-date"
+                  name="smf-date"
+                  className={`home-smf__input${meetErrors.date?" home-smf__input--err":""}`}
+                  min={tomorrow}
+                  value={meet.date}
+                  onChange={val=>{setMeet(p=>({...p,date:val}));setMeetErrors(p=>({...p,date:""}));}}
+                />
                 {meetErrors.date && <span className="home-smf__err">{meetErrors.date}</span>}
               </div>
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Time Slot *</label>
+                <label className="home-smf__label" htmlFor="smf-time">Time Slot *</label>
                 <div className="home-smf__select-wrap">
-                  <select className={`home-smf__input home-smf__select${meetErrors.time?" home-smf__input--err":""}`} value={meet.time} onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}>
+                  <select
+                    id="smf-time"
+                    name="smf-time"
+                    className={`home-smf__input home-smf__select${meetErrors.time?" home-smf__input--err":""}`}
+                    value={meet.time}
+                    onChange={e=>{setMeet(p=>({...p,time:e.target.value}));setMeetErrors(p=>({...p,time:""}));}}
+                  >
                     <option value="">Choose a slot…</option>
                     {timeSlots.map(t=><option key={t} value={t}>{t}</option>)}
                   </select>
@@ -1920,8 +2120,16 @@ function ScheduleMeetingFloat() {
               )}
 
               <div className="home-smf__field">
-                <label className="home-smf__label">Notes <span className="home-smf__optional">(optional)</span></label>
-                <textarea className="home-smf__input home-smf__textarea" placeholder="Any questions before the call…" rows={2} value={meet.notes} onChange={e=>setMeet(p=>({...p,notes:e.target.value}))} />
+                <label className="home-smf__label" htmlFor="smf-notes">Notes <span className="home-smf__optional">(optional)</span></label>
+                <textarea
+                  id="smf-notes"
+                  name="smf-notes"
+                  className="home-smf__input home-smf__textarea"
+                  placeholder="Any questions before the call…"
+                  rows={2}
+                  value={meet.notes}
+                  onChange={e=>setMeet(p=>({...p,notes:e.target.value}))}
+                />
               </div>
 
               <div className="home-smf__guest-notice">

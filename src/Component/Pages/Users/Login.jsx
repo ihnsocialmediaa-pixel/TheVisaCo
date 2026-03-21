@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import {
   loginUser,
@@ -104,7 +105,7 @@ function AuthModal({ type, role, onClose, onSuccess }) {
     const result = loginUser({ email, password });
     setLoading(false);
     if (!result.success) { setError(result.error); return; }
-    onSuccess(result.user);
+    onSuccess(result.user);  // ← triggers navigate("/profile")
   }
 
   async function handleSignup(e) {
@@ -134,7 +135,7 @@ function AuthModal({ type, role, onClose, onSuccess }) {
 
   function handleGoogleSignIn() {
     const result = googleSignIn(role);
-    if (result.success) onSuccess(result.user);
+    if (result.success) onSuccess(result.user);  // ← triggers navigate("/profile")
   }
 
   return (
@@ -336,6 +337,7 @@ function UserTypeCard({ data, onAction }) {
 // ── Main Login Page ───────────────────────────
 export default function Login({ onLoginSuccess }) {
   const [modal, setModal] = useState(null); // { type, role }
+  const navigate = useNavigate();           // ← added
 
   function handleAction(type, role) {
     if (type === "membership") {
@@ -347,7 +349,13 @@ export default function Login({ onLoginSuccess }) {
 
   function handleSuccess(user) {
     setModal(null);
-    if (onLoginSuccess) onLoginSuccess(user);
+    if (onLoginSuccess) {
+      // Inside LoginGate (Booking page) — caller handles navigation
+      onLoginSuccess(user);
+    } else {
+      // Standalone /login page — go to profile
+      navigate("/profile");
+    }
   }
 
   return (
@@ -362,13 +370,11 @@ export default function Login({ onLoginSuccess }) {
 
       {/* Hero */}
       <section className="login-hero">
-        
         <h1>
-          Your Visa Journey
-          Starts <span className="login-accent">Here</span>
+          Your Visa Journey Starts <span className="login-accent">Here</span>
         </h1>
         <p>
-          Choose your account type below to get started 
+          Choose your account type below to get started
         </p>
       </section>
 

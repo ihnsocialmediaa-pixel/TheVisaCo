@@ -2,17 +2,14 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getVisaData, rewardsData } from "./bookingdata";
 import "./Booking.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // ─── LOGIN GATE IMPORT ────────────────────────────────────────────────────
-// Login lives at src/Components/Pages/Users/Login.jsx
 import Login from "../Users/Login";
 import { getSession } from "../Users/Auth";
 
 
 // ─── LOGIN GATE MODAL ────────────────────────────────────────────────────
-// Wraps <Login /> in a full-screen overlay.
-// After successful login → calls onSuccess(user) and closes itself.
 function LoginGate({ open, onClose, onSuccess }) {
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -61,7 +58,6 @@ function LoginGate({ open, onClose, onSuccess }) {
           position: "relative",
         }}
       >
-        {/* ── Close Button ── */}
         <button
           onClick={onClose}
           style={{
@@ -80,10 +76,6 @@ function LoginGate({ open, onClose, onSuccess }) {
           }}
         >✕</button>
 
-        {/*
-          Login renders its full page but inside the modal we clip it.
-          We hide its outer header/hero via a style tag injected here.
-        */}
         <style>{`
           .lg-inner .login-page { min-height: unset !important; }
           .lg-inner .login-header { display: none !important; }
@@ -98,6 +90,11 @@ function LoginGate({ open, onClose, onSuccess }) {
           .lg-inner .login-page::after { display: none !important; }
         `}</style>
 
+        {/*
+          Key change: onLoginSuccess here does NOT navigate to /profile.
+          It just calls the local onSuccess so the booking page can
+          run the pending action (navigate to /application-form).
+        */}
         <Login onLoginSuccess={handleLoginSuccess} />
       </div>
     </div>
@@ -106,19 +103,14 @@ function LoginGate({ open, onClose, onSuccess }) {
 
 
 // ─── useLoginGate HOOK ────────────────────────────────────────────────────
-// Provides a single source of truth for the gate state and the
-// "guarded action" pattern: if not logged in → open gate; after
-// login → run the original action.
 function useLoginGate() {
-  const [gateOpen,    setGateOpen]    = useState(false);
+  const [gateOpen,      setGateOpen]      = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
-  const [loggedInUser, setLoggedInUser]   = useState(() => getSession());
+  const [loggedInUser,  setLoggedInUser]  = useState(() => getSession());
 
-  // Open the gate and store what to do after login
   const requireLogin = useCallback((action) => {
     const session = getSession();
     if (session) {
-      // Already logged in → run immediately
       action(session);
     } else {
       setPendingAction(() => action);
@@ -432,24 +424,20 @@ function RewardsModal({ open, onClose, onApply }) {
   const handleOverlay = (e) => { if (e.target === e.currentTarget) onClose(); };
   const toggleTier = (id) => setOpenTier((prev) => (prev === id ? null : id));
 
-  // ── "Start Application" inside Rewards Modal now goes through login gate
   const handleApply = () => { onClose(); onApply(); };
 
   return (
     <div className={`bk-modal-overlay ${open ? "open" : ""}`} onClick={handleOverlay}>
       <div className="bk-modal">
 
-        {/* ── HEAD ── */}
         <div className="bk-modal__head">
           <button className="bk-modal__close" onClick={onClose}>✕</button>
           <div className="bk-modal__title">Earn as you travel</div>
           <div className="bk-modal__sub">Every application brings you closer to exclusive benefits. All rewards apply on visa application fees charged.</div>
         </div>
 
-        {/* ── BODY ── */}
         <div className="bk-modal__body">
 
-          {/* Welcome Bonus */}
           <div>
             <div className="bk-modal__section-label">Welcome Bonus</div>
             <div className="bk-modal__bonus">
@@ -464,7 +452,6 @@ function RewardsModal({ open, onClose, onApply }) {
             </div>
           </div>
 
-          {/* Codes */}
           <div>
             <div className="bk-modal__section-label">Referral &amp; Discount Codes</div>
             <div className="bk-modal__codes">
@@ -485,7 +472,6 @@ function RewardsModal({ open, onClose, onApply }) {
             </div>
           </div>
 
-          {/* Three-Tier System */}
           <div>
             <div className="bk-modal__tiers-title">Three-Tier Membership</div>
             <div className="bk-modal__tiers">
@@ -536,7 +522,6 @@ function RewardsModal({ open, onClose, onApply }) {
             </div>
           </div>
 
-          {/* Milestone Benefits */}
           <div>
             <div className="bk-modal__ms-title">Milestone Benefits</div>
             <div className="bk-modal__milestone-card">
@@ -547,12 +532,10 @@ function RewardsModal({ open, onClose, onApply }) {
             </div>
           </div>
 
-          {/* ── CTA — goes through login gate ── */}
           <button className="bk-modal__cta" onClick={handleApply}>
             <span>Start Application</span>
           </button>
 
-          {/* T&C */}
           <div className="bk-modal__tc">
             T&amp;C apply. All rewards and discounts are applicable only on the visa application fees charged by TheVisaCo.
           </div>
@@ -579,7 +562,6 @@ function Sidebar({ data, onApply }) {
           <div className="bk-sb__price-sub">Total per person</div>
           <div className="bk-sb__price-note">Govt fee + service fee included</div>
         </div>
-        {/* ── Sidebar CTA — login gated ── */}
         <button
           className="bk-sb__cta"
           onClick={onApply}
@@ -694,7 +676,6 @@ function FloatingToggle({ onApply, onRewards }) {
           </svg>
           <span>Rewards</span>
         </button>
-        {/* ── FAB Apply Now — login gated ── */}
         <button className="bk-fab-action bk-fab-action--apply" onClick={handleApply} tabIndex={open ? 0 : -1} aria-hidden={!open}>
           <span className="bk-fab-action__dot" />
           <span>Apply Now</span>
@@ -730,6 +711,9 @@ export default function BookingPage({ visaId: propVisaId }) {
   const visaId = paramVisaId || propVisaId || "uae";
   const data = getVisaData(visaId);
 
+  // ── navigate — used to go to /application-form after login ──────────────
+  const navigate = useNavigate();
+
   const [heroLoaded,      setHeroLoaded]      = useState(false);
   const [activeSection,   setActiveSection]   = useState("Info");
   const [rewardsOpen,     setRewardsOpen]     = useState(false);
@@ -739,7 +723,6 @@ export default function BookingPage({ visaId: propVisaId }) {
   const [reviewsExpanded, setReviewsExpanded] = useState(false);
   const [faqsExpanded,    setFaqsExpanded]    = useState(false);
 
-  // ── Login Gate ──────────────────────────────────────────────────────────
   const { gateOpen, loggedInUser, requireLogin, handleLoginSuccess, closeGate } = useLoginGate();
 
   const sectionRefs = useRef({});
@@ -785,15 +768,13 @@ export default function BookingPage({ visaId: propVisaId }) {
 
   const scrollTo = (sec) => sectionRefs.current[sec]?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  // ── SINGLE guarded apply handler used by ALL apply/start buttons ────────
+  // ── THE FIX: replace alert() with navigate("/application-form") ──────────
   const handleApply = useCallback(() => {
-    requireLogin((user) => {
-      // User is confirmed logged in — proceed with application
-      alert(`Starting application for ${data.country} visa!\nLogged in as: ${user.name} (${user.userId})\n\n(Integrate your application form/route here)`);
+    requireLogin((_user) => {
+      navigate("/Profile");
     });
-  }, [requireLogin, data.country]);
+  }, [requireLogin, navigate]);
 
-  // ── Rewards modal open — no login needed to browse, gate only on Apply ──
   const handleRewardsApply = useCallback(() => {
     setRewardsOpen(false);
     handleApply();
@@ -802,7 +783,6 @@ export default function BookingPage({ visaId: propVisaId }) {
   return (
     <div className="bk">
 
-      {/* ── LOGIN GATE MODAL ── shown whenever a non-logged-in user clicks any apply button */}
       <LoginGate
         open={gateOpen}
         onClose={closeGate}
@@ -829,7 +809,6 @@ export default function BookingPage({ visaId: propVisaId }) {
           <h1 className="bk-hero__title">{data.country}</h1>
           <p className="bk-hero__tagline">{data.tagline}</p>
           <div className="bk-hero__cta-row">
-            {/* ── Hero "Start Application" — login gated ── */}
             <button
               className="bk-hero__btn-start"
               onClick={handleApply}
@@ -854,7 +833,6 @@ export default function BookingPage({ visaId: propVisaId }) {
           {data.navLinks.map((sec) => (
             <button key={sec} className={`bk-nav__btn ${activeSection === sec ? "active" : ""}`} onClick={() => scrollTo(sec)}>{sec}</button>
           ))}
-          {/* ── Nav "Apply Now" — login gated ── */}
           <button
             className="bk-nav__apply"
             onClick={handleApply}
@@ -1008,7 +986,6 @@ export default function BookingPage({ visaId: propVisaId }) {
         </main>
 
         <aside className="bk-sidebar-wrap">
-          {/* ── Sidebar passes the gated handler ── */}
           <Sidebar data={data} onApply={handleApply} />
         </aside>
       </div>
@@ -1100,7 +1077,6 @@ export default function BookingPage({ visaId: propVisaId }) {
               />
             )}
 
-            {/* ── Bottom CTA — login gated ── */}
             <div style={{ marginTop: "2rem", textAlign: "center", padding: "2rem", background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "var(--rl)" }}>
               <div style={{ fontWeight: 800, fontSize: "1.2rem", color: "var(--ink)", marginBottom: ".5rem" }}>Ready to Visit {data.country}?</div>
               <div style={{ fontFamily: "var(--ff2)", color: "var(--ink-soft)", fontSize: ".9rem", marginBottom: "1.2rem" }}>
@@ -1118,10 +1094,8 @@ export default function BookingPage({ visaId: propVisaId }) {
         </section>
       </div>
 
-      {/* ── FLOATING ACTION TOGGLE ── */}
       <FloatingToggle onApply={handleApply} onRewards={() => setRewardsOpen(true)} />
 
-      {/* ── REWARDS MODAL ── */}
       <RewardsModal
         open={rewardsOpen}
         onClose={() => setRewardsOpen(false)}

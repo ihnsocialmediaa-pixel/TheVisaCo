@@ -1,9 +1,10 @@
 // ─────────────────────────────────────────────
 //  Profile.jsx  —  Profile Page (UI Only)
-//  All state & logic is imported from Profile.js
+//  All state & logic is imported from ProfileLogic.js
 // ─────────────────────────────────────────────
 
 import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import { useProfileState } from "./ProfileLogic.js";
 
@@ -290,6 +291,14 @@ function SettingsTab({ user, onLogout }) {
 
 // ── Main Profile Page ─────────────────────────
 export default function Profile({ onLogout }) {
+  const navigate = useNavigate();   // ← added
+
+  // Wrap logout so it also redirects to /login
+  function handleLogoutAndRedirect() {
+    if (onLogout) onLogout();
+    navigate("/login");
+  }
+
   const {
     user,
     showWelcome, dismissWelcome,
@@ -307,7 +316,7 @@ export default function Profile({ onLogout }) {
     handleUploadDocuments,
     handleSaveProfile,
     handleLogout,
-  } = useProfileState(onLogout);
+  } = useProfileState(handleLogoutAndRedirect);  // ← pass redirect logout
 
   if (!user) {
     return (
